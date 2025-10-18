@@ -9,15 +9,24 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^2.2.0",
     "@reduxjs/toolkit": "^2.9.0",
     "expo": "~54.0.13",
+    "expo-background-fetch": "^14.0.7",
+    "expo-barcode-scanner": "^13.0.1",
+    "expo-camera": "^17.0.8",
     "expo-constants": "^18.0.9",
+    "expo-device": "^8.0.9",
+    "expo-location": "^19.0.7",
+    "expo-notifications": "^0.32.12",
     "expo-router": "^6.0.12",
     "expo-status-bar": "~3.0.8",
+    "expo-task-manager": "^14.0.7",
     "react": "19.1.0",
     "react-native": "0.81.4",
     "react-native-async-storage": "^0.0.1",
-    "react-native-web": "^0.21.0",
+    "react-native-maps": "^1.26.17",
+    "react-native-web": "^0.21.2",
     "react-redux": "^9.2.0"
   },
   "devDependencies": {

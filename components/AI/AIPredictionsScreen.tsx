@@ -23,7 +23,29 @@ export default function AIPredictionsScreen() {
 
   useEffect(() => {
     loadPredictions();
-    startPulseAnimation();
+
+    // Start animation with proper cleanup
+    const animation = Animated.loop(
+      Animated.sequence([
+        Animated.timing(pulseAnim, {
+          toValue: 1.2,
+          duration: 1500,
+          useNativeDriver: true,
+        }),
+        Animated.timing(pulseAnim, {
+          toValue: 1,
+          duration: 1500,
+          useNativeDriver: true,
+        }),
+      ])
+    );
+    animation.start();
+
+    // CRITICAL: Cleanup animation when component unmounts or timeframe changes
+    return () => {
+      animation.stop();
+      pulseAnim.setValue(1); // Reset to default value
+    };
   }, [timeframe]);
 
   const loadPredictions = async () => {
@@ -48,23 +70,6 @@ export default function AIPredictionsScreen() {
   const onRefresh = () => {
     setRefreshing(true);
     loadPredictions();
-  };
-
-  const startPulseAnimation = () => {
-    Animated.loop(
-      Animated.sequence([
-        Animated.timing(pulseAnim, {
-          toValue: 1.2,
-          duration: 1500,
-          useNativeDriver: true,
-        }),
-        Animated.timing(pulseAnim, {
-          toValue: 1,
-          duration: 1500,
-          useNativeDriver: true,
-        }),
-      ])
-    ).start();
   };
 
   const getRecommendationColor = (rec: string): string => {

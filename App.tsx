@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   StyleSheet,
   Text,
   View,
   SafeAreaView,
   ScrollView,
+  FlatList,
   TextInput,
   TouchableOpacity,
   Alert,
@@ -104,20 +105,20 @@ export default function App() {
     }
   };
 
-  const renderRecommendation = (rec: Recommendation, index: number) => (
-    <View key={rec.gameId} style={styles.recommendationCard}>
+  const renderRecommendation = useCallback(({ item, index }: { item: Recommendation; index: number }) => (
+    <View style={styles.recommendationCard}>
       <View style={styles.cardHeader}>
-        <Text style={styles.gameTitle}>#{index + 1} {rec.game.name}</Text>
-        <Text style={styles.gamePrice}>${rec.game.price}</Text>
+        <Text style={styles.gameTitle}>#{index + 1} {item.game.name}</Text>
+        <Text style={styles.gamePrice}>${item.game.price}</Text>
       </View>
 
       <View style={styles.evContainer}>
         <Text style={styles.evLabel}>Expected Value:</Text>
         <Text style={[
           styles.evValue,
-          { color: rec.ev.adjustedEV > 0 ? '#00FF7F' : '#FF4500' }
+          { color: item.ev.adjustedEV > 0 ? '#00FF7F' : '#FF4500' }
         ]}>
-          {rec.ev.adjustedEV > 0 ? '+' : ''}${rec.ev.adjustedEV.toFixed(2)}
+          {item.ev.adjustedEV > 0 ? '+' : ''}${item.ev.adjustedEV.toFixed(2)}
         </Text>
       </View>
 
@@ -125,29 +126,29 @@ export default function App() {
         <View style={styles.metric}>
           <Text style={styles.metricLabel}>Confidence</Text>
           <Text style={styles.metricValue}>
-            {(rec.ev.confidence * 100).toFixed(0)}%
+            {(item.ev.confidence * 100).toFixed(0)}%
           </Text>
         </View>
         <View style={styles.metric}>
           <Text style={styles.metricLabel}>Hotness</Text>
           <Text style={styles.metricValue}>
-            {rec.ev.hotness > 0.7 ? '🔥' : rec.ev.hotness > 0.4 ? '🌡️' : '❄️'}
+            {item.ev.hotness > 0.7 ? '🔥' : item.ev.hotness > 0.4 ? '🌡️' : '❄️'}
           </Text>
         </View>
         <View style={styles.metric}>
           <Text style={styles.metricLabel}>Odds</Text>
-          <Text style={styles.metricValue}>{rec.game.overall_odds}</Text>
+          <Text style={styles.metricValue}>{item.game.overall_odds}</Text>
         </View>
       </View>
 
       <View style={styles.reasonsContainer}>
         <Text style={styles.reasonsTitle}>Why this game:</Text>
-        {rec.reasons.slice(0, 3).map((reason, idx) => (
+        {item.reasons.slice(0, 3).map((reason, idx) => (
           <Text key={idx} style={styles.reason}>• {reason}</Text>
         ))}
       </View>
     </View>
-  );
+  ), []);
 
   const renderAgeGate = () => (
     <View style={styles.ageGateContainer}>
@@ -160,7 +161,13 @@ export default function App() {
         ))}
       </View>
 
-      <TouchableOpacity style={styles.verifyButton} onPress={handleAgeVerification}>
+      <TouchableOpacity
+        style={styles.verifyButton}
+        onPress={handleAgeVerification}
+        accessibilityLabel="Verify your age"
+        accessibilityHint="Opens age verification prompt. You must be 18 or older to use this app"
+        accessibilityRole="button"
+      >
         <Text style={styles.verifyButtonText}>Verify Age (18+)</Text>
       </TouchableOpacity>
 
@@ -194,30 +201,44 @@ export default function App() {
         style={[styles.recommendButton, loadingRecommendations && styles.disabledButton]}
         onPress={getRecommendations}
         disabled={loadingRecommendations}
+        accessibilityLabel="Get lottery recommendations"
+        accessibilityHint="Fetches personalized scratch-off recommendations based on your budget"
+        accessibilityRole="button"
+        accessibilityState={{ disabled: loadingRecommendations }}
       >
         {loadingRecommendations ? (
-          <ActivityIndicator color="#FFFFFF" />
+          <ActivityIndicator color="#FFFFFF" accessibilityLabel="Loading recommendations" />
         ) : (
           <Text style={styles.recommendButtonText}>Get Smart Recommendations</Text>
         )}
       </TouchableOpacity>
 
       {recommendations.length > 0 && (
-        <ScrollView style={styles.recommendationsContainer}>
-          <Text style={styles.recommendationsTitle}>
-            🎲 Top Recommendations for ${budget}
-          </Text>
-          {recommendations.map(renderRecommendation)}
-
-          <View style={styles.footerContainer}>
-            <Text style={styles.footerText}>
-              💡 Based on Expected Value, confidence, and prize availability
+        <FlatList
+          data={recommendations}
+          renderItem={renderRecommendation}
+          keyExtractor={(item) => item.gameId}
+          style={styles.recommendationsContainer}
+          removeClippedSubviews={true}
+          maxToRenderPerBatch={5}
+          windowSize={5}
+          initialNumToRender={3}
+          ListHeaderComponent={
+            <Text style={styles.recommendationsTitle}>
+              🎲 Top Recommendations for ${budget}
             </Text>
-            <Text style={styles.footerDisclaimer}>
-              Lottery games involve risk. Play responsibly within your budget.
-            </Text>
-          </View>
-        </ScrollView>
+          }
+          ListFooterComponent={
+            <View style={styles.footerContainer}>
+              <Text style={styles.footerText}>
+                💡 Based on Expected Value, confidence, and prize availability
+              </Text>
+              <Text style={styles.footerDisclaimer}>
+                Lottery games involve risk. Play responsibly within your budget.
+              </Text>
+            </View>
+          }
+        />
       )}
     </View>
   );

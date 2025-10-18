@@ -1,5 +1,5 @@
 // Age Verification Service - Minnesota compliance requirement (18+)
-import AsyncStorage from 'react-native-async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export interface AgeVerificationResult {
   isVerified: boolean;

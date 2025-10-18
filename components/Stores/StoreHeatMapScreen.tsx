@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   ScrollView,
+  FlatList,
   TouchableOpacity,
   ActivityIndicator,
   Alert,
@@ -171,15 +172,109 @@ export default function StoreHeatMapScreen() {
     // );
   };
 
+  const renderStoreCard = useCallback(({ item: store, index }: { item: HotStore; index: number }) => (
+    <TouchableOpacity
+      style={styles.storeCard}
+      onPress={() => openNavigation(store)}
+    >
+      {/* Rank Badge */}
+      {index < 3 && (
+        <View style={[styles.rankBadge, index === 0 && styles.rank1Badge]}>
+          <Text style={styles.rankText}>#{index + 1}</Text>
+        </View>
+      )}
+
+      {/* Store Header */}
+      <View style={styles.storeHeader}>
+        <View style={styles.storeInfo}>
+          <Text style={styles.storeName}>{store.name}</Text>
+          <Text style={styles.storeAddress}>
+            {store.address}, {store.city}
+          </Text>
+          {store.distance && (
+            <Text style={styles.storeDistance}>📍 {store.distance.toFixed(1)} mi away</Text>
+          )}
+        </View>
+
+        {/* Heat Score */}
+        <View style={styles.heatScoreContainer}>
+          <Text style={styles.heatEmoji}>{getHeatEmoji(store.heatScore.score)}</Text>
+          <Text style={[styles.heatScore, { color: getHeatColor(store.heatScore.score) }]}>
+            {store.heatScore.score}
+          </Text>
+        </View>
+      </View>
+
+      {/* Store Stats */}
+      <View style={styles.statsRow}>
+        <View style={styles.statItem}>
+          <Text style={styles.statValue}>{store.heatScore.totalWins}</Text>
+          <Text style={styles.statLabel}>Total Wins</Text>
+        </View>
+        <View style={styles.statItem}>
+          <Text style={styles.statValue}>${(store.heatScore.totalPayout / 1000).toFixed(0)}k</Text>
+          <Text style={styles.statLabel}>Total Payout</Text>
+        </View>
+        <View style={styles.statItem}>
+          <Text style={styles.statValue}>{store.heatScore.recentWins}</Text>
+          <Text style={styles.statLabel}>Recent (30d)</Text>
+        </View>
+        {store.rating > 0 && (
+          <View style={styles.statItem}>
+            <Text style={styles.statValue}>⭐ {store.rating}</Text>
+            <Text style={styles.statLabel}>Rating</Text>
+          </View>
+        )}
+      </View>
+
+      {/* Hot Games */}
+      {store.heatScore.hotGames.length > 0 && (
+        <View style={styles.hotGamesContainer}>
+          <Text style={styles.hotGamesLabel}>🔥 Hot Games:</Text>
+          <Text style={styles.hotGamesText}>
+            {store.heatScore.hotGames.join(', ')}
+          </Text>
+        </View>
+      )}
+
+      {/* Recent Win */}
+      {store.recentWins.length > 0 && (
+        <View style={styles.recentWinContainer}>
+          <Text style={styles.recentWinLabel}>Latest Win:</Text>
+          <Text style={styles.recentWinText}>
+            ${store.recentWins[0].prizeAmount.toLocaleString()} on {store.recentWins[0].gameName}
+          </Text>
+          <Text style={styles.recentWinDate}>
+            {new Date(store.recentWins[0].winDate).toLocaleDateString()}
+          </Text>
+        </View>
+      )}
+
+      {/* Navigate Button */}
+      <TouchableOpacity
+        style={styles.navigateButton}
+        onPress={() => openNavigation(store)}
+      >
+        <Text style={styles.navigateButtonText}>🧭 Navigate Here</Text>
+      </TouchableOpacity>
+    </TouchableOpacity>
+  ), [openNavigation, getHeatEmoji, getHeatColor]);
+
   const renderListView = () => {
     return (
-      <ScrollView
+      <FlatList
+        data={hotStores}
+        renderItem={renderStoreCard}
+        keyExtractor={(item) => item.id}
         style={styles.listContainer}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#00FFFF" />
         }
-      >
-        {hotStores.length === 0 ? (
+        removeClippedSubviews={true}
+        maxToRenderPerBatch={8}
+        windowSize={5}
+        initialNumToRender={5}
+        ListEmptyComponent={
           <View style={styles.emptyState}>
             <Text style={styles.emptyIcon}>🗺️</Text>
             <Text style={styles.emptyTitle}>No Stores Found</Text>
@@ -187,97 +282,8 @@ export default function StoreHeatMapScreen() {
               Adjust your filters or increase search radius
             </Text>
           </View>
-        ) : (
-          hotStores.map((store, index) => (
-            <TouchableOpacity
-              key={store.id}
-              style={styles.storeCard}
-              onPress={() => openNavigation(store)}
-            >
-              {/* Rank Badge */}
-              {index < 3 && (
-                <View style={[styles.rankBadge, index === 0 && styles.rank1Badge]}>
-                  <Text style={styles.rankText}>#{index + 1}</Text>
-                </View>
-              )}
-
-              {/* Store Header */}
-              <View style={styles.storeHeader}>
-                <View style={styles.storeInfo}>
-                  <Text style={styles.storeName}>{store.name}</Text>
-                  <Text style={styles.storeAddress}>
-                    {store.address}, {store.city}
-                  </Text>
-                  {store.distance && (
-                    <Text style={styles.storeDistance}>📍 {store.distance.toFixed(1)} mi away</Text>
-                  )}
-                </View>
-
-                {/* Heat Score */}
-                <View style={styles.heatScoreContainer}>
-                  <Text style={styles.heatEmoji}>{getHeatEmoji(store.heatScore.score)}</Text>
-                  <Text style={[styles.heatScore, { color: getHeatColor(store.heatScore.score) }]}>
-                    {store.heatScore.score}
-                  </Text>
-                </View>
-              </View>
-
-              {/* Store Stats */}
-              <View style={styles.statsRow}>
-                <View style={styles.statItem}>
-                  <Text style={styles.statValue}>{store.heatScore.totalWins}</Text>
-                  <Text style={styles.statLabel}>Total Wins</Text>
-                </View>
-                <View style={styles.statItem}>
-                  <Text style={styles.statValue}>${(store.heatScore.totalPayout / 1000).toFixed(0)}k</Text>
-                  <Text style={styles.statLabel}>Total Payout</Text>
-                </View>
-                <View style={styles.statItem}>
-                  <Text style={styles.statValue}>{store.heatScore.recentWins}</Text>
-                  <Text style={styles.statLabel}>Recent (30d)</Text>
-                </View>
-                {store.rating > 0 && (
-                  <View style={styles.statItem}>
-                    <Text style={styles.statValue}>⭐ {store.rating}</Text>
-                    <Text style={styles.statLabel}>Rating</Text>
-                  </View>
-                )}
-              </View>
-
-              {/* Hot Games */}
-              {store.heatScore.hotGames.length > 0 && (
-                <View style={styles.hotGamesContainer}>
-                  <Text style={styles.hotGamesLabel}>🔥 Hot Games:</Text>
-                  <Text style={styles.hotGamesText}>
-                    {store.heatScore.hotGames.join(', ')}
-                  </Text>
-                </View>
-              )}
-
-              {/* Recent Win */}
-              {store.recentWins.length > 0 && (
-                <View style={styles.recentWinContainer}>
-                  <Text style={styles.recentWinLabel}>Latest Win:</Text>
-                  <Text style={styles.recentWinText}>
-                    ${store.recentWins[0].prizeAmount.toLocaleString()} on {store.recentWins[0].gameName}
-                  </Text>
-                  <Text style={styles.recentWinDate}>
-                    {new Date(store.recentWins[0].winDate).toLocaleDateString()}
-                  </Text>
-                </View>
-              )}
-
-              {/* Navigate Button */}
-              <TouchableOpacity
-                style={styles.navigateButton}
-                onPress={() => openNavigation(store)}
-              >
-                <Text style={styles.navigateButtonText}>🧭 Navigate Here</Text>
-              </TouchableOpacity>
-            </TouchableOpacity>
-          ))
-        )}
-      </ScrollView>
+        }
+      />
     );
   };
 

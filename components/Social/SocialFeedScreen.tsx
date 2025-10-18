@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   ScrollView,
+  FlatList,
   TouchableOpacity,
   RefreshControl,
   ActivityIndicator
@@ -56,152 +57,181 @@ export default function SocialFeedScreen() {
     loadData();
   };
 
-  const renderWinFeed = () => (
-    <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#00FFFF" />}>
-      {winFeed.map((post) => (
-        <View key={post.id} style={styles.postCard}>
-          <View style={styles.postHeader}>
-            <View style={styles.userInfo}>
-              <View style={styles.avatar}>
-                <Text style={styles.avatarText}>{post.username[0].toUpperCase()}</Text>
-              </View>
-              <View>
-                <Text style={styles.username}>{post.username}</Text>
-                <Text style={styles.timestamp}>
-                  {new Date(post.timestamp).toLocaleString()}
-                </Text>
-              </View>
-            </View>
-            {post.mood && <Text style={styles.mood}>{post.mood}</Text>}
+  const renderWinPost = useCallback(({ item: post }: { item: WinPost }) => (
+    <View style={styles.postCard}>
+      <View style={styles.postHeader}>
+        <View style={styles.userInfo}>
+          <View style={styles.avatar}>
+            <Text style={styles.avatarText}>{post.username[0].toUpperCase()}</Text>
           </View>
-
-          <View style={styles.winContent}>
-            <Text style={styles.winAmount}>${post.prizeAmount.toLocaleString()}</Text>
-            <Text style={styles.gameName}>{post.gameName}</Text>
-            {post.storeName && (
-              <Text style={styles.storeName}>📍 {post.storeName}</Text>
-            )}
-          </View>
-
-          <View style={styles.postActions}>
-            <TouchableOpacity
-              style={styles.actionButton}
-              onPress={() => handleLike(post.id)}
-            >
-              <Text style={styles.actionIcon}>❤️</Text>
-              <Text style={styles.actionText}>{post.likes}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.actionButton}>
-              <Text style={styles.actionIcon}>💬</Text>
-              <Text style={styles.actionText}>{post.comments.length}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.actionButton}>
-              <Text style={styles.actionIcon}>🔗</Text>
-              <Text style={styles.actionText}>Share</Text>
-            </TouchableOpacity>
+          <View>
+            <Text style={styles.username}>{post.username}</Text>
+            <Text style={styles.timestamp}>
+              {new Date(post.timestamp).toLocaleString()}
+            </Text>
           </View>
         </View>
-      ))}
-    </ScrollView>
+        {post.mood && <Text style={styles.mood}>{post.mood}</Text>}
+      </View>
+
+      <View style={styles.winContent}>
+        <Text style={styles.winAmount}>${post.prizeAmount.toLocaleString()}</Text>
+        <Text style={styles.gameName}>{post.gameName}</Text>
+        {post.storeName && (
+          <Text style={styles.storeName}>📍 {post.storeName}</Text>
+        )}
+      </View>
+
+      <View style={styles.postActions}>
+        <TouchableOpacity
+          style={styles.actionButton}
+          onPress={() => handleLike(post.id)}
+        >
+          <Text style={styles.actionIcon}>❤️</Text>
+          <Text style={styles.actionText}>{post.likes}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.actionButton}>
+          <Text style={styles.actionIcon}>💬</Text>
+          <Text style={styles.actionText}>{post.comments.length}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.actionButton}>
+          <Text style={styles.actionIcon}>🔗</Text>
+          <Text style={styles.actionText}>Share</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  ), [handleLike]);
+
+  const renderWinFeed = () => (
+    <FlatList
+      data={winFeed}
+      renderItem={renderWinPost}
+      keyExtractor={(item) => item.id}
+      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#00FFFF" />}
+      removeClippedSubviews={true}
+      maxToRenderPerBatch={10}
+      windowSize={5}
+      initialNumToRender={5}
+    />
   );
 
-  const renderLeaderboard = () => (
-    <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#00FFFF" />}>
-      <View style={styles.leaderboardHeader}>
-        <Text style={styles.leaderboardTitle}>🏆 Top Winners This Week</Text>
-        <Text style={styles.leaderboardSubtitle}>
-          Your Rank: #{leaderboard?.userRank} of {leaderboard?.totalParticipants}
+  const renderLeaderboardEntry = useCallback(({ item: entry }: { item: any }) => (
+    <View style={styles.leaderboardCard}>
+      <View style={styles.rankContainer}>
+        {entry.badge ? (
+          <Text style={styles.rankBadge}>{entry.badge}</Text>
+        ) : (
+          <Text style={styles.rankNumber}>#{entry.rank}</Text>
+        )}
+      </View>
+
+      <View style={styles.leaderboardInfo}>
+        <Text style={styles.leaderboardUsername}>{entry.displayName}</Text>
+        <Text style={styles.leaderboardScore}>
+          ${entry.score.toLocaleString()}
         </Text>
       </View>
 
-      {leaderboard?.entries.map((entry) => (
-        <View key={entry.userId} style={styles.leaderboardCard}>
-          <View style={styles.rankContainer}>
-            {entry.badge ? (
-              <Text style={styles.rankBadge}>{entry.badge}</Text>
-            ) : (
-              <Text style={styles.rankNumber}>#{entry.rank}</Text>
-            )}
-          </View>
-
-          <View style={styles.leaderboardInfo}>
-            <Text style={styles.leaderboardUsername}>{entry.displayName}</Text>
-            <Text style={styles.leaderboardScore}>
-              ${entry.score.toLocaleString()}
-            </Text>
-          </View>
-
-          {entry.change !== 0 && (
-            <View style={styles.changeContainer}>
-              <Text
-                style={[
-                  styles.changeText,
-                  { color: entry.change > 0 ? '#00FF7F' : '#FF4500' }
-                ]}
-              >
-                {entry.change > 0 ? '↑' : '↓'}{Math.abs(entry.change)}
-              </Text>
-            </View>
-          )}
+      {entry.change !== 0 && (
+        <View style={styles.changeContainer}>
+          <Text
+            style={[
+              styles.changeText,
+              { color: entry.change > 0 ? '#00FF7F' : '#FF4500' }
+            ]}
+          >
+            {entry.change > 0 ? '↑' : '↓'}{Math.abs(entry.change)}
+          </Text>
         </View>
-      ))}
-    </ScrollView>
+      )}
+    </View>
+  ), []);
+
+  const renderLeaderboard = () => (
+    <FlatList
+      data={leaderboard?.entries || []}
+      renderItem={renderLeaderboardEntry}
+      keyExtractor={(item) => item.userId}
+      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#00FFFF" />}
+      removeClippedSubviews={true}
+      maxToRenderPerBatch={10}
+      windowSize={5}
+      initialNumToRender={10}
+      ListHeaderComponent={
+        <View style={styles.leaderboardHeader}>
+          <Text style={styles.leaderboardTitle}>🏆 Top Winners This Week</Text>
+          <Text style={styles.leaderboardSubtitle}>
+            Your Rank: #{leaderboard?.userRank} of {leaderboard?.totalParticipants}
+          </Text>
+        </View>
+      }
+    />
   );
 
-  const renderChallenges = () => (
-    <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#00FFFF" />}>
-      <View style={styles.challengesHeader}>
-        <Text style={styles.challengesTitle}>⚡ Active Challenges</Text>
-        <Text style={styles.challengesSubtitle}>Complete to earn rewards!</Text>
+  const renderChallengeItem = useCallback(({ item: challenge }: { item: Challenge }) => (
+    <View style={styles.challengeCard}>
+      <View style={styles.challengeHeader}>
+        <Text style={styles.challengeIcon}>{challenge.icon}</Text>
+        <View style={styles.challengeInfo}>
+          <Text style={styles.challengeTitle}>{challenge.title}</Text>
+          <Text style={styles.challengeDescription}>{challenge.description}</Text>
+        </View>
       </View>
 
-      {challenges.map((challenge) => (
-        <View key={challenge.id} style={styles.challengeCard}>
-          <View style={styles.challengeHeader}>
-            <Text style={styles.challengeIcon}>{challenge.icon}</Text>
-            <View style={styles.challengeInfo}>
-              <Text style={styles.challengeTitle}>{challenge.title}</Text>
-              <Text style={styles.challengeDescription}>{challenge.description}</Text>
+      {challenge.userProgress && (
+        <>
+          <View style={styles.progressContainer}>
+            <View style={styles.progressBar}>
+              <View
+                style={[
+                  styles.progressFill,
+                  { width: `${challenge.userProgress.percentage}%` }
+                ]}
+              />
             </View>
+            <Text style={styles.progressText}>
+              {challenge.userProgress.current} / {challenge.goal.target}
+            </Text>
           </View>
 
-          {challenge.userProgress && (
-            <>
-              <View style={styles.progressContainer}>
-                <View style={styles.progressBar}>
-                  <View
-                    style={[
-                      styles.progressFill,
-                      { width: `${challenge.userProgress.percentage}%` }
-                    ]}
-                  />
-                </View>
-                <Text style={styles.progressText}>
-                  {challenge.userProgress.current} / {challenge.goal.target}
-                </Text>
-              </View>
-
-              {challenge.userProgress.rank && (
-                <Text style={styles.challengeRank}>
-                  Your Rank: #{challenge.userProgress.rank}
-                </Text>
-              )}
-            </>
+          {challenge.userProgress.rank && (
+            <Text style={styles.challengeRank}>
+              Your Rank: #{challenge.userProgress.rank}
+            </Text>
           )}
+        </>
+      )}
 
-          <View style={styles.challengeFooter}>
-            <Text style={styles.participants}>
-              👥 {challenge.participants.toLocaleString()} participants
-            </Text>
-            <Text style={styles.reward}>
-              🎁 {challenge.reward.type === 'premium_days'
-                ? `${challenge.reward.value} days Premium`
-                : challenge.reward.type}
-            </Text>
-          </View>
+      <View style={styles.challengeFooter}>
+        <Text style={styles.participants}>
+          👥 {challenge.participants.toLocaleString()} participants
+        </Text>
+        <Text style={styles.reward}>
+          🎁 {challenge.reward.type === 'premium_days'
+            ? `${challenge.reward.value} days Premium`
+            : challenge.reward.type}
+        </Text>
+      </View>
+    </View>
+  ), []);
+
+  const renderChallenges = () => (
+    <FlatList
+      data={challenges}
+      renderItem={renderChallengeItem}
+      keyExtractor={(item) => item.id}
+      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#00FFFF" />}
+      removeClippedSubviews={true}
+      maxToRenderPerBatch={5}
+      windowSize={3}
+      initialNumToRender={3}
+      ListHeaderComponent={
+        <View style={styles.challengesHeader}>
+          <Text style={styles.challengesTitle}>⚡ Active Challenges</Text>
+          <Text style={styles.challengesSubtitle}>Complete to earn rewards!</Text>
         </View>
-      ))}
-    </ScrollView>
+      }
+    />
   );
 
   if (loading) {

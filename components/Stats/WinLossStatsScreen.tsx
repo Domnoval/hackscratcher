@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   ScrollView,
+  FlatList,
   TouchableOpacity,
   ActivityIndicator,
   RefreshControl
@@ -235,29 +236,35 @@ export default function WinLossStatsScreen() {
       {recentScans.length > 0 && (
         <View style={styles.recentScansSection}>
           <Text style={styles.sectionTitle}>Recent Scans</Text>
-          {recentScans.map((scan) => (
-            <View
-              key={scan.id}
-              style={[styles.scanItem, scan.isWinner && styles.winnerScanItem]}
-            >
-              <View style={styles.scanHeader}>
-                <Text style={styles.scanGame}>{scan.gameName}</Text>
-                <Text style={styles.scanDate}>
-                  {new Date(scan.scannedDate).toLocaleDateString()}
-                </Text>
-              </View>
-              <View style={styles.scanDetails}>
-                <Text style={styles.scanPrice}>${scan.price}</Text>
-                {scan.isWinner ? (
-                  <Text style={styles.scanWin}>
-                    Won: ${scan.prizeAmount?.toLocaleString()} 🎉
+          <FlatList
+            data={recentScans}
+            keyExtractor={(item) => item.id}
+            scrollEnabled={false}
+            nestedScrollEnabled={false}
+            removeClippedSubviews={true}
+            renderItem={({ item: scan }) => (
+              <View
+                style={[styles.scanItem, scan.isWinner && styles.winnerScanItem]}
+              >
+                <View style={styles.scanHeader}>
+                  <Text style={styles.scanGame}>{scan.gameName}</Text>
+                  <Text style={styles.scanDate}>
+                    {new Date(scan.scannedDate).toLocaleDateString()}
                   </Text>
-                ) : (
-                  <Text style={styles.scanLoss}>Not a winner</Text>
-                )}
+                </View>
+                <View style={styles.scanDetails}>
+                  <Text style={styles.scanPrice}>${scan.price}</Text>
+                  {scan.isWinner ? (
+                    <Text style={styles.scanWin}>
+                      Won: ${scan.prizeAmount?.toLocaleString()} 🎉
+                    </Text>
+                  ) : (
+                    <Text style={styles.scanLoss}>Not a winner</Text>
+                  )}
+                </View>
               </View>
-            </View>
-          ))}
+            )}
+          />
         </View>
       )}
 

@@ -29,8 +29,10 @@ export default function SyncStatusBanner({ onSyncComplete }: SyncStatusBannerPro
 
   useEffect(() => {
     // Pulse animation for sync button when sync is needed
+    let animation: Animated.CompositeAnimation | null = null;
+
     if (lastSyncTime && needsSync()) {
-      Animated.loop(
+      animation = Animated.loop(
         Animated.sequence([
           Animated.timing(pulseAnim, {
             toValue: 1.2,
@@ -43,8 +45,17 @@ export default function SyncStatusBanner({ onSyncComplete }: SyncStatusBannerPro
             useNativeDriver: true,
           }),
         ])
-      ).start();
+      );
+      animation.start();
     }
+
+    // CRITICAL: Cleanup animation when component unmounts or lastSyncTime changes
+    return () => {
+      if (animation) {
+        animation.stop();
+      }
+      pulseAnim.setValue(1); // Reset to default value
+    };
   }, [lastSyncTime]);
 
   const checkLastSync = async () => {

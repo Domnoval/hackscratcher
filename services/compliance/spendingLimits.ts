@@ -1,5 +1,5 @@
 // Spending Limits Service - Responsible gambling features
-import AsyncStorage from 'react-native-async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export interface SpendingLimits {
   daily: number;

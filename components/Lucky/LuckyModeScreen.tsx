@@ -20,7 +20,29 @@ export default function LuckyModeScreen() {
 
   useEffect(() => {
     loadLuckyData();
-    startGlowAnimation();
+
+    // Start animation with proper cleanup
+    const animation = Animated.loop(
+      Animated.sequence([
+        Animated.timing(glowAnim, {
+          toValue: 1.3,
+          duration: 2000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(glowAnim, {
+          toValue: 1,
+          duration: 2000,
+          useNativeDriver: true,
+        }),
+      ])
+    );
+    animation.start();
+
+    // CRITICAL: Cleanup animation when component unmounts
+    return () => {
+      animation.stop();
+      glowAnim.setValue(1); // Reset to default value
+    };
   }, []);
 
   const loadLuckyData = async () => {
@@ -44,23 +66,6 @@ export default function LuckyModeScreen() {
     } finally {
       setLoading(false);
     }
-  };
-
-  const startGlowAnimation = () => {
-    Animated.loop(
-      Animated.sequence([
-        Animated.timing(glowAnim, {
-          toValue: 1.3,
-          duration: 2000,
-          useNativeDriver: true,
-        }),
-        Animated.timing(glowAnim, {
-          toValue: 1,
-          duration: 2000,
-          useNativeDriver: true,
-        }),
-      ])
-    ).start();
   };
 
   const handleSetupProfile = () => {
