@@ -9,7 +9,8 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
-  ActivityIndicator
+  ActivityIndicator,
+  Platform
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
@@ -40,42 +41,65 @@ export default function App() {
     }
   };
 
-  const handleAgeVerification = () => {
-    Alert.prompt(
-      'Age Verification Required',
-      'Enter your birth year (you must be 18 or older):',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Verify',
-          onPress: async (birthYear) => {
-            if (!birthYear) return;
+  const handleAgeVerification = async () => {
+    // Web-compatible version using browser's native prompt
+    if (Platform.OS === 'web') {
+      const birthYear = window.prompt('Enter your birth year (you must be 18 or older):');
+      if (!birthYear) return;
 
-            const year = parseInt(birthYear);
-            if (isNaN(year) || year < 1900 || year > new Date().getFullYear()) {
-              Alert.alert('Error', 'Please enter a valid birth year');
-              return;
-            }
+      const year = parseInt(birthYear);
+      if (isNaN(year) || year < 1900 || year > new Date().getFullYear()) {
+        window.alert('Error: Please enter a valid birth year');
+        return;
+      }
 
-            const birthDate = new Date(year, 0, 1);
-            const result = await AgeVerificationService.verifyAge(birthDate);
+      const birthDate = new Date(year, 0, 1);
+      const result = await AgeVerificationService.verifyAge(birthDate);
 
-            if (result.isVerified) {
-              setIsVerified(true);
-              Alert.alert('Welcome to Scratch Oracle!', 'Age verification successful');
-            } else {
-              Alert.alert(
-                'Age Verification Failed',
-                'You must be 18 or older to use this app'
-              );
+      if (result.isVerified) {
+        setIsVerified(true);
+        window.alert('Welcome to Scratch Oracle! Age verification successful.');
+      } else {
+        window.alert('Age Verification Failed: You must be 18 or older to use this app');
+      }
+    } else {
+      // Mobile version using Alert.prompt
+      Alert.prompt(
+        'Age Verification Required',
+        'Enter your birth year (you must be 18 or older):',
+        [
+          { text: 'Cancel', style: 'cancel' },
+          {
+            text: 'Verify',
+            onPress: async (birthYear) => {
+              if (!birthYear) return;
+
+              const year = parseInt(birthYear);
+              if (isNaN(year) || year < 1900 || year > new Date().getFullYear()) {
+                Alert.alert('Error', 'Please enter a valid birth year');
+                return;
+              }
+
+              const birthDate = new Date(year, 0, 1);
+              const result = await AgeVerificationService.verifyAge(birthDate);
+
+              if (result.isVerified) {
+                setIsVerified(true);
+                Alert.alert('Welcome to Scratch Oracle!', 'Age verification successful');
+              } else {
+                Alert.alert(
+                  'Age Verification Failed',
+                  'You must be 18 or older to use this app'
+                );
+              }
             }
           }
-        }
-      ],
-      'plain-text',
-      '',
-      'numeric'
-    );
+        ],
+        'plain-text',
+        '',
+        'numeric'
+      );
+    }
   };
 
   const getRecommendations = async () => {
