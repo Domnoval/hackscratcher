@@ -89,3 +89,8 @@ GoogleService-Info.plist
 
 # Sentry (if added later)
 .sentryclirc
+
+# Debug files
+mnlottery-page.html
+mnlottery-puppeteer-debug.html
+*-debug.html

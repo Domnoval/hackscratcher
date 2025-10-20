@@ -6,11 +6,22 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "scrape": "tsx scripts/scrape-mn-lottery.ts",
+    "debug-html": "tsx scripts/debug-html.ts",
+    "find-api": "tsx scripts/find-api-endpoint.ts",
+    "debug-api": "tsx scripts/debug-api-response.ts",
+    "train-model": "python scripts/train-model.py",
+    "generate-predictions": "python scripts/generate-predictions.py",
+    "ml-pipeline": "npm run train-model && npm run generate-predictions"
   },
   "dependencies": {
-    "@react-native-async-storage/async-storage": "^2.2.0",
+    "@react-native-async-storage/async-storage": "2.2.0",
+    "@react-native-community/netinfo": "^11.4.1",
     "@reduxjs/toolkit": "^2.9.0",
+    "@supabase/supabase-js": "^2.75.1",
+    "@tanstack/react-query": "^5.90.5",
+    "@tanstack/react-query-persist-client": "^5.90.7",
     "expo": "~54.0.13",
     "expo-background-fetch": "^14.0.7",
     "expo-barcode-scanner": "^13.0.1",
@@ -23,14 +34,21 @@
     "expo-status-bar": "~3.0.8",
     "expo-task-manager": "^14.0.7",
     "react": "19.1.0",
+    "react-dom": "19.1.0",
     "react-native": "0.81.4",
     "react-native-async-storage": "^0.0.1",
     "react-native-maps": "^1.26.17",
+    "react-native-url-polyfill": "^3.0.0",
     "react-native-web": "^0.21.2",
     "react-redux": "^9.2.0"
   },
   "devDependencies": {
+    "@types/node": "^24.8.1",
     "@types/react": "~19.1.0",
+    "cheerio": "^1.1.2",
+    "dotenv": "^17.2.3",
+    "puppeteer": "^24.25.0",
+    "tsx": "^4.20.6",
     "typescript": "~5.9.2"
   },
   "private": true

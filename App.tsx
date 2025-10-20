@@ -13,13 +13,16 @@ import {
   Platform
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import { QueryClientProvider } from '@tanstack/react-query';
 
 // Services
 import { AgeVerificationService } from './services/compliance/ageVerification';
 import { RecommendationEngine } from './services/recommendations/recommendationEngine';
+import { FeatureFlagService } from './services/config/featureFlags';
+import { queryClient } from './lib/queryClient';
 import { Recommendation } from './types/lottery';
 
-export default function App() {
+function AppContent() {
   const [isVerified, setIsVerified] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [budget, setBudget] = useState('20');
@@ -27,8 +30,27 @@ export default function App() {
   const [loadingRecommendations, setLoadingRecommendations] = useState(false);
 
   useEffect(() => {
-    checkAgeVerification();
+    initializeApp();
   }, []);
+
+  const initializeApp = async () => {
+    try {
+      // Initialize feature flags first
+      await FeatureFlagService.initialize();
+
+      // ENABLE REAL SUPABASE DATA WITH AI PREDICTIONS!
+      await FeatureFlagService.enableSupabase();
+
+      console.log('[App] Feature flags initialized:', FeatureFlagService.getStatusMessage());
+
+      // Then check age verification
+      await checkAgeVerification();
+    } catch (error) {
+      console.error('[App] Initialization failed:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const checkAgeVerification = async () => {
     try {
@@ -36,8 +58,6 @@ export default function App() {
       setIsVerified(status.isVerified && !status.requiresReverification);
     } catch (error) {
       console.error('Age verification check failed:', error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -285,6 +305,18 @@ export default function App() {
         {!isVerified ? renderAgeGate() : renderMainApp()}
       </ScrollView>
     </SafeAreaView>
+  );
+}
+
+/**
+ * Main App component wrapped with React Query provider
+ * Enables data caching and automatic refetching
+ */
+export default function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <AppContent />
+    </QueryClientProvider>
   );
 }
 

@@ -1,0 +1,10 @@
+# Ignore trained model files (they can be large)
+*.pkl
+*.h5
+*.pt
+*.pth
+*.onnx
+
+# Keep the directory structure
+!.gitignore
+!README.md

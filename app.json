@@ -34,11 +34,15 @@
         "INTERNET",
         "ACCESS_NETWORK_STATE",
         "READ_EXTERNAL_STORAGE",
-        "WRITE_EXTERNAL_STORAGE"
+        "WRITE_EXTERNAL_STORAGE",
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION"
       ],
       "config": {
         "googleMaps": {
-          "apiKey": "YOUR_GOOGLE_MAPS_API_KEY"
+          "apiKey": "AIzaSyD4rbfLFmbK34IyX3QoAQQiuDzFiTME1KM"
         }
       },
       "edgeToEdgeEnabled": true,
@@ -65,14 +69,17 @@
         {
           "icon": "./assets/notification-icon.png",
           "color": "#00FFFF",
-          "sounds": ["./assets/notification-sound.wav"]
+          "sounds": [
+            "./assets/notification-sound.wav"
+          ]
         }
       ]
     ],
     "extra": {
       "eas": {
-        "projectId": "YOUR_EAS_PROJECT_ID"
+        "projectId": "78e2e800-e081-4b43-86e0-2968fffec441"
       }
-    }
+    },
+    "owner": "mm444"
   }
 }
