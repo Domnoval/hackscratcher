@@ -185,13 +185,20 @@ async function upsertPrizeTiers(gameId: string, prizes: APIPrizeTier[]) {
 async function createSnapshot(gameId: string, game: APIGame) {
   const today = new Date().toISOString().split('T')[0];
 
+  // Extract remaining prizes the same way upsertGame does
+  const topPrize = game.prizeTable && game.prizeTable.length > 0
+    ? game.prizeTable.reduce((max, prize) => prize.prizeAmount > max.prizeAmount ? prize : max)
+    : null;
+
+  const remainingTopPrizes = topPrize?.remaining || topPrize?.remainingPrizes || null;
+
   const { error } = await supabase
     .from('historical_snapshots')
     .upsert(
       {
         game_id: gameId,
         snapshot_date: today,
-        remaining_top_prizes: game.remainingTopPrizes,
+        remaining_top_prizes: remainingTopPrizes,
         tickets_remaining_estimate: null,
         days_since_launch: null,
         top_prize_depletion_rate: null,
@@ -232,8 +239,17 @@ async function main() {
 
     for (const game of games) {
       try {
+        // Extract fields for logging (same way upsertGame does it)
+        const gameName = game.name || game.gameName || 'Unknown Game';
+        const gameNumber = String(game.gameId || game.gameNumber || '???');
+        const ticketPrice = game.retailPrice || game.price || game.ticketPrice || 0;
+
         const dbGame = await upsertGame(game);
-        await createSnapshot(dbGame.id, game);
+
+        // Only create snapshot if we have prize table data
+        if (game.prizeTable && game.prizeTable.length > 0) {
+          await createSnapshot(dbGame.id, game);
+        }
 
         // Also save prize tiers if available
         if (game.prizes && game.prizes.length > 0) {
@@ -242,11 +258,12 @@ async function main() {
 
         successCount++;
         console.log(
-          `✅ ${game.gameName} (#${game.gameNumber}) - $${game.ticketPrice} - ${game.remainingTopPrizes}/${game.totalTopPrizes} top prizes left`
+          `✅ ${gameName} (#${gameNumber}) - $${ticketPrice} - Saved to DB`
         );
       } catch (error) {
         errorCount++;
-        console.error(`❌ ${game.gameName}:`, error);
+        const errorGameName = game.name || game.gameName || 'Unknown';
+        console.error(`❌ ${errorGameName}:`, error);
       }
     }
 

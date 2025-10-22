@@ -22,9 +22,21 @@ import { FeatureFlagService } from './services/config/featureFlags';
 import { queryClient } from './lib/queryClient';
 import { Recommendation } from './types/lottery';
 
+// AI Components
+import { AIScoreBadge, ConfidenceIndicatorWithHeights, RecommendationChip } from './components/AI';
+
+// Tracking Components
+import { WinTracker } from './components/tracking';
+
+// State Selector
+import { StateSelector } from './components/common/StateSelector';
+
+type State = 'MN' | 'FL';
+
 function AppContent() {
   const [isVerified, setIsVerified] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedState, setSelectedState] = useState<State>('MN');
   const [budget, setBudget] = useState('20');
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
   const [loadingRecommendations, setLoadingRecommendations] = useState(false);
@@ -91,7 +103,7 @@ function AppContent() {
           { text: 'Cancel', style: 'cancel' },
           {
             text: 'Verify',
-            onPress: async (birthYear) => {
+            onPress: async (birthYear?: string) => {
               if (!birthYear) return;
 
               const year = parseInt(birthYear);
@@ -149,50 +161,53 @@ function AppContent() {
     }
   };
 
-  const renderRecommendation = useCallback(({ item, index }: { item: Recommendation; index: number }) => (
-    <View style={styles.recommendationCard}>
-      <View style={styles.cardHeader}>
-        <Text style={styles.gameTitle}>#{index + 1} {item.game.name}</Text>
-        <Text style={styles.gamePrice}>${item.game.price}</Text>
-      </View>
+  const renderRecommendation = useCallback(({ item, index }: { item: Recommendation; index: number }) => {
+    // Extract AI prediction data (will be null/undefined for mock data)
+    const aiScore = item.game.ai_score || item.score || 0;
+    const confidence = item.game.confidence || (item.ev.confidence * 100) || 0;
+    const recommendation = item.game.recommendation ||
+      (aiScore >= 80 ? 'strong_buy' : aiScore >= 60 ? 'buy' : aiScore >= 40 ? 'neutral' : 'avoid');
 
-      <View style={styles.evContainer}>
-        <Text style={styles.evLabel}>Expected Value:</Text>
-        <Text style={[
-          styles.evValue,
-          { color: item.ev.adjustedEV > 0 ? '#00FF7F' : '#FF4500' }
-        ]}>
-          {item.ev.adjustedEV > 0 ? '+' : ''}${item.ev.adjustedEV.toFixed(2)}
-        </Text>
-      </View>
+    return (
+      <View style={styles.recommendationCard}>
+        <View style={styles.cardHeader}>
+          <View style={styles.cardTitleRow}>
+            <Text style={styles.gameTitle}>#{index + 1} {item.game.name}</Text>
+            <Text style={styles.gamePrice}>${item.game.price}</Text>
+          </View>
 
-      <View style={styles.metricsContainer}>
-        <View style={styles.metric}>
-          <Text style={styles.metricLabel}>Confidence</Text>
-          <Text style={styles.metricValue}>
-            {(item.ev.confidence * 100).toFixed(0)}%
-          </Text>
+          {/* AI COMING SOON Badge */}
+          <View style={styles.comingSoonBadge}>
+            <Text style={styles.comingSoonText}>🤖 AI Predictions Coming Soon</Text>
+            <Text style={styles.comingSoonSubtext}>Collecting data to train model...</Text>
+          </View>
         </View>
-        <View style={styles.metric}>
-          <Text style={styles.metricLabel}>Hotness</Text>
-          <Text style={styles.metricValue}>
-            {item.ev.hotness > 0.7 ? '🔥' : item.ev.hotness > 0.4 ? '🌡️' : '❄️'}
-          </Text>
-        </View>
-        <View style={styles.metric}>
-          <Text style={styles.metricLabel}>Odds</Text>
-          <Text style={styles.metricValue}>{item.game.overall_odds}</Text>
-        </View>
-      </View>
 
-      <View style={styles.reasonsContainer}>
-        <Text style={styles.reasonsTitle}>Why this game:</Text>
-        {item.reasons.slice(0, 3).map((reason, idx) => (
-          <Text key={idx} style={styles.reason}>• {reason}</Text>
-        ))}
+        {/* Basic Game Info */}
+        <View style={styles.gameInfo}>
+          <View style={styles.infoRow}>
+            <Text style={styles.infoLabel}>Ticket Price:</Text>
+            <Text style={styles.infoValue}>${item.game.price}</Text>
+          </View>
+          <View style={styles.infoRow}>
+            <Text style={styles.infoLabel}>Overall Odds:</Text>
+            <Text style={styles.infoValue}>{item.game.overall_odds}</Text>
+          </View>
+          <View style={styles.infoRow}>
+            <Text style={styles.infoLabel}>Status:</Text>
+            <Text style={[styles.infoValue, { color: '#00FF7F' }]}>{item.game.status}</Text>
+          </View>
+        </View>
+
+        {/* Win Tracking - Help us improve! */}
+        <WinTracker
+          gameId={item.gameId}
+          gameName={item.game.name}
+          gamePrice={item.game.price}
+        />
       </View>
-    </View>
-  ), []);
+    );
+  }, []);
 
   const renderAgeGate = () => (
     <View style={styles.ageGateContainer}>
@@ -224,7 +239,12 @@ function AppContent() {
   const renderMainApp = () => (
     <View style={styles.mainContainer}>
       <Text style={styles.appTitle}>🎯 Scratch Oracle</Text>
-      <Text style={styles.appSubtitle}>Smart Minnesota Lottery Recommendations</Text>
+      <Text style={styles.appSubtitle}>Smart Lottery Recommendations</Text>
+
+      <StateSelector
+        selectedState={selectedState}
+        onStateChange={setSelectedState}
+      />
 
       <View style={styles.inputContainer}>
         <Text style={styles.inputLabel}>Your Budget:</Text>
@@ -470,10 +490,19 @@ const styles = StyleSheet.create({
     borderColor: '#2E2E3F',
   },
   cardHeader: {
+    marginBottom: 12,
+  },
+  cardTitleRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 12,
+    marginBottom: 8,
+  },
+  aiHeaderRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    gap: 8,
   },
   gameTitle: {
     color: '#E0E0E0',
@@ -555,6 +584,57 @@ const styles = StyleSheet.create({
     color: '#FF4500',
     fontSize: 12,
     textAlign: 'center',
+    fontWeight: '500',
+  },
+  aiTransparency: {
+    marginTop: 12,
+    paddingTop: 12,
+    borderTopWidth: 1,
+    borderTopColor: '#2E2E3F',
+  },
+  transparencyText: {
+    color: '#708090',
+    fontSize: 11,
+    fontStyle: 'italic',
+    textAlign: 'center',
+  },
+  comingSoonBadge: {
+    backgroundColor: 'rgba(0, 191, 255, 0.1)',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#00BFFF',
+    marginTop: 8,
+  },
+  comingSoonText: {
+    color: '#00BFFF',
+    fontSize: 13,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+  comingSoonSubtext: {
+    color: '#708090',
+    fontSize: 10,
+    textAlign: 'center',
+    marginTop: 2,
+  },
+  gameInfo: {
+    marginTop: 12,
+    gap: 8,
+  },
+  infoRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  infoLabel: {
+    color: '#708090',
+    fontSize: 13,
+  },
+  infoValue: {
+    color: '#E0E0E0',
+    fontSize: 13,
     fontWeight: '500',
   },
 });

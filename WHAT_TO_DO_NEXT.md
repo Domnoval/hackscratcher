@@ -547,10 +547,7 @@ CREATE POLICY "Allow all inserts on predictions" ON predictions
 - Month 1: $0-50
 - Month 3: $100-300
 - Month 6: $500-1,500
-- Month 12: $2,000-5,000/month
-
----
-
+- Month 12: $2,000-5,000/month2
 ## RESOURCES
 
 ### Documentation
