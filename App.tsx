@@ -144,7 +144,7 @@ function AppContent() {
     setLoadingRecommendations(true);
 
     try {
-      const recs = await RecommendationEngine.getRecommendations(budgetAmount);
+      const recs = await RecommendationEngine.getRecommendations(budgetAmount, undefined, 3, selectedState);
       setRecommendations(recs);
 
       if (recs.length === 0) {

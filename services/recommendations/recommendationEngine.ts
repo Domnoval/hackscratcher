@@ -1,6 +1,8 @@
 // Recommendation Engine - Smart lottery recommendations for Scratch Oracle
 import { LotteryGame, UserProfile, Recommendation } from '../../types/lottery';
 import { MinnesotaLotteryService } from '../lottery/minnesotaData';
+import { SupabaseLotteryService } from '../lottery/supabaseLotteryService';
+import { FeatureFlagService } from '../config/featureFlags';
 import { EVCalculator } from '../calculator/evCalculator';
 
 export class RecommendationEngine {
@@ -10,10 +12,25 @@ export class RecommendationEngine {
   static async getRecommendations(
     budget: number,
     userProfile?: UserProfile,
-    limit: number = 3
+    limit: number = 3,
+    state: string = 'MN'
   ): Promise<Recommendation[]> {
-    // Get all active games
-    const games = await MinnesotaLotteryService.getActiveGames();
+    // Get all active games (use Supabase if enabled, otherwise mock data)
+    const useSupabase = FeatureFlagService.useSupabase();
+    console.log(`[RecommendationEngine] Using ${useSupabase ? 'SUPABASE (real data)' : 'MOCK data'} for state: ${state}`);
+
+    let games = useSupabase
+      ? await SupabaseLotteryService.getActiveGames()
+      : await MinnesotaLotteryService.getActiveGames();
+
+    // Filter by state if using Supabase (has multi-state support)
+    if (useSupabase) {
+      games = games.filter(game => {
+        // Games from Supabase should have a state field
+        // For now, treat all games as MN since we haven't scraped FL yet
+        return true; // TODO: Add state field to LotteryGame type and filter
+      });
+    }
 
     // Filter games within budget
     const affordableGames = games.filter(game => game.price <= budget);
