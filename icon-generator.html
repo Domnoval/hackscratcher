@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scratch Oracle Icon Generator</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 40px;
+            background: #f0f0f0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        .instructions {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px auto;
+            max-width: 600px;
+            text-align: left;
+        }
+        #icon-container {
+            display: inline-block;
+            margin: 20px;
+        }
+        button {
+            background: #00FFFF;
+            color: #0A0A0F;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover {
+            background: #00DDDD;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎯 Scratch Oracle Icon Generator</h1>
+
+    <div class="instructions">
+        <h3>📋 Instructions:</h3>
+        <ol>
+            <li><strong>Right-click</strong> the icon below</li>
+            <li>Select <strong>"Save image as..."</strong></li>
+            <li>Save as <code>icon.png</code> in the <code>assets/</code> folder</li>
+            <li>Overwrite the existing icon.png</li>
+        </ol>
+        <p><strong>Note:</strong> This will generate a 512x512 PNG icon suitable for Android.</p>
+    </div>
+
+    <div id="icon-container">
+        <canvas id="icon-canvas" width="512" height="512"></canvas>
+    </div>
+
+    <br>
+    <button onclick="downloadIcon()">⬇️ Download Icon (512x512)</button>
+
+    <script>
+        function drawIcon() {
+            const canvas = document.getElementById('icon-canvas');
+            const ctx = canvas.getContext('2d');
+            const size = 512;
+
+            // Background gradient (dark blue to black)
+            const bgGradient = ctx.createLinearGradient(0, 0, size, size);
+            bgGradient.addColorStop(0, '#1A1A2E');
+            bgGradient.addColorStop(1, '#0A0A0F');
+            ctx.fillStyle = bgGradient;
+            ctx.fillRect(0, 0, size, size);
+
+            // Outer border (cyan glow)
+            ctx.strokeStyle = '#00FFFF';
+            ctx.lineWidth = 8;
+            ctx.beginPath();
+            ctx.arc(size/2, size/2, size/2 - 20, 0, Math.PI * 2);
+            ctx.stroke();
+
+            // Inner circle background
+            const innerGradient = ctx.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/2 - 40);
+            innerGradient.addColorStop(0, '#2E2E3F');
+            innerGradient.addColorStop(1, '#1A1A2E');
+            ctx.fillStyle = innerGradient;
+            ctx.beginPath();
+            ctx.arc(size/2, size/2, size/2 - 40, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Draw lottery ticket symbol
+            ctx.save();
+            ctx.translate(size/2, size/2);
+
+            // Ticket background
+            ctx.fillStyle = '#FFD700';
+            ctx.fillRect(-140, -100, 280, 200);
+
+            // Ticket border
+            ctx.strokeStyle = '#FFA500';
+            ctx.lineWidth = 6;
+            ctx.strokeRect(-140, -100, 280, 200);
+
+            // Scratch-off area
+            ctx.fillStyle = '#C0C0C0';
+            ctx.fillRect(-120, -50, 240, 80);
+
+            // Dollar sign
+            ctx.fillStyle = '#0A0A0F';
+            ctx.font = 'bold 120px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('$', 0, -5);
+
+            // Stars decoration
+            ctx.fillStyle = '#00FFFF';
+            ctx.font = 'bold 40px Arial';
+            ctx.fillText('★', -60, -80);
+            ctx.fillText('★', 60, -80);
+            ctx.fillText('★', -80, 80);
+            ctx.fillText('★', 80, 80);
+
+            ctx.restore();
+
+            // App name arc (top)
+            ctx.fillStyle = '#00FFFF';
+            ctx.font = 'bold 42px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('SCRATCH', size/2, 80);
+
+            // App name arc (bottom)
+            ctx.font = 'bold 42px Arial';
+            ctx.fillText('ORACLE', size/2, size - 60);
+        }
+
+        function downloadIcon() {
+            const canvas = document.getElementById('icon-canvas');
+            const link = document.createElement('a');
+            link.download = 'icon.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        // Draw the icon when page loads
+        drawIcon();
+    </script>
+</body>
+</html>

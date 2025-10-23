@@ -45,7 +45,7 @@ export function AboutScreen() {
 
         <TouchableOpacity
           style={styles.menuItem}
-          onPress={() => Linking.openURL('mailto:support@scratchoracle.app')}
+          onPress={() => Linking.openURL('mailto:scratchoracleapp@gmail.com')}
         >
           <Text style={styles.menuText}>Contact Support</Text>
           <Text style={styles.arrow}>›</Text>

@@ -71,7 +71,7 @@ export function PrivacyPolicy() {
         <Text style={styles.sectionTitle}>9. Contact Us</Text>
         <Text style={styles.paragraph}>
           For privacy concerns or data requests, contact us at:{'\n'}
-          support@scratchoracle.app
+          scratchoracleapp@gmail.com
         </Text>
 
         <Text style={styles.disclaimer}>

@@ -100,7 +100,7 @@ export function TermsOfService() {
         <Text style={styles.sectionTitle}>12. Contact</Text>
         <Text style={styles.paragraph}>
           Questions about these terms? Contact us at:{'\n'}
-          support@scratchoracle.app
+          scratchoracleapp@gmail.com
         </Text>
 
         <Text style={styles.disclaimer}>
