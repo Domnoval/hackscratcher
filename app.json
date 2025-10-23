@@ -63,13 +63,6 @@
         {
           "locationAlwaysAndWhenInUsePermission": "Allow Scratch Oracle to find hot lottery stores near you."
         }
-      ],
-      [
-        "expo-notifications",
-        {
-          "icon": "./assets/notification-icon.png",
-          "color": "#00FFFF"
-        }
       ]
     ],
     "extra": {
