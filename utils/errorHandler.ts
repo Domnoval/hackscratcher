@@ -165,7 +165,7 @@ export class NetworkMonitor {
     this.notifyListeners(true);
   };
 
-  private static handleOffline = (): void {
+  private static handleOffline = (): void => {
     console.log('[NetworkMonitor] Connection lost');
     this.isOnline = false;
     this.notifyListeners(false);

@@ -1,0 +1,16 @@
+# Ignore local android/ios folders (EAS builds from source)
+android/
+ios/
+
+# Ignore node_modules
+node_modules/
+
+# Ignore local build artifacts
+.expo/
+dist/
+
+# Ignore debug files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
