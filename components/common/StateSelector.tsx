@@ -35,17 +35,23 @@ export function StateSelector({ selectedState, onStateChange }: StateSelectorPro
             styles.button,
             styles.buttonRight,
             selectedState === 'FL' && styles.buttonActive,
+            styles.buttonDisabled,
           ]}
+          disabled={true}
           onPress={() => onStateChange('FL')}
         >
-          <Text
-            style={[
-              styles.buttonText,
-              selectedState === 'FL' && styles.buttonTextActive,
-            ]}
-          >
-            Florida
-          </Text>
+          <View style={styles.buttonContent}>
+            <Text
+              style={[
+                styles.buttonText,
+                selectedState === 'FL' && styles.buttonTextActive,
+                styles.buttonTextDisabled,
+              ]}
+            >
+              Florida
+            </Text>
+            <Text style={styles.comingSoonBadge}>Coming Soon</Text>
+          </View>
         </TouchableOpacity>
       </View>
     </View>
@@ -103,5 +109,21 @@ const styles = StyleSheet.create({
   },
   buttonTextActive: {
     color: '#0A0A0F',
+  },
+  buttonDisabled: {
+    opacity: 0.5,
+  },
+  buttonTextDisabled: {
+    color: '#4A4A5A',
+  },
+  buttonContent: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  comingSoonBadge: {
+    fontSize: 10,
+    color: '#FFD700',
+    marginTop: 2,
+    fontWeight: '600',
   },
 });

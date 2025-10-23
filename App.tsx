@@ -10,7 +10,8 @@ import {
   TouchableOpacity,
   Alert,
   ActivityIndicator,
-  Platform
+  Platform,
+  Modal
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { QueryClientProvider } from '@tanstack/react-query';
@@ -31,11 +32,21 @@ import { WinTracker } from './components/tracking';
 // State Selector
 import { StateSelector } from './components/common/StateSelector';
 
+// Legal Components
+import { AgeVerification } from './components/legal/AgeVerification';
+import { AboutScreen } from './components/screens/AboutScreen';
+
+// Error Handling
+import { NetworkMonitor, ErrorHandler } from './utils/errorHandler';
+
 type State = 'MN' | 'FL';
 
 function AppContent() {
   const [isVerified, setIsVerified] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [showAgeVerification, setShowAgeVerification] = useState(false);
+  const [showAbout, setShowAbout] = useState(false);
+  const [isOnline, setIsOnline] = useState(true);
   const [selectedState, setSelectedState] = useState<State>('MN');
   const [budget, setBudget] = useState('20');
   const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
@@ -43,6 +54,19 @@ function AppContent() {
 
   useEffect(() => {
     initializeApp();
+
+    // Initialize network monitoring
+    NetworkMonitor.initialize();
+    setIsOnline(NetworkMonitor.getStatus());
+
+    const unsubscribe = NetworkMonitor.subscribe((online) => {
+      setIsOnline(online);
+    });
+
+    return () => {
+      unsubscribe();
+      NetworkMonitor.cleanup();
+    };
   }, []);
 
   const initializeApp = async () => {
@@ -67,71 +91,38 @@ function AppContent() {
   const checkAgeVerification = async () => {
     try {
       const status = await AgeVerificationService.checkVerificationStatus();
-      setIsVerified(status.isVerified && !status.requiresReverification);
+      const verified = status.isVerified && !status.requiresReverification;
+      setIsVerified(verified);
+      setShowAgeVerification(!verified);
     } catch (error) {
       console.error('Age verification check failed:', error);
     }
   };
 
-  const handleAgeVerification = async () => {
-    // Web-compatible version using browser's native prompt
-    if (Platform.OS === 'web') {
-      const birthYear = window.prompt('Enter your birth year (you must be 18 or older):');
-      if (!birthYear) return;
+  const handleAgeConfirm = async () => {
+    try {
+      // Set a birth date that makes the user 18+ (e.g., 20 years ago)
+      const birthDate = new Date();
+      birthDate.setFullYear(birthDate.getFullYear() - 20);
 
-      const year = parseInt(birthYear);
-      if (isNaN(year) || year < 1900 || year > new Date().getFullYear()) {
-        window.alert('Error: Please enter a valid birth year');
-        return;
-      }
-
-      const birthDate = new Date(year, 0, 1);
       const result = await AgeVerificationService.verifyAge(birthDate);
 
       if (result.isVerified) {
         setIsVerified(true);
-        window.alert('Welcome to Scratch Oracle! Age verification successful.');
-      } else {
-        window.alert('Age Verification Failed: You must be 18 or older to use this app');
+        setShowAgeVerification(false);
       }
-    } else {
-      // Mobile version using Alert.prompt
-      Alert.prompt(
-        'Age Verification Required',
-        'Enter your birth year (you must be 18 or older):',
-        [
-          { text: 'Cancel', style: 'cancel' },
-          {
-            text: 'Verify',
-            onPress: async (birthYear?: string) => {
-              if (!birthYear) return;
-
-              const year = parseInt(birthYear);
-              if (isNaN(year) || year < 1900 || year > new Date().getFullYear()) {
-                Alert.alert('Error', 'Please enter a valid birth year');
-                return;
-              }
-
-              const birthDate = new Date(year, 0, 1);
-              const result = await AgeVerificationService.verifyAge(birthDate);
-
-              if (result.isVerified) {
-                setIsVerified(true);
-                Alert.alert('Welcome to Scratch Oracle!', 'Age verification successful');
-              } else {
-                Alert.alert(
-                  'Age Verification Failed',
-                  'You must be 18 or older to use this app'
-                );
-              }
-            }
-          }
-        ],
-        'plain-text',
-        '',
-        'numeric'
-      );
+    } catch (error) {
+      console.error('Age verification failed:', error);
+      Alert.alert('Error', 'Age verification failed. Please try again.');
     }
+  };
+
+  const handleAgeDecline = () => {
+    Alert.alert(
+      'Age Requirement',
+      'You must be 18 or older to use Scratch Oracle. For more information about responsible gaming, please visit the National Council on Problem Gambling at ncpgambling.org.',
+      [{ text: 'OK', onPress: () => setShowAgeVerification(true) }]
+    );
   };
 
   const getRecommendations = async () => {
@@ -141,10 +132,22 @@ function AppContent() {
       return;
     }
 
+    // Check network status first
+    if (!isOnline) {
+      Alert.alert(
+        'No Internet Connection',
+        'Please check your connection and try again.'
+      );
+      return;
+    }
+
     setLoadingRecommendations(true);
 
     try {
-      const recs = await RecommendationEngine.getRecommendations(budgetAmount, undefined, 3, selectedState);
+      const recs = await ErrorHandler.retry(
+        () => RecommendationEngine.getRecommendations(budgetAmount, undefined, 3, selectedState),
+        2 // Retry once if network fails
+      );
       setRecommendations(recs);
 
       if (recs.length === 0) {
@@ -155,7 +158,7 @@ function AppContent() {
       }
     } catch (error) {
       console.error('Failed to get recommendations:', error);
-      Alert.alert('Error', 'Failed to get recommendations. Please try again.');
+      ErrorHandler.handleNetworkError(error, 'Get recommendations');
     } finally {
       setLoadingRecommendations(false);
     }
@@ -209,37 +212,29 @@ function AppContent() {
     );
   }, []);
 
-  const renderAgeGate = () => (
-    <View style={styles.ageGateContainer}>
-      <Text style={styles.ageGateTitle}>🎯 Scratch Oracle</Text>
-      <Text style={styles.ageGateSubtitle}>Minnesota Lottery Assistant</Text>
-
-      <View style={styles.disclaimerContainer}>
-        {AgeVerificationService.getAgeGateDisclaimers().map((disclaimer, index) => (
-          <Text key={index} style={styles.disclaimer}>• {disclaimer}</Text>
-        ))}
-      </View>
-
-      <TouchableOpacity
-        style={styles.verifyButton}
-        onPress={handleAgeVerification}
-        accessibilityLabel="Verify your age"
-        accessibilityHint="Opens age verification prompt. You must be 18 or older to use this app"
-        accessibilityRole="button"
-      >
-        <Text style={styles.verifyButtonText}>Verify Age (18+)</Text>
-      </TouchableOpacity>
-
-      <Text style={styles.helpText}>
-        Problem gambling help: 1-800-333-HOPE
-      </Text>
-    </View>
-  );
-
   const renderMainApp = () => (
     <View style={styles.mainContainer}>
-      <Text style={styles.appTitle}>🎯 Scratch Oracle</Text>
-      <Text style={styles.appSubtitle}>Smart Lottery Recommendations</Text>
+      {/* Offline Indicator */}
+      {!isOnline && (
+        <View style={styles.offlineBanner}>
+          <Text style={styles.offlineText}>⚠️ No Internet Connection</Text>
+        </View>
+      )}
+
+      <View style={styles.headerContainer}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.appTitle}>🎯 Scratch Oracle</Text>
+          <Text style={styles.appSubtitle}>Smart Lottery Recommendations</Text>
+        </View>
+        <TouchableOpacity
+          style={styles.aboutButton}
+          onPress={() => setShowAbout(true)}
+          accessibilityLabel="About and Settings"
+          accessibilityRole="button"
+        >
+          <Text style={styles.aboutButtonText}>ⓘ</Text>
+        </TouchableOpacity>
+      </View>
 
       <StateSelector
         selectedState={selectedState}
@@ -322,8 +317,32 @@ function AppContent() {
     <SafeAreaView style={styles.container}>
       <StatusBar style="light" />
       <ScrollView style={styles.scrollContainer}>
-        {!isVerified ? renderAgeGate() : renderMainApp()}
+        {renderMainApp()}
       </ScrollView>
+
+      {/* Age Verification Modal */}
+      <AgeVerification
+        visible={showAgeVerification}
+        onConfirm={handleAgeConfirm}
+        onDecline={handleAgeDecline}
+      />
+
+      {/* About Screen Modal */}
+      <Modal
+        visible={showAbout}
+        animationType="slide"
+        presentationStyle="pageSheet"
+      >
+        <View style={styles.modalHeader}>
+          <TouchableOpacity
+            style={styles.closeButton}
+            onPress={() => setShowAbout(false)}
+          >
+            <Text style={styles.closeButtonText}>Close</Text>
+          </TouchableOpacity>
+        </View>
+        <AboutScreen />
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -413,18 +432,38 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
   },
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  titleContainer: {
+    flex: 1,
+  },
   appTitle: {
     fontSize: 28,
     fontWeight: 'bold',
     color: '#00FFFF',
-    textAlign: 'center',
     marginBottom: 4,
   },
   appSubtitle: {
     fontSize: 16,
     color: '#FFD700',
-    textAlign: 'center',
-    marginBottom: 32,
+  },
+  aboutButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#1A1A2E',
+    borderWidth: 1,
+    borderColor: '#2E2E3F',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  aboutButtonText: {
+    fontSize: 24,
+    color: '#00FFFF',
   },
   inputContainer: {
     marginBottom: 24,
@@ -636,5 +675,33 @@ const styles = StyleSheet.create({
     color: '#E0E0E0',
     fontSize: 13,
     fontWeight: '500',
+  },
+  modalHeader: {
+    backgroundColor: '#1A1A2E',
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#2E2E3F',
+    alignItems: 'flex-end',
+  },
+  closeButton: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+  },
+  closeButtonText: {
+    fontSize: 16,
+    color: '#00FFFF',
+    fontWeight: '600',
+  },
+  offlineBanner: {
+    backgroundColor: '#FF6B6B',
+    padding: 12,
+    borderRadius: 8,
+    marginBottom: 16,
+    alignItems: 'center',
+  },
+  offlineText: {
+    color: '#FFFFFF',
+    fontSize: 14,
+    fontWeight: '600',
   },
 });
