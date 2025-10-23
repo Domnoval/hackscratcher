@@ -111,7 +111,7 @@ export interface Challenge {
   endDate: string;
   status: 'upcoming' | 'active' | 'completed';
   goal: {
-    type: 'total_wins' | 'roi' | 'scans' | 'lucky_score';
+    type: 'total_wins' | 'roi' | 'scans' | 'lucky_score' | 'win_streak';
     target: number;
   };
   reward: {

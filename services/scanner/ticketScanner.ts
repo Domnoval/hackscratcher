@@ -192,7 +192,7 @@ export class TicketScannerService {
       : null;
 
     // Calculate current streak
-    let currentStreak = { type: 'losing' as const, count: 0 };
+    let currentStreak: { type: 'winning' | 'losing', count: number } = { type: 'losing', count: 0 };
     if (history.tickets.length > 0) {
       const recent = history.tickets.slice(0, 20); // Last 20 tickets
       let count = 0;
