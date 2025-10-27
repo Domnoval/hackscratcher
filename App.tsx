@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, memo } from 'react';
 import {
   StyleSheet,
   Text,
@@ -18,6 +18,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 
 // Services
 import { AgeVerificationService } from './services/compliance/ageVerification';
+import { SessionMonitor } from './services/compliance/sessionMonitor';
 import { RecommendationEngine } from './services/recommendations/recommendationEngine';
 import { FeatureFlagService } from './services/config/featureFlags';
 import { queryClient } from './lib/queryClient';
@@ -29,22 +30,48 @@ import { AIScoreBadge, ConfidenceIndicatorWithHeights, RecommendationChip } from
 // Tracking Components
 import { WinTracker } from './components/tracking';
 
+// Recommendation Components
+import { RecommendationCard } from './components/recommendations/RecommendationCard';
+
 // State Selector
 import { StateSelector } from './components/common/StateSelector';
+
+// Compliance Components
+import { HelplineButton } from './components/common/HelplineButton';
+
+// Empty States
+import { NoRecommendationsState } from './components/empty-states/NoRecommendationsState';
+import { OfflineState } from './components/empty-states/OfflineState';
+
+// Loading States
+import { RecommendationSkeletonList } from './components/loading/RecommendationCardSkeleton';
 
 // Legal Components
 import { AgeVerification } from './components/legal/AgeVerification';
 import { AboutScreen } from './components/screens/AboutScreen';
 
+// Onboarding
+import { OnboardingFlow } from './components/onboarding/OnboardingFlow';
+import { hasCompletedOnboarding, markOnboardingComplete } from './services/storage/onboardingStorage';
+
 // Error Handling
 import { NetworkMonitor, ErrorHandler } from './utils/errorHandler';
 
+// Auth
+import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { SignInScreen } from './screens/auth/SignInScreen';
+import { SignUpScreen } from './screens/auth/SignUpScreen';
+
 type State = 'MN' | 'FL';
+type AuthScreen = 'signIn' | 'signUp';
 
 function AppContent() {
+  const { isAuthenticated, isLoading: authLoading } = useAuth();
+  const [authScreen, setAuthScreen] = useState<AuthScreen>('signIn');
   const [isVerified, setIsVerified] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [showAgeVerification, setShowAgeVerification] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(false);
   const [showAbout, setShowAbout] = useState(false);
   const [isOnline, setIsOnline] = useState(true);
   const [selectedState, setSelectedState] = useState<State>('MN');
@@ -63,9 +90,13 @@ function AppContent() {
       setIsOnline(online);
     });
 
+    // Initialize session monitoring for compliance
+    SessionMonitor.startSession();
+
     return () => {
       unsubscribe();
       NetworkMonitor.cleanup();
+      SessionMonitor.endSession();
     };
   }, []);
 
@@ -94,26 +125,43 @@ function AppContent() {
       const verified = status.isVerified && !status.requiresReverification;
       setIsVerified(verified);
       setShowAgeVerification(!verified);
+
+      // Check onboarding status if user is age verified
+      if (verified) {
+        const onboardingComplete = await hasCompletedOnboarding();
+        setShowOnboarding(!onboardingComplete);
+      }
     } catch (error) {
       console.error('Age verification check failed:', error);
     }
   };
 
-  const handleAgeConfirm = async () => {
+  const handleAgeConfirm = async (birthDate: Date) => {
     try {
-      // Set a birth date that makes the user 18+ (e.g., 20 years ago)
-      const birthDate = new Date();
-      birthDate.setFullYear(birthDate.getFullYear() - 20);
-
       const result = await AgeVerificationService.verifyAge(birthDate);
 
       if (result.isVerified) {
         setIsVerified(true);
         setShowAgeVerification(false);
+
+        // Check if user needs to see onboarding
+        const onboardingComplete = await hasCompletedOnboarding();
+        setShowOnboarding(!onboardingComplete);
       }
     } catch (error) {
       console.error('Age verification failed:', error);
       Alert.alert('Error', 'Age verification failed. Please try again.');
+    }
+  };
+
+  const handleOnboardingComplete = async () => {
+    try {
+      await markOnboardingComplete();
+      setShowOnboarding(false);
+    } catch (error) {
+      console.error('Failed to mark onboarding complete:', error);
+      // Still hide onboarding even if storage fails
+      setShowOnboarding(false);
     }
   };
 
@@ -158,58 +206,31 @@ function AppContent() {
       }
     } catch (error) {
       console.error('Failed to get recommendations:', error);
-      ErrorHandler.handleNetworkError(error, 'Get recommendations');
+
+      // User-friendly error message
+      let errorMessage = 'We couldn\'t load recommendations right now. ';
+
+      if (error instanceof Error) {
+        if (error.message.includes('network') || error.message.includes('fetch')) {
+          errorMessage += 'Please check your internet connection and try again.';
+        } else if (error.message.includes('timeout')) {
+          errorMessage += 'The request took too long. Please try again.';
+        } else {
+          errorMessage += 'Please try again in a moment.';
+        }
+      }
+
+      Alert.alert('Oops!', errorMessage, [
+        { text: 'Try Again', onPress: getRecommendations },
+        { text: 'Cancel', style: 'cancel' },
+      ]);
     } finally {
       setLoadingRecommendations(false);
     }
   };
 
   const renderRecommendation = useCallback(({ item, index }: { item: Recommendation; index: number }) => {
-    // Extract AI prediction data (will be null/undefined for mock data)
-    const aiScore = item.game.ai_score || item.score || 0;
-    const confidence = item.game.confidence || (item.ev.confidence * 100) || 0;
-    const recommendation = item.game.recommendation ||
-      (aiScore >= 80 ? 'strong_buy' : aiScore >= 60 ? 'buy' : aiScore >= 40 ? 'neutral' : 'avoid');
-
-    return (
-      <View style={styles.recommendationCard}>
-        <View style={styles.cardHeader}>
-          <View style={styles.cardTitleRow}>
-            <Text style={styles.gameTitle}>#{index + 1} {item.game.name}</Text>
-            <Text style={styles.gamePrice}>${item.game.price}</Text>
-          </View>
-
-          {/* AI COMING SOON Badge */}
-          <View style={styles.comingSoonBadge}>
-            <Text style={styles.comingSoonText}>🤖 AI Predictions Coming Soon</Text>
-            <Text style={styles.comingSoonSubtext}>Collecting data to train model...</Text>
-          </View>
-        </View>
-
-        {/* Basic Game Info */}
-        <View style={styles.gameInfo}>
-          <View style={styles.infoRow}>
-            <Text style={styles.infoLabel}>Ticket Price:</Text>
-            <Text style={styles.infoValue}>${item.game.price}</Text>
-          </View>
-          <View style={styles.infoRow}>
-            <Text style={styles.infoLabel}>Overall Odds:</Text>
-            <Text style={styles.infoValue}>{item.game.overall_odds}</Text>
-          </View>
-          <View style={styles.infoRow}>
-            <Text style={styles.infoLabel}>Status:</Text>
-            <Text style={[styles.infoValue, { color: '#00FF7F' }]}>{item.game.status}</Text>
-          </View>
-        </View>
-
-        {/* Win Tracking - Help us improve! */}
-        <WinTracker
-          gameId={item.gameId}
-          gameName={item.game.name}
-          gamePrice={item.game.price}
-        />
-      </View>
-    );
+    return <RecommendationCard item={item} index={index} />;
   }, []);
 
   const renderMainApp = () => (
@@ -272,7 +293,12 @@ function AppContent() {
         )}
       </TouchableOpacity>
 
-      {recommendations.length > 0 && (
+      {/* Show loading skeleton while fetching recommendations */}
+      {loadingRecommendations ? (
+        <RecommendationSkeletonList count={3} />
+      ) : !isOnline && recommendations.length === 0 ? (
+        <OfflineState onRetry={getRecommendations} />
+      ) : recommendations.length > 0 ? (
         <FlatList
           data={recommendations}
           renderItem={renderRecommendation}
@@ -298,11 +324,17 @@ function AppContent() {
             </View>
           }
         />
+      ) : (
+        <NoRecommendationsState onGetStarted={() => {
+          // Scroll to budget input
+          console.log('Scroll to budget input');
+        }} />
       )}
     </View>
   );
 
-  if (isLoading) {
+  // Show loading spinner while auth or app is loading
+  if (isLoading || authLoading) {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.loadingContainer}>
@@ -313,12 +345,48 @@ function AppContent() {
     );
   }
 
+  // Show onboarding if user is verified but hasn't completed onboarding
+  if (isVerified && showOnboarding) {
+    return (
+      <OnboardingFlow onComplete={handleOnboardingComplete} />
+    );
+  }
+
+  // Show auth screens if not authenticated
+  if (!isAuthenticated) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <StatusBar style="light" />
+        {authScreen === 'signIn' ? (
+          <SignInScreen
+            onSignInSuccess={() => {
+              // Auth state change will automatically update isAuthenticated
+            }}
+            onNavigateToSignUp={() => setAuthScreen('signUp')}
+          />
+        ) : (
+          <SignUpScreen
+            onSignUpSuccess={() => {
+              // After signup, switch to sign in screen
+              setAuthScreen('signIn');
+            }}
+            onNavigateToSignIn={() => setAuthScreen('signIn')}
+          />
+        )}
+      </SafeAreaView>
+    );
+  }
+
+  // Show main app if authenticated
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="light" />
       <ScrollView style={styles.scrollContainer}>
         {renderMainApp()}
       </ScrollView>
+
+      {/* Minnesota Compliance: Floating Helpline Button */}
+      {isVerified && <HelplineButton />}
 
       {/* Age Verification Modal */}
       <AgeVerification
@@ -348,13 +416,16 @@ function AppContent() {
 }
 
 /**
- * Main App component wrapped with React Query provider
- * Enables data caching and automatic refetching
+ * Main App component wrapped with providers
+ * - QueryClientProvider: Enables data caching and automatic refetching
+ * - AuthProvider: Manages authentication state across the app
  */
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <AppContent />
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
     </QueryClientProvider>
   );
 }

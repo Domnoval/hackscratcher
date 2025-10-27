@@ -1,13 +1,50 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Modal, Linking } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Modal, Linking, Platform, Alert } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 interface AgeVerificationProps {
   visible: boolean;
-  onConfirm: () => void;
+  onConfirm: (birthDate: Date) => void;
   onDecline: () => void;
 }
 
 export function AgeVerification({ visible, onConfirm, onDecline }: AgeVerificationProps) {
+  const [birthDate, setBirthDate] = useState<Date>(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
+
+  const calculateAge = (date: Date): number => {
+    return Math.floor((Date.now() - date.getTime()) / (365.25 * 24 * 60 * 60 * 1000));
+  };
+
+  const handleConfirm = () => {
+    const age = calculateAge(birthDate);
+    if (age < 18) {
+      Alert.alert(
+        'Age Requirement Not Met',
+        'You must be at least 18 years old to use Scratch Oracle. For more information about responsible gaming, please visit the National Council on Problem Gambling at ncpgambling.org.',
+        [{ text: 'OK' }]
+      );
+      return;
+    }
+    onConfirm(birthDate);
+  };
+
+  const handleDateChange = (event: any, selectedDate?: Date) => {
+    if (Platform.OS === 'android') {
+      setShowDatePicker(false);
+    }
+    if (selectedDate) {
+      setBirthDate(selectedDate);
+      if (Platform.OS === 'ios') {
+        setShowDatePicker(false);
+      }
+    }
+  };
+
+  const formatDate = (date: Date): string => {
+    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  };
+
   return (
     <Modal
       visible={visible}
@@ -33,35 +70,53 @@ export function AgeVerification({ visible, onConfirm, onDecline }: AgeVerificati
               Gambling involves risk. Please play responsibly.
             </Text>
             <TouchableOpacity
-              onPress={() => Linking.openURL('tel:1-800-522-4700')}
+              onPress={() => Linking.openURL('tel:18003334673')}
               style={styles.helplineButton}
             >
               <Text style={styles.helplineText}>
-                Problem Gambling Helpline: 1-800-522-4700
+                Minnesota Problem Gambling Helpline: 1-800-333-HOPE (4673)
               </Text>
             </TouchableOpacity>
           </View>
 
-          <Text style={styles.question}>Are you 18 years of age or older?</Text>
+          <Text style={styles.question}>Please enter your date of birth:</Text>
+
+          <TouchableOpacity
+            style={styles.dateButton}
+            onPress={() => setShowDatePicker(true)}
+          >
+            <Text style={styles.dateButtonText}>{formatDate(birthDate)}</Text>
+          </TouchableOpacity>
+
+          {showDatePicker && (
+            <DateTimePicker
+              value={birthDate}
+              mode="date"
+              display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+              onChange={handleDateChange}
+              maximumDate={new Date()}
+              minimumDate={new Date(1900, 0, 1)}
+            />
+          )}
 
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={[styles.button, styles.confirmButton]}
-              onPress={onConfirm}
+              onPress={handleConfirm}
             >
-              <Text style={styles.confirmButtonText}>Yes, I'm 18+</Text>
+              <Text style={styles.confirmButtonText}>Verify My Age</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={[styles.button, styles.declineButton]}
               onPress={onDecline}
             >
-              <Text style={styles.declineButtonText}>No, I'm Under 18</Text>
+              <Text style={styles.declineButtonText}>I'm Under 18</Text>
             </TouchableOpacity>
           </View>
 
           <Text style={styles.disclaimer}>
-            By clicking "Yes, I'm 18+", you confirm that you are of legal age and
+            By clicking "Verify My Age", you confirm that you are of legal age and
             agree to our Terms of Service and Privacy Policy.
           </Text>
         </View>
@@ -140,6 +195,21 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     textAlign: 'center',
     marginBottom: 20,
+  },
+  dateButton: {
+    backgroundColor: '#2E2E3F',
+    paddingVertical: 16,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#FFD700',
+    marginBottom: 20,
+    alignItems: 'center',
+  },
+  dateButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#FFFFFF',
   },
   buttonContainer: {
     gap: 12,

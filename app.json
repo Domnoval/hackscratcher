@@ -28,7 +28,8 @@
       "permissions": [
         "INTERNET",
         "ACCESS_NETWORK_STATE"
-      ]
+      ],
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.scratchoracle.app"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -39,6 +40,16 @@
         "projectId": "78e2e800-e081-4b43-86e0-2968fffec441"
       }
     },
-    "owner": "mm444"
+    "owner": "mm444",
+    "autolinking": {
+      "exclude": [
+        "expo-barcode-scanner",
+        "expo-camera",
+        "expo-location",
+        "expo-notifications",
+        "expo-task-manager",
+        "expo-background-fetch"
+      ]
+    }
   }
 }

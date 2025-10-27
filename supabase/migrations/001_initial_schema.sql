@@ -373,3 +373,4 @@ BEGIN
   RAISE NOTICE 'Views created: 2';
   RAISE NOTICE 'Ready for scraper integration!';
 END $$;
+

@@ -1,6 +1,10 @@
 import 'react-native-url-polyfill/auto';
 import { createClient } from '@supabase/supabase-js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { pinnedFetch } from '../services/security/certificatePinning';
+import { validate, ValidationError } from '../services/validation/validator';
+import { SupabaseResponseSchema, SupabaseArrayResponseSchema, UUIDSchema } from '../services/validation/schemas';
+import { sanitizeString, sanitizeNumber } from '../services/validation/sanitizer';
 
 const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL!;
 const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY!;
@@ -15,6 +19,10 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
     autoRefreshToken: true,
     persistSession: true,
     detectSessionInUrl: false,
+  },
+  global: {
+    // Use custom fetch with SSL certificate pinning for all Supabase requests
+    fetch: pinnedFetch as unknown as typeof fetch,
   },
 });
 
@@ -117,12 +125,17 @@ export interface UserScan {
 
 /**
  * Fetch all active games with their latest AI predictions
+ * Now validates response data structure
  */
 export async function getActiveGamesWithPredictions() {
   const { data, error } = await supabase
     .from('active_games_with_predictions')
     .select('*')
     .order('ai_score', { ascending: false });
+
+  // Validate response structure
+  const response = { data, error };
+  validate(SupabaseArrayResponseSchema, response, 'getActiveGamesWithPredictions');
 
   if (error) {
     console.error('Error fetching games:', error);
@@ -134,19 +147,32 @@ export async function getActiveGamesWithPredictions() {
 
 /**
  * Fetch a specific game by ID with all details
+ * Now validates game ID input and response data
  */
 export async function getGameDetails(gameId: string) {
+  // Validate and sanitize game ID
+  const validGameId = sanitizeString(gameId, 100);
+
+  if (!validGameId) {
+    throw new Error('Invalid game ID provided');
+  }
+
   const [gameResult, prizeTiersResult, latestPrediction] = await Promise.all([
-    supabase.from('games').select('*').eq('id', gameId).single(),
-    supabase.from('prize_tiers').select('*').eq('game_id', gameId),
+    supabase.from('games').select('*').eq('id', validGameId).single(),
+    supabase.from('prize_tiers').select('*').eq('game_id', validGameId),
     supabase
       .from('predictions')
       .select('*')
-      .eq('game_id', gameId)
+      .eq('game_id', validGameId)
       .order('prediction_date', { ascending: false })
       .limit(1)
       .single(),
   ]);
+
+  // Validate responses
+  validate(SupabaseResponseSchema, gameResult, 'getGameDetails.game');
+  validate(SupabaseArrayResponseSchema, prizeTiersResult, 'getGameDetails.prizeTiers');
+  validate(SupabaseResponseSchema, latestPrediction, 'getGameDetails.prediction');
 
   if (gameResult.error) throw gameResult.error;
 
@@ -159,18 +185,27 @@ export async function getGameDetails(gameId: string) {
 
 /**
  * Fetch top performing stores near a location
+ * Now validates coordinate inputs
  */
 export async function getTopStoresNearby(
   latitude: number,
   longitude: number,
   radiusMiles: number = 25
 ) {
+  // Validate and sanitize coordinates
+  const validLatitude = sanitizeNumber(latitude, -90, 90);
+  const validLongitude = sanitizeNumber(longitude, -180, 180);
+  const validRadius = sanitizeNumber(radiusMiles, 1, 500);
+
   // Note: This uses the helper function we created in SQL
   const { data, error } = await supabase.rpc('get_stores_within_radius', {
-    lat: latitude,
-    lng: longitude,
-    radius: radiusMiles,
+    lat: validLatitude,
+    lng: validLongitude,
+    radius: validRadius,
   });
+
+  // Validate response
+  validate(SupabaseArrayResponseSchema, { data, error }, 'getTopStoresNearby');
 
   if (error) {
     console.error('Error fetching stores:', error);
@@ -182,9 +217,30 @@ export async function getTopStoresNearby(
 
 /**
  * Log a user ticket scan
+ * Now validates scan data before insertion
  */
 export async function logTicketScan(scan: Omit<UserScan, 'id' | 'created_at'>) {
-  const { data, error } = await supabase.from('user_scans').insert(scan).select().single();
+  // Sanitize string fields to prevent injection
+  const sanitizedScan = {
+    ...scan,
+    user_id: scan.user_id ? sanitizeString(scan.user_id, 100) : undefined,
+    game_id: scan.game_id ? sanitizeString(scan.game_id, 100) : undefined,
+    store_id: scan.store_id ? sanitizeString(scan.store_id, 100) : undefined,
+    device_id: scan.device_id ? sanitizeString(scan.device_id, 200) : undefined,
+    app_version: scan.app_version ? sanitizeString(scan.app_version, 50) : undefined,
+    prize_amount: scan.prize_amount !== undefined
+      ? sanitizeNumber(scan.prize_amount, 0, 10000000)
+      : undefined,
+  };
+
+  const { data, error } = await supabase
+    .from('user_scans')
+    .insert(sanitizedScan)
+    .select()
+    .single();
+
+  // Validate response
+  validate(SupabaseResponseSchema, { data, error }, 'logTicketScan');
 
   if (error) {
     console.error('Error logging scan:', error);
@@ -196,17 +252,29 @@ export async function logTicketScan(scan: Omit<UserScan, 'id' | 'created_at'>) {
 
 /**
  * Get historical trend for a game
+ * Now validates inputs
  */
 export async function getGameTrend(gameId: string, days: number = 30) {
+  // Validate and sanitize inputs
+  const validGameId = sanitizeString(gameId, 100);
+  const validDays = sanitizeNumber(days, 1, 365);
+
+  if (!validGameId) {
+    throw new Error('Invalid game ID provided');
+  }
+
   const cutoffDate = new Date();
-  cutoffDate.setDate(cutoffDate.getDate() - days);
+  cutoffDate.setDate(cutoffDate.getDate() - validDays);
 
   const { data, error } = await supabase
     .from('historical_snapshots')
     .select('*')
-    .eq('game_id', gameId)
+    .eq('game_id', validGameId)
     .gte('snapshot_date', cutoffDate.toISOString().split('T')[0])
     .order('snapshot_date', { ascending: true });
+
+  // Validate response
+  validate(SupabaseArrayResponseSchema, { data, error }, 'getGameTrend');
 
   if (error) {
     console.error('Error fetching trend:', error);
@@ -218,14 +286,26 @@ export async function getGameTrend(gameId: string, days: number = 30) {
 
 /**
  * Get user's scan history
+ * Now validates inputs
  */
 export async function getUserScanHistory(userId: string, limit: number = 50) {
+  // Validate and sanitize inputs
+  const validUserId = sanitizeString(userId, 100);
+  const validLimit = sanitizeNumber(limit, 1, 1000);
+
+  if (!validUserId) {
+    throw new Error('Invalid user ID provided');
+  }
+
   const { data, error } = await supabase
     .from('user_scans')
     .select('*, games(game_name, ticket_price)')
-    .eq('user_id', userId)
+    .eq('user_id', validUserId)
     .order('scan_date', { ascending: false })
-    .limit(limit);
+    .limit(validLimit);
+
+  // Validate response
+  validate(SupabaseArrayResponseSchema, { data, error }, 'getUserScanHistory');
 
   if (error) {
     console.error('Error fetching scan history:', error);

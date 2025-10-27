@@ -1,5 +1,7 @@
 // Age Verification Service - Minnesota compliance requirement (18+)
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { validate, ValidationError } from '../validation/validator';
+import { BirthDateSchema } from '../validation/schemas';
 
 export interface AgeVerificationResult {
   isVerified: boolean;
@@ -15,32 +17,48 @@ export class AgeVerificationService {
 
   /**
    * Verify user's age and store verification
+   * Now includes Zod validation for birth date
    */
   static async verifyAge(birthDate: Date): Promise<AgeVerificationResult> {
-    const age = this.calculateAge(birthDate);
-    const isVerified = age >= this.MIN_AGE;
+    try {
+      // Validate birth date using Zod schema (checks age >= 18, valid date, etc.)
+      const validBirthDate = validate(BirthDateSchema, birthDate, 'birthDate');
 
-    if (isVerified) {
-      const verification = {
-        age,
-        verificationDate: new Date().toISOString(),
-        birthDate: birthDate.toISOString()
-      };
+      const age = this.calculateAge(validBirthDate);
+      const isVerified = age >= this.MIN_AGE;
 
-      await AsyncStorage.setItem(this.STORAGE_KEY, JSON.stringify(verification));
+      if (isVerified) {
+        const verification = {
+          age,
+          verificationDate: new Date().toISOString(),
+          birthDate: validBirthDate.toISOString()
+        };
+
+        await AsyncStorage.setItem(this.STORAGE_KEY, JSON.stringify(verification));
+
+        return {
+          isVerified: true,
+          age,
+          verificationDate: verification.verificationDate,
+          requiresReverification: false
+        };
+      }
 
       return {
-        isVerified: true,
-        age,
-        verificationDate: verification.verificationDate,
+        isVerified: false,
         requiresReverification: false
       };
+    } catch (error) {
+      if (error instanceof ValidationError) {
+        console.error('[AgeVerification] Validation error:', error.getMessages());
+        // Return verification failure with helpful message
+        return {
+          isVerified: false,
+          requiresReverification: false
+        };
+      }
+      throw error;
     }
-
-    return {
-      isVerified: false,
-      requiresReverification: false
-    };
   }
 
   /**

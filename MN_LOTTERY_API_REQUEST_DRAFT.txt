@@ -1,0 +1,58 @@
+Subject: Partnership Request - Lottery Ticket Validation API for Scratch Oracle App
+
+Dear Minnesota Lottery Team,
+
+I am writing to request API access for ticket validation as part of a new mobile application called Scratch Oracle.
+
+ABOUT SCRATCH ORACLE:
+Scratch Oracle is a lottery companion app that helps players make informed decisions about scratch-off purchases through data analysis and Expected Value calculations. We are committed to responsible gaming and include:
+- 18+ age verification (enforced)
+- Problem gambling helpline (always visible)
+- Session monitoring
+- Educational responsible gaming content
+
+CURRENT STATUS:
+- Launching in Google Play Store (Week of Oct 27, 2025)
+- Minnesota & Florida support
+- Real-time prize data integration
+- 500+ expected users in first month
+
+FEATURE REQUEST:
+We would like to add a barcode scanning feature that allows users to scan lottery ticket barcodes to check if they are winners. This would require:
+- API endpoint for ticket validation
+- Ticket ID → Winner/Loser status
+- Prize amount (if winner)
+- Rate limiting (reasonable usage)
+
+OUR COMMITMENT:
+- Display official Minnesota Lottery branding
+- Link to official resources
+- Promote responsible gaming
+- Comply with all regulations
+- Drive traffic to lottery retailers
+- No ticket sales (information only)
+
+BENEFITS TO MINNESOTA LOTTERY:
+- Increased player engagement
+- Modernized user experience
+- Promotes responsible play
+- Free marketing for lottery
+- Drives retail foot traffic
+
+We are open to:
+- Partnership agreement
+- Revenue sharing (if applicable)
+- Co-marketing opportunities
+- Compliance reviews
+- Any requirements you have
+
+CONTACT:
+[Your Name]
+[Your Email]
+[Phone Number]
+
+We would love to discuss this opportunity. Thank you for considering our request.
+
+Respectfully,
+[Your Name]
+Founder, Scratch Oracle

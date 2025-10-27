@@ -1,14 +1,69 @@
 // EV Calculator - Core algorithm for Scratch Oracle
 import { LotteryGame, EVCalculation, UserProfile } from '../../types/lottery';
+import { validate, ValidationError } from '../validation/validator';
+import { GameSchema, UserProfileSchema } from '../validation/schemas';
+import { z } from 'zod';
 
 export class EVCalculator {
   /**
    * Calculate Expected Value with dynamic weighting and confidence scoring
+   * Now includes comprehensive validation using Zod schemas
    */
   static calculateEV(
     game: LotteryGame,
     userProfile?: UserProfile
   ): EVCalculation {
+    // Validate game data using Zod schema
+    // This replaces manual validation with comprehensive schema validation
+    try {
+      // Create a schema compatible with LotteryGame type
+      const GameValidationSchema = z.object({
+        id: z.string(),
+        name: z.string().min(1).max(200),
+        price: z.number().positive().max(100),
+        overall_odds: z.string(),
+        status: z.enum(['Active', 'Retired', 'New', 'active', 'ended']),
+        prizes: z.array(
+          z.object({
+            tier: z.string(),
+            amount: z.number().positive().max(10000000),
+            total: z.number().int().nonnegative(),
+            remaining: z.number().int().nonnegative(),
+            odds: z.string().optional(),
+          })
+        ).min(1),
+        launch_date: z.string(),
+        last_updated: z.string(),
+        total_tickets: z.number().int().positive().optional(),
+        ai_score: z.number().optional(),
+        confidence: z.number().optional(),
+        recommendation: z.enum(['strong_buy', 'buy', 'neutral', 'avoid', 'strong_avoid']).optional(),
+        ai_reasoning: z.string().optional(),
+        win_probability: z.number().optional(),
+      });
+
+      // Validate game structure
+      const validGame = validate(GameValidationSchema, game, 'game');
+
+      // Validate user profile if provided
+      if (userProfile) {
+        validate(UserProfileSchema, userProfile, 'userProfile');
+      }
+
+      // Normalize status to match LotteryGame type (Active, Retired, New)
+      if (validGame.status === 'active') validGame.status = 'Active';
+      if (validGame.status === 'ended') validGame.status = 'Retired';
+
+      // Continue with validated data
+      game = validGame as LotteryGame;
+    } catch (error) {
+      if (error instanceof ValidationError) {
+        console.error('[EVCalculator] Validation error:', error.getMessages());
+        throw new Error(`Invalid game data: ${error.getFirstMessage()}`);
+      }
+      throw error;
+    }
+
     const baseEV = this.calculateBaseEV(game);
     const confidence = this.calculateConfidence(game);
     const hotness = this.calculateHotness(game);
@@ -47,6 +102,11 @@ export class EVCalculator {
     let expectedWinnings = 0;
 
     for (const prize of game.prizes) {
+      // Validate prize data before calculations
+      if (prize.remaining < 0 || prize.remaining > prize.total) {
+        console.warn(`Invalid prize data for game ${game.id}`);
+        continue;
+      }
       if (prize.remaining > 0) {
         const probability = prize.remaining / game.total_tickets;
         expectedWinnings += prize.amount * probability;
@@ -70,6 +130,12 @@ export class EVCalculator {
     // Reduce confidence for games with few remaining prizes
     const totalRemaining = game.prizes.reduce((sum, p) => sum + p.remaining, 0);
     const totalPrizes = game.prizes.reduce((sum, p) => sum + p.total, 0);
+
+    // Prevent division by zero
+    if (totalPrizes === 0) {
+      return 0.3; // Minimum confidence for invalid data
+    }
+
     const remainingRatio = totalRemaining / totalPrizes;
 
     if (remainingRatio < 0.1) confidence *= 0.7; // Very few prizes left
@@ -82,6 +148,12 @@ export class EVCalculator {
     // MVP: Simple hotness based on prize depletion and game age
     const totalPrizes = game.prizes.reduce((sum, p) => sum + p.total, 0);
     const remainingPrizes = game.prizes.reduce((sum, p) => sum + p.remaining, 0);
+
+    // Prevent division by zero
+    if (totalPrizes === 0) {
+      return 0;
+    }
+
     const depletionRate = 1 - (remainingPrizes / totalPrizes);
 
     // Recent games with high depletion are "hot"
@@ -89,8 +161,14 @@ export class EVCalculator {
     const recencyFactor = Math.max(0, 1 - (daysOld / 30)); // Fade over 30 days
 
     // Detect if top prizes are being claimed quickly
-    const topPrizes = game.prizes.slice(0, 2); // Top 2 tiers
+    const topPrizes = game.prizes.slice(0, Math.min(2, game.prizes.length));
+    if (topPrizes.length === 0) {
+      return 0;
+    }
+
     const topPrizeDepletionRate = topPrizes.reduce((sum, p) => {
+      // Prevent division by zero for individual prizes
+      if (p.total === 0) return sum;
       return sum + (1 - (p.remaining / p.total));
     }, 0) / topPrizes.length;
 
@@ -163,6 +241,12 @@ export class EVCalculator {
 
     // Normalize entropy (higher = more distributed prizes)
     const maxEntropy = Math.log2(game.prizes.length);
+
+    // Prevent division by zero if maxEntropy is 0 or negative
+    if (maxEntropy <= 0) {
+      return 0;
+    }
+
     return entropy / maxEntropy;
   }
 

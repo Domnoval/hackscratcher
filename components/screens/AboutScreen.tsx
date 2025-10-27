@@ -1,11 +1,37 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Modal, Linking } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Modal, Linking, Alert } from 'react-native';
 import { PrivacyPolicy } from '../legal/PrivacyPolicy';
 import { TermsOfService } from '../legal/TermsOfService';
+import { useAuth } from '../../contexts/AuthContext';
 
 export function AboutScreen() {
   const [showPrivacy, setShowPrivacy] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
+  const { user, signOut } = useAuth();
+
+  const handleSignOut = async () => {
+    Alert.alert(
+      'Sign Out',
+      'Are you sure you want to sign out?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Sign Out',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              await signOut();
+            } catch (error) {
+              Alert.alert('Error', 'Failed to sign out. Please try again.');
+            }
+          },
+        },
+      ]
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -22,6 +48,22 @@ export function AboutScreen() {
           you make informed decisions about lottery scratch-off games. We analyze remaining
           prizes, odds, and expected value to provide data-driven recommendations.
         </Text>
+      </View>
+
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Account</Text>
+        {user && (
+          <View style={styles.accountInfo}>
+            <Text style={styles.accountLabel}>Signed in as:</Text>
+            <Text style={styles.accountEmail}>{user.email}</Text>
+          </View>
+        )}
+        <TouchableOpacity
+          style={styles.signOutButton}
+          onPress={handleSignOut}
+        >
+          <Text style={styles.signOutButtonText}>Sign Out</Text>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.section}>
@@ -223,6 +265,33 @@ const styles = StyleSheet.create({
   copyright: {
     fontSize: 11,
     color: '#4A4A5A',
+  },
+  accountInfo: {
+    backgroundColor: '#1A1A2E',
+    padding: 16,
+    borderRadius: 8,
+    marginBottom: 16,
+  },
+  accountLabel: {
+    fontSize: 12,
+    color: '#708090',
+    marginBottom: 4,
+  },
+  accountEmail: {
+    fontSize: 16,
+    color: '#00FFFF',
+    fontWeight: '500',
+  },
+  signOutButton: {
+    backgroundColor: '#FF4500',
+    padding: 16,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  signOutButtonText: {
+    fontSize: 16,
+    color: '#FFFFFF',
+    fontWeight: '600',
   },
   modalHeader: {
     backgroundColor: '#1A1A2E',
