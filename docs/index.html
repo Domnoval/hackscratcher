@@ -3,98 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scratch Oracle - Legal</title>
+    <title>Scratch Oracle - Legal Documents</title>
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            background: #0A0A0F;
-            color: #E0E0E0;
-            text-align: center;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #0A0A0F 0%, #1a1a2e 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 255, 255, 0.2);
+        }
+
         h1 {
             color: #00FFFF;
-            font-size: 48px;
             margin-bottom: 10px;
+            font-size: 2.5em;
+            text-align: center;
         }
+
         .subtitle {
-            color: #FFD700;
-            font-size: 20px;
+            color: #777;
+            text-align: center;
             margin-bottom: 40px;
+            font-size: 1.1em;
         }
+
         .links {
             display: flex;
+            flex-direction: column;
             gap: 20px;
-            justify-content: center;
-            margin: 40px 0;
         }
+
         .link-card {
-            background: #1A1A2E;
-            border: 2px solid #2E2E3F;
-            border-radius: 12px;
-            padding: 30px;
-            text-decoration: none;
-            color: #E0E0E0;
-            transition: all 0.3s;
-            flex: 1;
-            max-width: 300px;
+            background: linear-gradient(135deg, #00FFFF 0%, #FFD700 100%);
+            padding: 3px;
+            border-radius: 8px;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
+
         .link-card:hover {
-            border-color: #00FFFF;
-            transform: translateY(-5px);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 255, 255, 0.4);
         }
-        .link-card h2 {
+
+        .link-content {
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .link-title {
             color: #00FFFF;
-            margin-top: 0;
+            font-size: 1.5em;
+            font-weight: 600;
+            margin-bottom: 5px;
         }
-        .link-card p {
-            color: #708090;
-            font-size: 14px;
+
+        .link-description {
+            color: #666;
+            font-size: 0.95em;
         }
+
         .footer {
-            margin-top: 60px;
+            margin-top: 40px;
             padding-top: 20px;
-            border-top: 1px solid #2E2E3F;
-            color: #708090;
-            font-size: 14px;
+            border-top: 1px solid #ddd;
+            text-align: center;
+            color: #777;
+            font-size: 0.9em;
+        }
+
+        .app-link {
+            color: #00FFFF;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .app-link:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <h1>🎯 Scratch Oracle</h1>
-    <p class="subtitle">Smart Lottery Analysis & Recommendations</p>
+    <div class="container">
+        <h1>Scratch Oracle</h1>
+        <p class="subtitle">Legal Documents</p>
 
-    <div class="links">
-        <a href="app/" class="link-card" style="border-color: #00FFFF; background: linear-gradient(135deg, #1A1A2E 0%, #0E4A5F 100%);">
-            <h2>🚀 Launch App (Beta)</h2>
-            <p>Try Scratch Oracle now - analyze lottery games</p>
-        </a>
+        <div class="links">
+            <a href="privacy.html" class="link-card">
+                <div class="link-content">
+                    <div class="link-title">Privacy Policy</div>
+                    <div class="link-description">
+                        Learn about how we collect, use, and protect your personal information.
+                    </div>
+                </div>
+            </a>
 
-        <a href="privacy.html" class="link-card">
-            <h2>Privacy Policy</h2>
-            <p>How we collect, use, and protect your data</p>
-        </a>
+            <a href="terms.html" class="link-card">
+                <div class="link-content">
+                    <div class="link-title">Terms of Service</div>
+                    <div class="link-description">
+                        Read the terms and conditions for using Scratch Oracle.
+                    </div>
+                </div>
+            </a>
+        </div>
 
-        <a href="terms.html" class="link-card">
-            <h2>Terms of Service</h2>
-            <p>Legal terms and conditions of use</p>
-        </a>
-    </div>
-
-    <div class="footer">
-        <p>
-            For support or questions, contact us at:<br>
-            <a href="mailto:scratchoracleapp@gmail.com" style="color: #00FFFF;">scratchoracleapp@gmail.com</a>
-        </p>
-        <p style="margin-top: 20px;">
-            <strong>Problem Gambling Helpline:</strong> <a href="tel:1-800-522-4700" style="color: #00FFFF;">1-800-522-4700</a>
-        </p>
-        <p style="margin-top: 30px; font-size: 12px;">
-            © 2025 Scratch Oracle | Not affiliated with any state lottery
-        </p>
+        <div class="footer">
+            <p>Last Updated: October 27, 2025</p>
+            <p>&copy; 2025 Scratch Oracle. All rights reserved.</p>
+        </div>
     </div>
 </body>
 </html>
