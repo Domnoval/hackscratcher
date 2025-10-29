@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scratch Oracle - Feature Graphic (1024x500)</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #111;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        .container {
+            border: 2px solid #ffd700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        svg {
+            display: block;
+        }
+
+        .info {
+            background: #222;
+            padding: 15px;
+            border-radius: 8px;
+            max-width: 1024px;
+            width: 100%;
+        }
+
+        .info h2 {
+            color: #ffd700;
+            margin-top: 0;
+        }
+
+        .info p {
+            margin: 10px 0;
+        }
+
+        .button {
+            background: linear-gradient(135deg, #fde047, #fbbf24);
+            color: #1e0329;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .button:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="info">
+        <h2>🎯 Scratch Oracle - Feature Graphic</h2>
+        <p><strong>Dimensions:</strong> 1024 x 500 pixels (Google Play Store requirement)</p>
+        <p><strong>Design:</strong> Eye of Horus + Sacred Geometry + Vegas Theme</p>
+        <p><strong>Features:</strong></p>
+        <ul>
+            <li>Dual Eye of Horus (symmetry)</li>
+            <li>Merkaba (Star Tetrahedron) in center</li>
+            <li>Flower of Life sacred geometry (background)</li>
+            <li>Vegas gradient (red-purple-indigo)</li>
+            <li>Gold gradients with glow effects</li>
+        </ul>
+
+        <p><strong>How to save as PNG:</strong></p>
+        <ol>
+            <li><strong>Option A (Screenshot):</strong> Take a screenshot of just the graphic below (use Snipping Tool)</li>
+            <li><strong>Option B (Browser):</strong> Right-click graphic → "Save image as..." (may need browser extension)</li>
+            <li><strong>Option C (Online):</strong> Go to <a href="https://cloudconvert.com/svg-to-png" target="_blank" style="color: #ffd700;">CloudConvert</a>, upload feature-graphic.svg, convert to PNG at 1024x500</li>
+            <li><strong>Option D (Inkscape/Illustrator):</strong> Open SVG, export as PNG at 1024x500</li>
+        </ol>
+
+        <button class="button" onclick="downloadSVG()">⬇️ Download SVG</button>
+        <button class="button" onclick="window.print()">🖨️ Print to PDF</button>
+    </div>
+
+    <div class="container" id="graphic">
+        <svg width="1024" height="500" viewBox="0 0 1024 500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Vegas Gradient Background -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#991b1b;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#1e0329;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#581c87;stop-opacity:1" />
+    </linearGradient>
+
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fde047;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#fbbf24;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Glow filter -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Stronger glow -->
+    <filter id="strongGlow">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1024" height="500" fill="url(#bgGradient)"/>
+
+  <!-- Sacred Geometry - Flower of Life (subtle in background) -->
+  <g opacity="0.1" stroke="url(#goldGradient)" fill="none" stroke-width="0.5">
+    <!-- Circles forming Flower of Life -->
+    <circle cx="512" cy="250" r="80"/>
+    <circle cx="442" cy="250" r="80"/>
+    <circle cx="582" cy="250" r="80"/>
+    <circle cx="477" cy="310" r="80"/>
+    <circle cx="547" cy="310" r="80"/>
+    <circle cx="477" cy="190" r="80"/>
+    <circle cx="547" cy="190" r="80"/>
+  </g>
+
+  <!-- Eye of Horus (Left Side) -->
+  <g transform="translate(256, 250)" filter="url(#strongGlow)">
+    <!-- Outer eye shape -->
+    <path d="M -60,0 Q -50,-30 0,-35 Q 50,-30 60,0 Q 50,10 40,12 L -40,12 Q -50,10 -60,0 Z"
+          fill="none" stroke="url(#goldGradient)" stroke-width="3"/>
+
+    <!-- Iris/Pupil -->
+    <circle cx="0" cy="-10" r="15" fill="url(#goldGradient)" opacity="0.8"/>
+    <circle cx="0" cy="-10" r="8" fill="#1e0329"/>
+
+    <!-- Sacred geometry detail - inner circle -->
+    <circle cx="0" cy="-10" r="3" fill="url(#goldGradient)"/>
+
+    <!-- Distinctive markings under eye -->
+    <path d="M 40,12 Q 45,25 48,40" stroke="url(#goldGradient)" stroke-width="2.5" fill="none"/>
+    <path d="M 30,15 Q 32,28 33,38" stroke="url(#goldGradient)" stroke-width="2" fill="none" opacity="0.7"/>
+
+    <!-- Eyebrow/top detail -->
+    <path d="M -65,-2 Q -40,-40 10,-45 Q 55,-38 68,-8"
+          stroke="url(#goldGradient)" stroke-width="2" fill="none" opacity="0.6"/>
+  </g>
+
+  <!-- Sacred Geometry Symbol (Center) - Merkaba/Star Tetrahedron -->
+  <g transform="translate(512, 250)" filter="url(#glow)">
+    <!-- Upward triangle -->
+    <path d="M 0,-45 L 40,30 L -40,30 Z"
+          fill="none" stroke="url(#goldGradient)" stroke-width="2.5" opacity="0.8"/>
+
+    <!-- Downward triangle (interlocked) -->
+    <path d="M 0,45 L -40,-30 L 40,-30 Z"
+          fill="none" stroke="url(#goldGradient)" stroke-width="2.5" opacity="0.8"/>
+
+    <!-- Center circle (third eye) -->
+    <circle cx="0" cy="0" r="12" fill="none" stroke="url(#goldGradient)" stroke-width="2"/>
+    <circle cx="0" cy="0" r="5" fill="url(#goldGradient)" opacity="0.9"/>
+  </g>
+
+  <!-- Eye of Horus (Right Side - mirrored) -->
+  <g transform="translate(768, 250) scale(-1, 1)" filter="url(#strongGlow)">
+    <!-- Outer eye shape -->
+    <path d="M -60,0 Q -50,-30 0,-35 Q 50,-30 60,0 Q 50,10 40,12 L -40,12 Q -50,10 -60,0 Z"
+          fill="none" stroke="url(#goldGradient)" stroke-width="3"/>
+
+    <!-- Iris/Pupil -->
+    <circle cx="0" cy="-10" r="15" fill="url(#goldGradient)" opacity="0.8"/>
+    <circle cx="0" cy="-10" r="8" fill="#1e0329"/>
+
+    <!-- Sacred geometry detail -->
+    <circle cx="0" cy="-10" r="3" fill="url(#goldGradient)"/>
+
+    <!-- Distinctive markings -->
+    <path d="M 40,12 Q 45,25 48,40" stroke="url(#goldGradient)" stroke-width="2.5" fill="none"/>
+    <path d="M 30,15 Q 32,28 33,38" stroke="url(#goldGradient)" stroke-width="2" fill="none" opacity="0.7"/>
+
+    <!-- Eyebrow -->
+    <path d="M -65,-2 Q -40,-40 10,-45 Q 55,-38 68,-8"
+          stroke="url(#goldGradient)" stroke-width="2" fill="none" opacity="0.6"/>
+  </g>
+
+  <!-- App Name -->
+  <g filter="url(#glow)">
+    <text x="512" y="430" font-family="serif" font-size="48" font-weight="bold"
+          fill="url(#goldGradient)" text-anchor="middle" letter-spacing="4">
+      SCRATCH ORACLE
+    </text>
+
+    <text x="512" y="465" font-family="sans-serif" font-size="20"
+          fill="#fde047" text-anchor="middle" opacity="0.9" letter-spacing="2">
+      Your Fortune Awaits
+    </text>
+  </g>
+
+  <!-- Connecting sacred geometry lines -->
+  <g stroke="url(#goldGradient)" stroke-width="1" opacity="0.3" fill="none">
+    <line x1="320" y1="250" x2="450" y2="250"/>
+    <line x1="574" y1="250" x2="704" y2="250"/>
+  </g>
+</svg>
+    </div>
+
+    <div class="info">
+        <p><strong>✅ Ready for Google Play Store!</strong></p>
+        <p>This graphic meets all Play Store requirements (1024x500, no transparency)</p>
+    </div>
+
+    <script>
+        function downloadSVG() {
+            const svgElement = document.querySelector('svg');
+            const svgData = new XMLSerializer().serializeToString(svgElement);
+            const blob = new Blob([svgData], {type: 'image/svg+xml'});
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'scratch-oracle-feature-graphic.svg';
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
