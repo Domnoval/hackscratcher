@@ -3,6 +3,7 @@ name: Build Production Android
 on:
   push:
     branches:
+      - master
       - main
     paths-ignore:
       - '**.md'
