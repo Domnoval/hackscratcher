@@ -1,16 +1,37 @@
 import 'react-native-url-polyfill/auto';
 import { createClient } from '@supabase/supabase-js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Constants from 'expo-constants';
 import { pinnedFetch } from '../services/security/certificatePinning';
 import { validate, ValidationError } from '../services/validation/validator';
 import { SupabaseResponseSchema, SupabaseArrayResponseSchema, UUIDSchema } from '../services/validation/schemas';
 import { sanitizeString, sanitizeNumber } from '../services/validation/sanitizer';
 
-const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY!;
+// Get environment variables from expo-constants
+// In development: loaded from .env via app.config.js
+// In production: loaded from EAS secrets via app.config.js
+const supabaseUrl = Constants.expoConfig?.extra?.supabaseUrl;
+const supabaseAnonKey = Constants.expoConfig?.extra?.supabaseAnonKey;
+
+// Debug logging to help diagnose env var issues
+console.log('[Supabase] Environment check:', {
+  hasExpoConfig: !!Constants.expoConfig,
+  hasExtra: !!Constants.expoConfig?.extra,
+  hasUrl: !!supabaseUrl,
+  hasKey: !!supabaseAnonKey,
+  url: supabaseUrl ? supabaseUrl.substring(0, 20) + '...' : 'MISSING',
+});
 
 if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Missing Supabase environment variables. Check your .env file.');
+  const errorMessage =
+    'Missing Supabase environment variables.\n' +
+    'Supabase URL: ' + (supabaseUrl ? 'OK' : 'MISSING') + '\n' +
+    'Supabase Key: ' + (supabaseAnonKey ? 'OK' : 'MISSING') + '\n' +
+    'Constants.expoConfig: ' + (Constants.expoConfig ? 'exists' : 'MISSING') + '\n' +
+    'Constants.expoConfig.extra: ' + (Constants.expoConfig?.extra ? 'exists' : 'MISSING');
+
+  console.error('[Supabase] ' + errorMessage);
+  throw new Error(errorMessage);
 }
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
