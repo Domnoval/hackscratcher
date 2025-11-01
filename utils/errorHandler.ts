@@ -3,7 +3,8 @@
  * Centralized error handling for network errors, timeouts, and other failures
  */
 
-import { Alert } from 'react-native';
+import { Alert, Platform } from 'react-native';
+import NetInfo from '@react-native-community/netinfo';
 
 export class ErrorHandler {
   /**
@@ -109,21 +110,44 @@ export class ErrorHandler {
 
 /**
  * Network Status Monitor
- * Detects online/offline status (limited on React Native Web)
+ * Detects online/offline status using React Native NetInfo
  */
 export class NetworkMonitor {
   private static listeners: Array<(isOnline: boolean) => void> = [];
   private static isOnline: boolean = true;
+  private static unsubscribe: (() => void) | null = null;
 
   /**
    * Initialize network monitoring
    */
   static initialize(): void {
-    // Browser network detection
-    if (typeof window !== 'undefined') {
-      window.addEventListener('online', this.handleOnline);
-      window.addEventListener('offline', this.handleOffline);
-      this.isOnline = navigator.onLine;
+    try {
+      // Use NetInfo for React Native
+      this.unsubscribe = NetInfo.addEventListener(state => {
+        const wasOnline = this.isOnline;
+        this.isOnline = state.isConnected ?? true;
+
+        // Notify listeners on status change
+        if (wasOnline !== this.isOnline) {
+          if (this.isOnline) {
+            this.handleOnline();
+          } else {
+            this.handleOffline();
+          }
+        }
+      });
+
+      // Get initial state
+      NetInfo.fetch().then(state => {
+        this.isOnline = state.isConnected ?? true;
+      }).catch(error => {
+        console.warn('[NetworkMonitor] Failed to fetch initial state:', error);
+        this.isOnline = true; // Assume online if we can't check
+      });
+    } catch (error) {
+      console.error('[NetworkMonitor] Failed to initialize:', error);
+      // Assume online if NetInfo is not available
+      this.isOnline = true;
     }
   }
 
@@ -131,9 +155,9 @@ export class NetworkMonitor {
    * Clean up listeners
    */
   static cleanup(): void {
-    if (typeof window !== 'undefined') {
-      window.removeEventListener('online', this.handleOnline);
-      window.removeEventListener('offline', this.handleOffline);
+    if (this.unsubscribe) {
+      this.unsubscribe();
+      this.unsubscribe = null;
     }
   }
 
@@ -150,13 +174,18 @@ export class NetworkMonitor {
   }
 
   /**
-   * Get current network status
+   * Get current network status (synchronous)
    */
   static getStatus(): boolean {
-    if (typeof window !== 'undefined') {
-      return navigator.onLine;
-    }
     return this.isOnline;
+  }
+
+  /**
+   * Fetch current network status from NetInfo (async)
+   */
+  static async fetchStatus(): Promise<boolean> {
+    const state = await NetInfo.fetch();
+    return state.isConnected ?? true;
   }
 
   private static handleOnline = (): void => {
