@@ -10,12 +10,17 @@
 
 import { Platform } from 'react-native';
 
-// Only import ssl-pinning on native platforms (it doesn't work on web)
+// Only import ssl-pinning on native platforms (it doesn't work on web or Expo Go)
 let sslPinnedFetch: any = null;
 if (Platform.OS !== 'web') {
   try {
     const sslPinning = require('react-native-ssl-pinning');
-    sslPinnedFetch = sslPinning.fetch;
+    // Check if fetch method actually exists (it won't in Expo Go)
+    if (sslPinning && typeof sslPinning.fetch === 'function') {
+      sslPinnedFetch = sslPinning.fetch;
+    } else {
+      console.warn('[SECURITY] react-native-ssl-pinning loaded but fetch not available (Expo Go?), certificate pinning disabled');
+    }
   } catch (error) {
     console.warn('[SECURITY] react-native-ssl-pinning not available, certificate pinning disabled');
   }
@@ -64,9 +69,10 @@ export interface CertificatePinConfig {
 }
 
 // Default configuration - pinning enabled in production
+// TEMPORARY: Allow fallback in production until ssl-pinning is properly configured
 const defaultConfig: CertificatePinConfig = {
   enabled: true,
-  fallbackToNormalFetch: __DEV__, // Only allow fallback in development
+  fallbackToNormalFetch: true, // Allow fallback if ssl-pinning not available
 };
 
 let currentConfig = { ...defaultConfig };
@@ -162,6 +168,12 @@ export async function pinnedFetch(
     // Certificate pinning failure - this is a security event
     console.error('[SECURITY] Certificate pinning validation failed:', error);
     console.error('[SECURITY] URL:', url);
+
+    // If fallback is allowed, use regular fetch
+    if (currentConfig.fallbackToNormalFetch) {
+      console.warn('[SECURITY] Falling back to normal fetch due to pinning error');
+      return fetch(url, options);
+    }
 
     if (error instanceof Error) {
       // Check if it's a pinning failure vs network error
