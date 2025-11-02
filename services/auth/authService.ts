@@ -198,17 +198,38 @@ export class AuthService {
   static onAuthStateChange(
     callback: (user: User | null, session: Session | null) => void
   ): () => void {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        console.log('[AuthService] Auth state changed:', event);
-        callback(session?.user ?? null, session);
+    try {
+      // Check if supabase.auth.onAuthStateChange exists
+      if (!supabase?.auth?.onAuthStateChange || typeof supabase.auth.onAuthStateChange !== 'function') {
+        console.error('[AuthService] onAuthStateChange not available on supabase.auth');
+        console.error('[AuthService] supabase:', !!supabase);
+        console.error('[AuthService] supabase.auth:', !!supabase?.auth);
+        // Return no-op unsubscribe function
+        return () => {};
       }
-    );
 
-    // Return unsubscribe function
-    return () => {
-      subscription.unsubscribe();
-    };
+      const { data: { subscription } } = supabase.auth.onAuthStateChange(
+        (event, session) => {
+          console.log('[AuthService] Auth state changed:', event);
+          callback(session?.user ?? null, session);
+        }
+      );
+
+      // Return unsubscribe function with safety check
+      return () => {
+        try {
+          if (subscription && typeof subscription.unsubscribe === 'function') {
+            subscription.unsubscribe();
+          }
+        } catch (error) {
+          console.error('[AuthService] Error unsubscribing from auth changes:', error);
+        }
+      };
+    } catch (error) {
+      console.error('[AuthService] Failed to subscribe to auth state changes:', error);
+      // Return no-op unsubscribe function
+      return () => {};
+    }
   }
 
   /**
