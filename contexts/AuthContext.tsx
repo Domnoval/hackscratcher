@@ -27,16 +27,29 @@ export function AuthProvider({ children }: AuthProviderProps) {
     // Check for existing session on mount
     initializeAuth();
 
-    // Subscribe to auth state changes
-    const unsubscribe = AuthService.onAuthStateChange((user, session) => {
-      console.log('[AuthContext] Auth state changed:', user ? 'signed in' : 'signed out');
-      setUser(user);
-      setSession(session);
-      setIsLoading(false);
-    });
+    // Subscribe to auth state changes with error handling
+    let unsubscribe: (() => void) | null = null;
+    try {
+      unsubscribe = AuthService.onAuthStateChange((user, session) => {
+        console.log('[AuthContext] Auth state changed:', user ? 'signed in' : 'signed out');
+        setUser(user);
+        setSession(session);
+        setIsLoading(false);
+      });
+    } catch (error) {
+      console.error('[AuthContext] Failed to subscribe to auth changes:', error);
+      // Proceed without auth state change subscription
+      unsubscribe = () => {}; // No-op unsubscribe
+    }
 
     return () => {
-      unsubscribe();
+      if (unsubscribe) {
+        try {
+          unsubscribe();
+        } catch (error) {
+          console.error('[AuthContext] Error during unsubscribe:', error);
+        }
+      }
     };
   }, []);
 
