@@ -3,7 +3,6 @@ import {
   StyleSheet,
   Text,
   View,
-  SafeAreaView,
   ScrollView,
   FlatList,
   TextInput,
@@ -13,6 +12,7 @@ import {
   Platform,
   Modal
 } from 'react-native';
+import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { QueryClientProvider } from '@tanstack/react-query';
 
@@ -66,8 +66,9 @@ type State = 'MN' | 'FL';
 type AuthScreen = 'signIn' | 'signUp';
 
 function AppContent() {
-  const { isAuthenticated, isLoading: authLoading } = useAuth();
-  const [authScreen, setAuthScreen] = useState<AuthScreen>('signIn');
+  // AUTH DISABLED - Skip login for now
+  // const { isAuthenticated, isLoading: authLoading } = useAuth();
+  // const [authScreen, setAuthScreen] = useState<AuthScreen>('signIn');
   const [isVerified, setIsVerified] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [showAgeVerification, setShowAgeVerification] = useState(false);
@@ -84,7 +85,11 @@ function AppContent() {
 
     // Initialize network monitoring
     NetworkMonitor.initialize();
-    setIsOnline(NetworkMonitor.getStatus());
+
+    // Get initial network status
+    NetworkMonitor.getStatus().then(status => {
+      setIsOnline(status);
+    });
 
     const unsubscribe = NetworkMonitor.subscribe((online) => {
       setIsOnline(online);
@@ -333,8 +338,8 @@ function AppContent() {
     </View>
   );
 
-  // Show loading spinner while auth or app is loading
-  if (isLoading || authLoading) {
+  // Show loading spinner while app is loading
+  if (isLoading) {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.loadingContainer}>
@@ -352,30 +357,30 @@ function AppContent() {
     );
   }
 
-  // Show auth screens if not authenticated
-  if (!isAuthenticated) {
-    return (
-      <SafeAreaView style={styles.container}>
-        <StatusBar style="light" />
-        {authScreen === 'signIn' ? (
-          <SignInScreen
-            onSignInSuccess={() => {
-              // Auth state change will automatically update isAuthenticated
-            }}
-            onNavigateToSignUp={() => setAuthScreen('signUp')}
-          />
-        ) : (
-          <SignUpScreen
-            onSignUpSuccess={() => {
-              // After signup, switch to sign in screen
-              setAuthScreen('signIn');
-            }}
-            onNavigateToSignIn={() => setAuthScreen('signIn')}
-          />
-        )}
-      </SafeAreaView>
-    );
-  }
+  // AUTH DISABLED - Skip login screens, go straight to app
+  // if (!isAuthenticated) {
+  //   return (
+  //     <SafeAreaView style={styles.container}>
+  //       <StatusBar style="light" />
+  //       {authScreen === 'signIn' ? (
+  //         <SignInScreen
+  //           onSignInSuccess={() => {
+  //             // Auth state change will automatically update isAuthenticated
+  //           }}
+  //           onNavigateToSignUp={() => setAuthScreen('signUp')}
+  //         />
+  //       ) : (
+  //         <SignUpScreen
+  //           onSignUpSuccess={() => {
+  //             // After signup, switch to sign in screen
+  //             setAuthScreen('signIn');
+  //           }}
+  //           onNavigateToSignIn={() => setAuthScreen('signIn')}
+  //         />
+  //       )}
+  //     </SafeAreaView>
+  //   );
+  // }
 
   // Show main app if authenticated
   return (
@@ -417,16 +422,18 @@ function AppContent() {
 
 /**
  * Main App component wrapped with providers
+ * - SafeAreaProvider: Provides safe area insets for proper device edge handling
  * - QueryClientProvider: Enables data caching and automatic refetching
  * - AuthProvider: Manages authentication state across the app
  */
 export default function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
+    <SafeAreaProvider>
+      <QueryClientProvider client={queryClient}>
+        {/* AUTH DISABLED - Removed AuthProvider wrapper */}
         <AppContent />
-      </AuthProvider>
-    </QueryClientProvider>
+      </QueryClientProvider>
+    </SafeAreaProvider>
   );
 }
 
