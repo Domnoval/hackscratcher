@@ -158,14 +158,25 @@ export class AuthService {
    */
   static async getCurrentUser(): Promise<User | null> {
     try {
-      const { data: { user }, error } = await supabase.auth.getUser();
-
-      if (error) {
-        console.error('[AuthService] Get user error:', error);
+      // Check if getUser exists
+      if (!supabase?.auth?.getUser || typeof supabase.auth.getUser !== 'function') {
+        console.error('[AuthService] getUser not available on supabase.auth');
         return null;
       }
 
-      return user;
+      const result = await supabase.auth.getUser();
+
+      if (!result || !result.data) {
+        console.error('[AuthService] getUser returned unexpected result:', result);
+        return null;
+      }
+
+      if (result.error) {
+        console.error('[AuthService] Get user error:', result.error);
+        return null;
+      }
+
+      return result.data.user;
     } catch (error) {
       console.error('[AuthService] Get user exception:', error);
       return null;
@@ -177,14 +188,25 @@ export class AuthService {
    */
   static async getSession(): Promise<Session | null> {
     try {
-      const { data: { session }, error } = await supabase.auth.getSession();
-
-      if (error) {
-        console.error('[AuthService] Get session error:', error);
+      // Check if getSession exists
+      if (!supabase?.auth?.getSession || typeof supabase.auth.getSession !== 'function') {
+        console.error('[AuthService] getSession not available on supabase.auth');
         return null;
       }
 
-      return session;
+      const result = await supabase.auth.getSession();
+
+      if (!result || !result.data) {
+        console.error('[AuthService] getSession returned unexpected result:', result);
+        return null;
+      }
+
+      if (result.error) {
+        console.error('[AuthService] Get session error:', result.error);
+        return null;
+      }
+
+      return result.data.session;
     } catch (error) {
       console.error('[AuthService] Get session exception:', error);
       return null;
