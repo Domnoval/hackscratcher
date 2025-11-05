@@ -43,7 +43,8 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   },
   global: {
     // Use custom fetch with SSL certificate pinning for all Supabase requests
-    fetch: pinnedFetch as unknown as typeof fetch,
+    // In development (__DEV__), use regular fetch since SSL pinning doesn't work in Expo Go
+    fetch: __DEV__ ? fetch : (pinnedFetch as unknown as typeof fetch),
   },
 });
 

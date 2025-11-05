@@ -110,8 +110,8 @@ function AppContent() {
       // Initialize feature flags first
       await FeatureFlagService.initialize();
 
-      // ENABLE REAL SUPABASE DATA WITH AI PREDICTIONS!
-      await FeatureFlagService.enableSupabase();
+      // AUTH DISABLED - Don't enable Supabase features for now
+      // await FeatureFlagService.enableSupabase();
 
       console.log('[App] Feature flags initialized:', FeatureFlagService.getStatusMessage());
 
