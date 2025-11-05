@@ -208,12 +208,22 @@ export class AuthService {
         return () => {};
       }
 
-      const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      // Call onAuthStateChange and check if result exists
+      const result = supabase.auth.onAuthStateChange(
         (event, session) => {
           console.log('[AuthService] Auth state changed:', event);
           callback(session?.user ?? null, session);
         }
       );
+
+      // Check if result has expected structure
+      if (!result || !result.data || !result.data.subscription) {
+        console.error('[AuthService] onAuthStateChange returned unexpected result:', result);
+        // Return no-op unsubscribe function
+        return () => {};
+      }
+
+      const subscription = result.data.subscription;
 
       // Return unsubscribe function with safety check
       return () => {
