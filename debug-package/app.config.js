@@ -6,7 +6,7 @@ module.exports = {
   expo: {
     name: "Scratch Oracle",
     slug: "scratch-oracle-app",
-    version: "1.0.11",
+    version: "1.0.10",
     orientation: "portrait",
     icon: "./assets/icon.png",
     userInterfaceStyle: "dark",
@@ -24,7 +24,7 @@ module.exports = {
     },
     android: {
       package: "com.scratchoracle.app",
-      versionCode: 12,
+      versionCode: 11,
       adaptiveIcon: {
         foregroundImage: "./assets/adaptive-icon.png",
         backgroundColor: "#0A0A0F"

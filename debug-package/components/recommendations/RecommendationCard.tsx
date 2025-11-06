@@ -1,8 +1,7 @@
 import React, { memo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Recommendation } from '../../types/lottery';
-// DISABLED: WinTracker requires Supabase - will re-enable after fixing auth
-// import { WinTracker } from '../tracking';
+import { WinTracker } from '../tracking';
 
 interface RecommendationCardProps {
   item: Recommendation;
@@ -46,13 +45,12 @@ const RecommendationCardComponent = ({ item, index }: RecommendationCardProps) =
         </View>
       </View>
 
-      {/* DISABLED: Win Tracking requires Supabase - will re-enable after fixing auth
+      {/* Win Tracking - Help us improve! */}
       <WinTracker
         gameId={item.gameId}
         gameName={item.game.name}
         gamePrice={item.game.price}
       />
-      */}
     </View>
   );
 };

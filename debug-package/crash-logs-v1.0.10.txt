@@ -1,0 +1,908 @@
+--------- beginning of system
+11-05 05:22:24.181   834  1928 W ActivityTaskManager: callingPackage for (uid=2000, pid=7802) has no WPC
+11-05 05:22:24.190   834  1928 V WindowManager: DesktopModeLaunchParamsModifier: phase= 0 task=null activity=null display-area-from-current-params=null display-area-from-default-fallback=DefaultTaskDisplayArea@41053049 display-id=0 task-display-area-windowing-mode=1 suggested-display-area=DefaultTaskDisplayArea@41053049 task null, skipping
+11-05 05:22:24.192   834  1928 V WindowManager: TaskLaunchParamsModifier:phase=0 task=null activity=null display-area-from-current-params=null display-area-from-default-fallback=DefaultTaskDisplayArea@41053049 display-id=0 task-display-area-windowing-mode=1 suggested-display-area=DefaultTaskDisplayArea@41053049
+--------- beginning of main
+11-05 05:22:24.208   834  1928 V GrammaticalInflectionUtils: AttributionSource: android.content.AttributionSource@16f8b47c does not have READ_SYSTEM_GRAMMATICAL_GENDER permission.
+11-05 05:22:24.217   834  1928 V WindowManager: DesktopModeLaunchParamsModifier: phase= 0 task=null activity=ActivityRecord{127891613 u0 com.scratchoracle.app/.MainActivity display-area-from-current-params=null display-area-from-default-fallback=DefaultTaskDisplayArea@41053049 display-id=0 task-display-area-windowing-mode=1 suggested-display-area=DefaultTaskDisplayArea@41053049 task null, skipping
+11-05 05:22:24.217   834  1928 V WindowManager: TaskLaunchParamsModifier:phase=0 task=null activity=ActivityRecord{127891613 u0 com.scratchoracle.app/.MainActivity t-1} display-area-from-current-params=null display-area-from-default-fallback=DefaultTaskDisplayArea@41053049 display-id=0 task-display-area-windowing-mode=1 suggested-display-area=DefaultTaskDisplayArea@41053049
+11-05 05:22:24.218   834  1928 V WindowManager: DesktopModeLaunchParamsModifier: phase= 3 task=null activity=ActivityRecord{127891613 u0 com.scratchoracle.app/.MainActivity t-1} display-area-from-current-params=null display-area-from-default-fallback=DefaultTaskDisplayArea@41053049 display-id=0 task-display-area-windowing-mode=1 suggested-display-area=DefaultTaskDisplayArea@41053049 task null, skipping
+11-05 05:22:24.218   834  1928 V WindowManager: TaskLaunchParamsModifier:phase=3 task=null activity=ActivityRecord{127891613 u0 com.scratchoracle.app/.MainActivity t-1} display-area-from-current-params=null display-area-from-default-fallback=DefaultTaskDisplayArea@41053049 display-id=0 task-display-area-windowing-mode=1 suggested-display-area=DefaultTaskDisplayArea@41053049 non-freeform-task-display-area display-area=DefaultTaskDisplayArea@41053049 skip-bounds-fullscreen
+11-05 05:22:24.251   834  1928 V WindowManager: DesktopModeLaunchParamsModifier: phase= 3 task=Task{c146112 #43 type=standard A=10221:com.scratchoracle.app} activity=ActivityRecord{127891613 u0 com.scratchoracle.app/.MainActivity t-1} display-from-task=0 display-id=0 task-display-area-windowing-mode=1 suggested-display-area=DefaultTaskDisplayArea@41053049 not entering desktop mode, skipping
+11-05 05:22:24.252   834  1928 V WindowManager: TaskLaunchParamsModifier:phase=3 task=Task{c146112 #43 type=standard A=10221:com.scratchoracle.app} activity=ActivityRecord{127891613 u0 com.scratchoracle.app/.MainActivity t-1} display-from-task=0 display-id=0 task-display-area-windowing-mode=1 suggested-display-area=DefaultTaskDisplayArea@41053049 inherit-from-task=fullscreen non-freeform-task-display-area display-area=DefaultTaskDisplayArea@41053049 skip-bounds-fullscreen
+11-05 05:22:24.267   834  1928 I ActivityTaskManager: START u0 {flg=0x10000000 xflg=0x5 cmp=com.scratchoracle.app/.MainActivity} with LAUNCH_SINGLE_TASK from uid 2000 (com.android.shell) (BAL_ALLOW_PERMISSION) result code=0
+11-05 05:22:24.274  1326  1326 D BaseActivity: Launcher flags updated: [state_started|state_resumed|state_deferred_resumed|state_window_focused] -[state_user_active]
+11-05 05:22:24.279  1326  1326 D BaseActivity: Launcher flags updated: [state_started|state_window_focused] -[state_resumed|state_deferred_resumed]
+11-05 05:22:24.279   834   868 V GrammaticalInflectionUtils: AttributionSource: android.content.AttributionSource@16f8b47c does not have READ_SYSTEM_GRAMMATICAL_GENDER permission.
+11-05 05:22:24.283  1326  1326 W SplitSelectStateCtor: Missing session instanceIds
+11-05 05:22:24.283  1326  1326 D StatsLog: LAUNCHER_SPLIT_SELECTION_EXIT_INTERRUPTED
+11-05 05:22:24.287   834  1092 D BackgroundInstallControlService: Package event received: 0
+11-05 05:22:24.300   834  1312 V WindowManager: Defer transition id=14 for TaskFragmentTransaction=android.os.Binder@2537c5e
+11-05 05:22:24.303   834  1312 V WindowManager: deferTransitionReady deferReadyDepth=1 stack=com.android.server.wm.TransitionController.deferTransitionReady:1061 com.android.server.wm.TaskFragmentOrganizerController$TaskFragmentOrganizerState.dispatchTransaction:517 com.android.server.wm.TaskFragmentOrganizerController.dispatchPendingEvents:1259 com.android.server.wm.TaskFragmentOrganizerController.dispatchPendingEvents:1228 com.android.server.wm.RootWindowContainer.performSurfacePlacement:777 
+11-05 05:22:24.304   834  1928 D CompatChangeReporter: Compat change id reported: 377864165; UID 10221; state: ENABLED
+11-05 05:22:24.305   579   579 D Zygote  : Forked child process 7809
+11-05 05:22:24.306   834   880 I ActivityManager: Start proc 7809:com.scratchoracle.app/u0a221 for next-top-activity {com.scratchoracle.app/com.scratchoracle.app.MainActivity}
+11-05 05:22:24.306  1326  1326 D RecentsView: onTaskDisplayChanged: 43, new displayId = 0
+11-05 05:22:24.308  1149  1211 V WindowManagerShell: Transition requested (#14): android.os.BinderProxy@88f95f8 TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=43 effectiveUid=10221 displayId=0 isRunning=true baseIntent=Intent { flg=0x10000000 cmp=com.scratchoracle.app/.MainActivity } baseActivity=ComponentInfo{com.scratchoracle.app/com.scratchoracle.app.MainActivity} topActivity=ComponentInfo{com.scratchoracle.app/com.scratchoracle.app.MainActivity} origActivity=null realActivity=ComponentInfo{com.scratchoracle.app/com.scratchoracle.app.MainActivity} numActivities=1 lastActiveTime=13613396 supportsMultiWindow=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.os.BinderProxy@aa49ad1} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 0 - 0, 0) topActivityInfo=ActivityInfo{de7c936 com.scratchoracle.app.MainActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isVisible=false isVisibleRequested=false isTopActivityNoDisplay=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=false lastNonFullscreenBounds=null capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=503 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false isLeafTask= true eligibleForLetterboxEducation= false isLetterboxEducationEnabled= true isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 1080, 2400) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null cameraCompatTaskInfo=CameraCompatTaskInfo { cameraCompatMode=inactive0} topNonResizableActivityAspectRatio=-1.0} topActivityMainWindowFrame=null isAppBubble=false}, pipChange = null, remoteTransition = null, displayChange = null, requestedLocation = null, userChange = null, windowingLayerChange = null, flags = 0, debugId = 14 }
+11-05 05:22:24.310   834  1312 V WindowManager: Continue transition id=14 for TaskFragmentTransaction=android.os.Binder@2537c5e
+11-05 05:22:24.313  1149  1211 D ShellSplitScreen: logExit: no-op, mLoggerSessionId is null
+11-05 05:22:24.313   834  1312 V WindowManager: continueTransitionReady deferReadyDepth=0 stack=com.android.server.wm.TransitionController.continueTransitionReady:1071 com.android.server.wm.TaskFragmentOrganizerController$TaskFragmentOrganizerState.onTransactionFinished:546 com.android.server.wm.TaskFragmentOrganizerController.onTransactionHandled:740 android.window.ITaskFragmentOrganizerController$Stub.onTransact:225 android.os.Binder.execTransactInternal:1473 
+11-05 05:22:24.320  1149  1211 D WindowManagerShell: setLauncherKeepClearAreaHeight: visible=false, height=544
+11-05 05:22:24.326  1326  1326 D b/417220811: invalidateLoadedTasks - previous requestLoadId: -1
+11-05 05:22:24.329  1326  1326 D b/417220811: invalidateLoadedTasks - previous requestLoadId: -1
+11-05 05:22:24.352   708   798 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+11-05 05:22:24.352   708   798 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+11-05 05:22:24.356  1326  1326 D BaseActivity: Launcher flags updated: [state_started] -[state_window_focused]
+11-05 05:22:24.360  7809  7809 I Zygote  : Process 7809 created for com.scratchoracle.app
+11-05 05:22:24.361  7809  7809 I ratchoracle.app: Using CollectorTypeCMC GC.
+11-05 05:22:24.364  7809  7809 W ratchoracle.app: Unexpected CPU variant for x86: x86_64.
+11-05 05:22:24.364  7809  7809 W ratchoracle.app: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, goldmont-without-sha-xsaves, tremont, kabylake, alderlake, default
+11-05 05:22:24.397  1326  1326 D b/417220811: invalidateLoadedTasks - previous requestLoadId: -1
+11-05 05:22:24.399  1149  1250 D WindowOnBackDispatcher: setTopOnBackInvokedCallback (unwrapped): android.view.ViewRootImpl$$ExternalSyntheticLambda12@bab7cc3
+11-05 05:22:24.400   834  1312 D CoreBackPreview: Window{5461e55 u0 Splash Screen com.scratchoracle.app}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@7a7a95b, mPriority=0, mIsAnimationCallback=false, mOverrideBehavior=0}
+11-05 05:22:24.415   834  1928 W WindowManager: takeTaskSnapshot: taskId=36 not found or not visible
+11-05 05:22:24.422  7809  7809 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+11-05 05:22:24.475   834  1092 D BackgroundInstallControlService: Package event received: 0
+11-05 05:22:24.514  1149  1484 V WindowManagerShell: onTransitionReady(transaction=3582002726059)
+11-05 05:22:24.514  1149  1211 V WindowManagerShell: onTransitionReady (#14) android.os.BinderProxy@88f95f8: {id=14 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+11-05 05:22:24.514  1149  1211 V WindowManagerShell:         {m=OPEN f=NONE leash=Surface(name=Task=43#184)/@0x7d90bca sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 winMode=1 userId=0},
+11-05 05:22:24.514  1149  1211 V WindowManagerShell:         {m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1#44)/@0x13dc13b sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 winMode=1 userId=0},
+11-05 05:22:24.514  1149  1211 V WindowManagerShell:         {m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{a5e3854}#65)/@0x6cd7058 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}
+11-05 05:22:24.514  1149  1211 V WindowManagerShell:     ]}
+11-05 05:22:24.515   834   865 V WindowManager: Sent Transition (#14) createdAt=11-05 05:22:24.215 via request=TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=43 effectiveUid=10221 displayId=0 isRunning=true baseIntent=Intent { flg=0x10000000 cmp=com.scratchoracle.app/.MainActivity } baseActivity=ComponentInfo{com.scratchoracle.app/com.scratchoracle.app.MainActivity} topActivity=ComponentInfo{com.scratchoracle.app/com.scratchoracle.app.MainActivity} origActivity=null realActivity=ComponentInfo{com.scratchoracle.app/com.scratchoracle.app.MainActivity} numActivities=1 lastActiveTime=13613396 supportsMultiWindow=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{RemoteToken{9b332c2 Task{c146112 #43 type=standard A=10221:com.scratchoracle.app}}} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 0 - 0, 0) topActivityInfo=ActivityInfo{ecfe8d3 com.scratchoracle.app.MainActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isVisible=false isVisibleRequested=false isTopActivityNoDisplay=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=false lastNonFullscreenBounds=null capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=503 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false isLeafTask= true eligibleForLetterboxEducation= false isLetterboxEducationEnabled= true isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 1080, 2400) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null cameraCompatTaskInfo=CameraCompatTaskInfo { cameraCompatMode=inactive0} topNonResizableActivityAspectRatio=-1.0} topActivityMainWindowFrame=null isAppBubble=false}, pipChange = null, remoteTransition = null, displayChange = null, requestedLocation = null, userChange = null, windowingLayerChange = null, flags = 0, debugId = 14 }
+11-05 05:22:24.515   834   865 V WindowManager:     startWCT=WindowContainerTransaction { changes= {} hops= [] errorCallbackToken=null taskFragmentOrganizer=null }
+11-05 05:22:24.515   834   865 V WindowManager:     info={id=14 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+11-05 05:22:24.515   834   865 V WindowManager:         {WCT{RemoteToken{9b332c2 Task{c146112 #43 type=standard A=10221:com.scratchoracle.app}}} m=OPEN f=NONE leash=Surface(name=Task=43#184)/@0x37a89a4 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 winMode=1 userId=0},
+11-05 05:22:24.515   834   865 V WindowManager:         {WCT{RemoteToken{fde634a Task{48aa688 #1 type=home}}} m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1#44)/@0xeb23a sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 winMode=1 userId=0},
+11-05 05:22:24.515   834   865 V WindowManager:         {m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{a5e3854}#65)/@0x6c8aefd sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}
+11-05 05:22:24.515   834   865 V WindowManager:     ]}
+11-05 05:22:24.543  1149  1211 V WindowManagerShell: Playing animation for (#14) android.os.BinderProxy@88f95f8@0
+11-05 05:22:24.545  1149  1211 V ShellRecents: RecentsTransitionHandler.startAnimation: no controller found
+11-05 05:22:24.545  1149  1211 V WindowManagerShell: Transition doesn't have explicit remote, search filters for match for {id=14 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{m=OPEN f=NONE leash=Surface(name=Task=43#184)/@0x7d90bca sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 winMode=1 userId=0},{m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1#44)/@0x13dc13b sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 winMode=1 userId=0},{m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{a5e3854}#65)/@0x6cd7058 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}]}
+11-05 05:22:24.545  1149  1211 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x0 checks=[{atype=undefined independent=true modes=[CLOSE,TO_BACK] flags=IN_TASK_WITH_EMBEDDED_ACTIVITY mustBeTask=false order=ANY topActivity=null launchCookie=null taskFragmentToken=android.os.BinderProxy@c15e8d1 windowingMode=undefined isCrossDisplayMove=false}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@4e9ff36, appThread = android.app.IApplicationThread$Stub$Proxy@d284e37, debugName = overlayBackTransition }}
+11-05 05:22:24.546  1149  1211 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x0 checks=[{atype=dream independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{atype=home independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@7883fa4, appThread = android.app.IApplicationThread$Stub$Proxy@53f410d, debugName = LauncherToDream }}
+11-05 05:22:24.546  1149  1211 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=TOP topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity} launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined isCrossDisplayMove=false}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@eced8c2, appThread = android.app.IApplicationThread$Stub$Proxy@c2996d3, debugName = QuickstepLaunchHome }}
+11-05 05:22:24.546  1149  1211 V WindowManagerShell:  Delegate animation for (#14) to null
+11-05 05:22:24.546  1149  1211 V WindowManagerShell: start default transition animation, info = {id=14 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{m=OPEN f=NONE leash=Surface(name=Task=43#184)/@0x7d90bca sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 winMode=1 userId=0},{m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1#44)/@0x13dc13b sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 winMode=1 userId=0},{m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{a5e3854}#65)/@0x6cd7058 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}]}
+11-05 05:22:24.549  1149  1211 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@6d53a04 animAttr=0x13 type=OPEN isEntrance=false
+11-05 05:22:24.551  1149  1211 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@66df270 animAttr=0x12 type=OPEN isEntrance=true
+11-05 05:22:24.554  1149  1211 V WindowManagerShell:  animated by com.android.wm.shell.transition.DefaultTransitionHandler@5eafa9b
+11-05 05:22:24.560  7809  7809 D ApplicationLoaders: Returning zygote-cached class loader: /system/framework/org.apache.http.legacy.jar
+11-05 05:22:24.560  1149  1211 V ShellTaskOrganizer: Task appeared taskId=43 listener=FullscreenTaskListener
+11-05 05:22:24.560  1149  1211 V ShellTaskOrganizer: Fullscreen Task Appeared: #43
+11-05 05:22:24.561  1326  1326 D b/417220811: invalidateLoadedTasks - previous requestLoadId: -1
+11-05 05:22:24.569  7809  7809 D nativeloader: Configuring clns-9 for other apk /data/app/~~VQidtQmtKQpl2alC9HrWtA==/com.scratchoracle.app-w8smA7pMVhueqiIHWqQHHA==/base.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~VQidtQmtKQpl2alC9HrWtA==/com.scratchoracle.app-w8smA7pMVhueqiIHWqQHHA==/lib/x86_64:/data/app/~~VQidtQmtKQpl2alC9HrWtA==/com.scratchoracle.app-w8smA7pMVhueqiIHWqQHHA==/base.apk!/lib/x86_64, permitted_path=/data:/mnt/expand:/data/user/0/com.scratchoracle.app
+11-05 05:22:24.609  7809  7809 V GraphicsEnvironment: Currently set values for:
+11-05 05:22:24.610  7809  7809 V GraphicsEnvironment:   angle_gl_driver_selection_pkgs=[]
+11-05 05:22:24.611  7809  7809 V GraphicsEnvironment:   angle_gl_driver_selection_values=[]
+11-05 05:22:24.611  7809  7809 V GraphicsEnvironment: com.scratchoracle.app is not listed in per-application setting
+11-05 05:22:24.611  7809  7809 V GraphicsEnvironment: ANGLE allowlist from config: com.dreamgames.royalmatch com.dts.freefiremax com.dxx.firenow com.gramgames.mergedragons com.ludo.king com.mojang.minecraftpe com.my.defense com.nintendo.zaka com.os.airforce com.playrix.fishdomdd.gplay io.teslatech.callbreak jp.konami.prospia net.peakgames.toonblast
+11-05 05:22:24.611  7809  7809 V GraphicsEnvironment: No special selections for ANGLE, returning default driver choice
+11-05 05:22:24.612  7809  7809 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+11-05 05:22:24.663  7809  7809 D WM-WrkMgrInitializer: Initializing WorkManager with default configuration.
+11-05 05:22:24.679  7809  7809 W SoLoader: Initializing SoLoader: 0
+11-05 05:22:24.681  7809  7809 W SoLoader: Recording new base apk path: /data/app/~~VQidtQmtKQpl2alC9HrWtA==/com.scratchoracle.app-w8smA7pMVhueqiIHWqQHHA==/base.apk
+11-05 05:22:24.681  7809  7809 W SoLoader: Previously recorded 0 base apk paths.
+11-05 05:22:24.681  7809  7828 E ashmem  : Pinning is deprecated since Android Q. Please use trim or other methods.
+11-05 05:22:24.683  7809  7809 I SoLoader: Preparing SO source: DirectorySoSource[root = /vendor/lib64 flags = 2]
+11-05 05:22:24.683  7809  7809 I SoLoader: Preparing SO source: DirectorySoSource[root = /system/lib64 flags = 2]
+11-05 05:22:24.683  7809  7809 I SoLoader: Preparing SO source: DirectApkSoSource[root = [/data/app/~~VQidtQmtKQpl2alC9HrWtA==/com.scratchoracle.app-w8smA7pMVhueqiIHWqQHHA==/base.apk!/lib/x86_64]]
+11-05 05:22:24.687  7809  7809 I SoLoader: Preparing SO source: ApplicationSoSource[DirectorySoSource[root = /data/app/~~VQidtQmtKQpl2alC9HrWtA==/com.scratchoracle.app-w8smA7pMVhueqiIHWqQHHA==/lib/x86_64 flags = 0]]
+11-05 05:22:24.687  7809  7809 I SoLoader: init finish: 4 SO sources prepared
+11-05 05:22:24.688  7809  7809 W SoLoader: SoLoader initialized: 8
+11-05 05:22:24.701  7809  7809 D nativeloader: Load /data/app/~~VQidtQmtKQpl2alC9HrWtA==/com.scratchoracle.app-w8smA7pMVhueqiIHWqQHHA==/base.apk!/lib/x86_64/libc++_shared.so using class loader ns clns-9 (caller=/data/app/~~VQidtQmtKQpl2alC9HrWtA==/com.scratchoracle.app-w8smA7pMVhueqiIHWqQHHA==/base.apk): ok
+11-05 05:22:24.754  7809  7809 D nativeloader: Load /data/app/~~VQidtQmtKQpl2alC9HrWtA==/com.scratchoracle.app-w8smA7pMVhueqiIHWqQHHA==/base.apk!/lib/x86_64/libjsi.so using class loader ns clns-9 (caller=/data/app/~~VQidtQmtKQpl2alC9HrWtA==/com.scratchoracle.app-w8smA7pMVhueqiIHWqQHHA==/base.apk): ok
+11-05 05:22:24.757  7809  7809 D nativeloader: Load /data/app/~~VQidtQmtKQpl2alC9HrWtA==/com.scratchoracle.app-w8smA7pMVhueqiIHWqQHHA==/base.apk!/lib/x86_64/libfbjni.so using class loader ns clns-9 (caller=/data/app/~~VQidtQmtKQpl2alC9HrWtA==/com.scratchoracle.app-w8smA7pMVhueqiIHWqQHHA==/base.apk): ok
+11-05 05:22:24.761  7809  7809 D nativeloader: Load /data/app/~~VQidtQmtKQpl2alC9HrWtA==/com.scratchoracle.app-w8smA7pMVhueqiIHWqQHHA==/base.apk!/lib/x86_64/libreactnative.so using class loader ns clns-9 (caller=/data/app/~~VQidtQmtKQpl2alC9HrWtA==/com.scratchoracle.app-w8smA7pMVhueqiIHWqQHHA==/base.apk): ok
+11-05 05:22:24.761  7809  7809 D jni_lib_merge: Entering merged library JNI_OnLoad.
+11-05 05:22:24.761  7809  7809 D jni_lib_merge: Preparing 12 pre-merged libs (including stub)
+11-05 05:22:24.761  7809  7809 D jni_lib_merge: Preparing to register libfabricjni_so.  onload_func: 0x74d3316b2ba0
+11-05 05:22:24.761  7809  7809 D jni_lib_merge: Preparing to register libreact_devsupportjni_so.  onload_func: 0x74d33178e530
+11-05 05:22:24.761  7809  7809 D jni_lib_merge: Preparing to register libreact_featureflagsjni_so.  onload_func: 0x74d3317a10a0
+11-05 05:22:24.761  7809  7809 D jni_lib_merge: Preparing to register libreact_newarchdefaults_so.  onload_func: 0x74d3317c7fa0
+11-05 05:22:24.761  7809  7809 D jni_lib_merge: Preparing to register libreactnativeblob_so.  onload_func: 0x74d33186fa50
+11-05 05:22:24.761  7809  7809 D jni_lib_merge: Preparing to register libreactnativejni_so.  onload_func: 0x74d33188a8c0
+11-05 05:22:24.761  7809  7809 D jni_lib_merge: Preparing to register libreactnativejni_common_so.  onload_func: 0x74d331891150
+11-05 05:22:24.761  7809  7809 D jni_lib_merge: Preparing to register librninstance_so.  onload_func: 0x74d3318af450
+11-05 05:22:24.761  7809  7809 D jni_lib_merge: Preparing to register libturbomodulejsijni_so.  onload_func: 0x74d33195ab80
+11-05 05:22:24.761  7809  7809 D jni_lib_merge: Preparing to register libuimanagerjni_so.  onload_func: 0x74d331962ab0
+11-05 05:22:24.761  7809  7809 D jni_lib_merge: Preparing to register libyoga_so.  onload_func: 0x74d33196a130
+11-05 05:22:24.761  7809  7809 D jni_lib_merge: About to register 11 actual methods.
+11-05 05:22:24.766  7809  7809 D nativeloader: Load /data/app/~~VQidtQmtKQpl2alC9HrWtA==/com.scratchoracle.app-w8smA7pMVhueqiIHWqQHHA==/base.apk!/lib/x86_64/libreact_codegen_rnscreens.so using class loader ns clns-9 (caller=/data/app/~~VQidtQmtKQpl2alC9HrWtA==/com.scratchoracle.app-w8smA7pMVhueqiIHWqQHHA==/base.apk): ok
+11-05 05:22:24.766  7809  7809 D jni_lib_merge: Entering merged library JNI_OnLoad.
+11-05 05:22:24.766  7809  7809 D jni_lib_merge: Preparing 12 pre-merged libs (including stub)
+11-05 05:22:24.766  7809  7809 D jni_lib_merge: Preparing to register libfabricjni_so.  onload_func: 0x74d3316b2ba0
+11-05 05:22:24.766  7809  7809 D jni_lib_merge: Preparing to register libreact_devsupportjni_so.  onload_func: 0x74d33178e530
+11-05 05:22:24.766  7809  7809 D jni_lib_merge: Preparing to register libreact_featureflagsjni_so.  onload_func: 0x74d3317a10a0
+11-05 05:22:24.766  7809  7809 D jni_lib_merge: Preparing to register libreact_newarchdefaults_so.  onload_func: 0x74d3317c7fa0
+11-05 05:22:24.766  7809  7809 D jni_lib_merge: Preparing to register libreactnativeblob_so.  onload_func: 0x74d33186fa50
+11-05 05:22:24.766  7809  7809 D jni_lib_merge: Preparing to register libreactnativejni_so.  onload_func: 0x74d33188a8c0
+11-05 05:22:24.766  7809  7809 D jni_lib_merge: Preparing to register libreactnativejni_common_so.  onload_func: 0x74d331891150
+11-05 05:22:24.766  7809  7809 D jni_lib_merge: Preparing to register librninstance_so.  onload_func: 0x74d3318af450
+11-05 05:22:24.766  7809  7809 D jni_lib_merge: Preparing to register libturbomodulejsijni_so.  onload_func: 0x74d33195ab80
+11-05 05:22:24.766  7809  7809 D jni_lib_merge: Preparing to register libuimanagerjni_so.  onload_func: 0x74d331962ab0
+11-05 05:22:24.766  7809  7809 D jni_lib_merge: Preparing to register libyoga_so.  onload_func: 0x74d33196a130
+11-05 05:22:24.766  7809  7809 D jni_lib_merge: About to register 11 actual methods.
+11-05 05:22:24.769  7809  7809 D nativeloader: Load /data/app/~~VQidtQmtKQpl2alC9HrWtA==/com.scratchoracle.app-w8smA7pMVhueqiIHWqQHHA==/base.apk!/lib/x86_64/libreact_codegen_safeareacontext.so using class loader ns clns-9 (caller=/data/app/~~VQidtQmtKQpl2alC9HrWtA==/com.scratchoracle.app-w8smA7pMVhueqiIHWqQHHA==/base.apk): ok
+11-05 05:22:24.771  7809  7809 D nativeloader: Load /data/app/~~VQidtQmtKQpl2alC9HrWtA==/com.scratchoracle.app-w8smA7pMVhueqiIHWqQHHA==/base.apk!/lib/x86_64/libappmodules.so using class loader ns clns-9 (caller=/data/app/~~VQidtQmtKQpl2alC9HrWtA==/com.scratchoracle.app-w8smA7pMVhueqiIHWqQHHA==/base.apk): ok
+11-05 05:22:24.782   834  1092 D BackgroundInstallControlService: Package event received: 0
+11-05 05:22:24.783   834  1092 D BackgroundInstallControlService: Package event received: 0
+11-05 05:22:24.789  7809  7830 I DisplayManager: Choreographer implicitly registered for the refresh rate.
+11-05 05:22:24.823  7809  7809 D DesktopExperienceFlags: Toggle override initialized to: false
+11-05 05:22:24.828  7809  7809 D AppCompatDelegate: Checking for metadata for AppLocalesMetadataHolderService : Service not found
+11-05 05:22:24.862  1149  1211 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#14) android.os.BinderProxy@88f95f8@0
+11-05 05:22:24.867   834   865 V WindowManager: Finish Transition (#14): created at 11-05 05:22:24.215 collect-started=2.375ms request-sent=52.13ms started=100.321ms ready=290.936ms sent=295.612ms commit=48.636ms finished=651.784ms
+11-05 05:22:24.870  1326  1326 D VRI[NexusLauncherActivity]: visibilityChanged oldVisibility=true newVisibility=false
+11-05 05:22:24.873  1149  1211 V WindowManagerShell: Track 0 became idle
+11-05 05:22:24.874  1149  1211 V WindowManagerShell: All active transition animations finished
+11-05 05:22:24.877  1149  1437 D WallpaperService: onVisibilityChanged(false): com.android.systemui.wallpapers.ImageWallpaper$CanvasEngine@b8f5b73
+11-05 05:22:24.880  1326  1326 D NexusLauncherModelDelegate: notifySmartspaceEvent: SmartspaceTargetEvent{mSmartspaceTarget=null, mSmartspaceActionId='null', mEventType=7}
+11-05 05:22:24.885  7809  7830 I GFXSTREAM: [eglDisplay.cpp(297)] Opening libGLESv1_CM_emulation.so
+11-05 05:22:24.885  7809  7830 I GFXSTREAM: [eglDisplay.cpp(297)] Opening libGLESv2_emulation.so
+11-05 05:22:24.895  7809  7830 W HWUI    : Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+11-05 05:22:24.895  7809  7830 W HWUI    : Failed to initialize 101010-2 format, error = EGL_SUCCESS
+11-05 05:22:24.915  7809  7809 W unknown:BridgelessReact: ReactHost{0}.startSurface(surfaceId = 0): Schedule
+11-05 05:22:24.916  7809  7809 W unknown:BridgelessReact: ReactHost{0}.attachSurface(surfaceId = 0)
+11-05 05:22:24.919  7809  7835 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask()
+11-05 05:22:24.919  7809  7835 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Start
+11-05 05:22:24.919  7809  7835 W unknown:BridgelessReact: ReactHost{0}.getJSBundleLoader()
+11-05 05:22:24.922  7809  7835 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactContext(): Creating BridgelessReactContext
+11-05 05:22:24.924  7809  7835 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Creating ReactInstance
+11-05 05:22:24.929  7809  7809 D CompatChangeReporter: Compat change id reported: 377864165; UID 10221; state: ENABLED
+11-05 05:22:24.929  7809  7809 D DesktopModeFlags: Toggle override initialized to: OVERRIDE_UNSET
+11-05 05:22:24.946  7809  7835 D nativeloader: Load /data/app/~~VQidtQmtKQpl2alC9HrWtA==/com.scratchoracle.app-w8smA7pMVhueqiIHWqQHHA==/base.apk!/lib/x86_64/libhermes.so using class loader ns clns-9 (caller=/data/app/~~VQidtQmtKQpl2alC9HrWtA==/com.scratchoracle.app-w8smA7pMVhueqiIHWqQHHA==/base.apk): ok
+11-05 05:22:24.953  7809  7809 W WindowOnBackDispatcher: OnBackInvokedCallback is not enabled for the application.
+11-05 05:22:24.953  7809  7809 W WindowOnBackDispatcher: Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+11-05 05:22:24.963  7809  7809 W unknown:BridgelessReact: ReactHost{0}.onHostResume(activity)
+11-05 05:22:24.963  7809  7809 W unknown:BridgelessReact: ReactContext.onHostResume()
+11-05 05:22:24.978  7809  7835 D nativeloader: Load /data/app/~~VQidtQmtKQpl2alC9HrWtA==/com.scratchoracle.app-w8smA7pMVhueqiIHWqQHHA==/base.apk!/lib/x86_64/libhermestooling.so using class loader ns clns-9 (caller=/data/app/~~VQidtQmtKQpl2alC9HrWtA==/com.scratchoracle.app-w8smA7pMVhueqiIHWqQHHA==/base.apk): ok
+11-05 05:22:24.979  7809  7835 D jni_lib_merge: Entering merged library JNI_OnLoad.
+11-05 05:22:24.979  7809  7835 D jni_lib_merge: Preparing 4 pre-merged libs (including stub)
+11-05 05:22:24.979  7809  7835 D jni_lib_merge: Preparing to register libhermes_executor_so.  onload_func: 0x74d32f15e730
+11-05 05:22:24.979  7809  7835 D jni_lib_merge: Preparing to register libhermesinstancejni_so.  onload_func: 0x74d32f165db0
+11-05 05:22:24.979  7809  7835 D jni_lib_merge: Preparing to register libjsijniprofiler_so.  onload_func: 0x74d32f166540
+11-05 05:22:24.979  7809  7835 D jni_lib_merge: About to register 3 actual methods.
+11-05 05:22:24.993  7809  7809 W HWUI    : Unknown dataspace 0
+11-05 05:22:25.024  7809  7809 D VRI[MainActivity]: WindowInsets changed: 1080x2400 statusBars:[0,69,0,0] navigationBars:[0,0,0,138] mandatorySystemGestures:[0,69,0,138] 
+11-05 05:22:25.028  7809  7809 D WindowOnBackDispatcher: setTopOnBackInvokedCallback (unwrapped): android.view.ViewRootImpl$$ExternalSyntheticLambda12@2a3835a
+11-05 05:22:25.029   834  1928 D CoreBackPreview: Window{396fbca u0 com.scratchoracle.app/com.scratchoracle.app.MainActivity}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@34e85b1, mPriority=0, mIsAnimationCallback=false, mOverrideBehavior=0}
+11-05 05:22:25.073   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:22:25.089  7809  7835 I ExpoModulesCore: ✅ AppContext was initialized
+11-05 05:22:25.106  7809  7835 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Loading JS Bundle
+11-05 05:22:25.107  7809  7835 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Calling DevSupportManagerBase.onNewReactContextCreated(reactContext)
+11-05 05:22:25.109  7809  7835 W unknown:BridgelessReact: ReactHost{0}.startSurface(surfaceId = 0): Execute
+11-05 05:22:25.127  7809  7836 D nativeloader: Load /data/app/~~VQidtQmtKQpl2alC9HrWtA==/com.scratchoracle.app-w8smA7pMVhueqiIHWqQHHA==/base.apk!/lib/x86_64/libexpo-modules-core.so using class loader ns clns-9 (caller=/data/app/~~VQidtQmtKQpl2alC9HrWtA==/com.scratchoracle.app-w8smA7pMVhueqiIHWqQHHA==/base.apk): ok
+11-05 05:22:25.166  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.rnmaps.maps.MapUrlTileManager
+11-05 05:22:25.170  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.uimanager.LayoutShadowNode
+11-05 05:22:25.172  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.ScreenFooterManager
+11-05 05:22:25.175  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.gamma.tabs.TabScreenViewManager
+11-05 05:22:25.176  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.rnmaps.maps.MapManager
+11-05 05:22:25.178  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.ScreenContainerViewManager
+11-05 05:22:25.179  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.gamma.tabs.TabsHostViewManager
+11-05 05:22:25.181  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.rnmaps.maps.MapMarkerManager
+11-05 05:22:25.183  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.rnmaps.maps.MapLocalTileManager
+11-05 05:22:25.184  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.ModalScreenViewManager
+11-05 05:22:25.186  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.rnmaps.maps.MapPolylineManager
+11-05 05:22:25.187  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.rnmaps.maps.MapCircleManager
+11-05 05:22:25.189  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.th3rdwave.safeareacontext.SafeAreaViewManager
+11-05 05:22:25.191  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.th3rdwave.safeareacontext.SafeAreaViewShadowNode
+11-05 05:22:25.192  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.safearea.SafeAreaViewManager
+11-05 05:22:25.194  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.safearea.paper.SafeAreaViewShadowNode
+11-05 05:22:25.195  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.ScreenViewManager
+11-05 05:22:25.195  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.ScreenStackViewManager
+11-05 05:22:25.196  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.rnmaps.maps.MapCalloutManager
+11-05 05:22:25.197  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.th3rdwave.safeareacontext.SafeAreaProviderManager
+11-05 05:22:25.198  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.SearchBarManager
+11-05 05:22:25.199  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.rnmaps.maps.MapGradientPolylineManager
+11-05 05:22:25.200  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.rnmaps.maps.MapHeatmapManager
+11-05 05:22:25.202  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.rnmaps.maps.MapWMSTileManager
+11-05 05:22:25.204  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.ScreenStackHeaderConfigViewManager
+11-05 05:22:25.204  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.ScreenContentWrapperManager
+11-05 05:22:25.205  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.rnmaps.maps.MapPolygonManager
+11-05 05:22:25.206  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.swmansion.rnscreens.ScreenStackHeaderSubviewManager
+11-05 05:22:25.207  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.rnmaps.maps.MapOverlayManager
+11-05 05:22:25.216   834   865 I ActivityTaskManager: Displayed com.scratchoracle.app/.MainActivity for user 0: +1s41ms
+11-05 05:22:25.222  7809  7809 W unknown:BridgelessReact: ReactContext.onHostResume()
+11-05 05:22:25.222  7809  7809 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Executing ReactInstanceEventListeners
+11-05 05:22:25.224  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.safeareaview.ReactSafeAreaViewManager
+11-05 05:22:25.225  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.safeareaview.ReactSafeAreaViewShadowNode
+11-05 05:22:25.226  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.modal.ReactModalHostManager
+11-05 05:22:25.227  1326  1326 D BaseActivity: Launcher flags updated: [] -[state_started]
+11-05 05:22:25.227  1326  1326 D BaseDepthController: setSurface:
+11-05 05:22:25.227  1326  1326 D BaseDepthController: 	mWaitingOnSurfaceValidity: false
+11-05 05:22:25.227  1326  1326 D BaseDepthController: 	mBaseSurface: null
+11-05 05:22:25.227  1326  1326 D BaseDepthController: mSurface is null and mCurrentBlur is: 0
+11-05 05:22:25.227  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.text.frescosupport.FrescoBasedReactTextInlineImageViewManager
+11-05 05:22:25.228  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.text.frescosupport.FrescoBasedReactTextInlineImageShadowNode
+11-05 05:22:25.229  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.progressbar.ReactProgressBarViewManager
+11-05 05:22:25.229  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.progressbar.ProgressBarShadowNode
+11-05 05:22:25.230  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.scroll.ReactHorizontalScrollViewManager
+11-05 05:22:25.235  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.image.ReactImageManager
+11-05 05:22:25.237  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.text.ReactTextViewManager
+11-05 05:22:25.237  1326  1326 D LauncherStateManager: StateManager.goToState: fromState: Normal, toState: Normal, partial trace:
+11-05 05:22:25.237  1326  1326 D LauncherStateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(go/retraceme 7101499b44b219b757f6885b35ae099b24fc769225595efcaaacae5b0f94500b:6)
+11-05 05:22:25.237  1326  1326 D LauncherStateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(go/retraceme 7101499b44b219b757f6885b35ae099b24fc769225595efcaaacae5b0f94500b:2)
+11-05 05:22:25.237  1326  1326 D LauncherStateManager: 	at com.android.launcher3.statemanager.StatefulActivity.onStop(go/retraceme 7101499b44b219b757f6885b35ae099b24fc769225595efcaaacae5b0f94500b:32)
+11-05 05:22:25.237  1326  1326 D LauncherStateManager: StateManager.onRepeatStateSetAborted: state: Normal
+11-05 05:22:25.239  1326  1326 D ActivityContext: hideKeyboard
+11-05 05:22:25.239  1326  1326 D ActivityContext: isImeShown: false
+11-05 05:22:25.239  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.text.ReactTextShadowNode
+11-05 05:22:25.240  1326  1326 D StatsLog: LAUNCHER_ONSTOP
+11-05 05:22:25.241  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.scroll.ReactHorizontalScrollContainerViewManager
+11-05 05:22:25.243  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.unimplementedview.ReactUnimplementedViewManager
+11-05 05:22:25.246  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.scroll.ReactScrollViewManager
+11-05 05:22:25.247  1326  1326 D StatsLog: LAUNCHER_GOOGLE_SEARCH_RESTORE_LIST_SIZE_AFTER_ACTIVITY_RESTART
+11-05 05:22:25.255  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.view.ReactViewManager
+11-05 05:22:25.256   834   989 I ImeTracker: com.scratchoracle.app:165de8f5: onRequestHide at ORIGIN_SERVER reason HIDE_UNSPECIFIED_WINDOW fromUser false
+11-05 05:22:25.258  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.drawer.ReactDrawerLayoutManager
+11-05 05:22:25.259  7809  7809 D InsetsController: hide(ime())
+11-05 05:22:25.261  7809  7809 I ImeTracker: com.scratchoracle.app:165de8f5: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+11-05 05:22:25.270   834  1092 D BackgroundInstallControlService: Package event received: 0
+11-05 05:22:25.275  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.switchview.ReactSwitchManager
+11-05 05:22:25.277  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.switchview.ReactSwitchShadowNode
+11-05 05:22:25.278  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.text.ReactVirtualTextViewManager
+11-05 05:22:25.279  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.text.ReactVirtualTextShadowNode
+11-05 05:22:25.280  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.swiperefresh.SwipeRefreshLayoutManager
+11-05 05:22:25.283  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.text.ReactRawTextManager
+11-05 05:22:25.283  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.text.ReactRawTextShadowNode
+11-05 05:22:25.285   834  1312 I ImeTracker: system_server:6a688c7: onRequestHide at ORIGIN_SERVER reason IME_REQUESTED_CHANGED_LISTENER fromUser false
+11-05 05:22:25.286  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.textinput.ReactTextInputManager
+11-05 05:22:25.287  1595  1595 I GoogleInputMethodService: GoogleInputMethodService.onFinishInput():2057 
+11-05 05:22:25.288  7809  7836 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.views.textinput.ReactTextInputShadowNode
+11-05 05:22:25.292   834   868 I ImeTracker: system_server:6a688c7: onCancelled at PHASE_SERVER_SHOULD_HIDE
+11-05 05:22:25.293  7809  7836 W BridgelessReactContext: [WARNING] Bridgeless doesn't support CatalystInstance. Accessing an API that's not part of the new architecture is not encouraged usage.
+11-05 05:22:25.306  7809  7836 I ExpoModulesCore: ✅ JSI interop was installed
+11-05 05:22:25.311  7809  7836 I ExpoModulesCore: ✅ Constants were exported
+11-05 05:22:25.326  1595  1595 I Module  : DeviceLockedStatusModuleProvider$Module.updateDeviceLockedStatus():100 repeatCheckTimes = 0, locked = false
+11-05 05:22:25.344  7809  7836 I ReactNativeJS: '[Supabase] Environment check:', { hasExpoConfig: true,
+11-05 05:22:25.344  7809  7836 I ReactNativeJS:   hasExtra: true,
+11-05 05:22:25.344  7809  7836 I ReactNativeJS:   hasUrl: true,
+11-05 05:22:25.344  7809  7836 I ReactNativeJS:   hasKey: true,
+11-05 05:22:25.344  7809  7836 I ReactNativeJS:   url: 'https://wqealxmdjpwj...' }
+11-05 05:22:25.351  1595  1595 I GoogleInputMethodService: GoogleInputMethodService.onStartInput():1318 onStartInput(EditorInfo{EditorInfo{packageName=com.scratchoracle.app, inputType=0, inputTypeString=NULL, enableLearning=false, autoCorrection=false, autoComplete=false, imeOptions=0, privateImeOptions=null, actionName=UNSPECIFIED, actionLabel=null, initialSelStart=-1, initialSelEnd=-1, initialCapsMode=0, label=null, fieldId=0, fieldName=null, extras=null, hintText=null, hintLocales=[]}}, false)
+11-05 05:22:25.353   834  2100 D ConnectivityService: requestNetwork for uid/pid:10221/7809 activeRequest: null callbackRequest: 297 [NetworkRequest [ REQUEST id=298, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10221 RequestorUid: 10221 RequestorPkg: com.scratchoracle.app UnderlyingNetworks: Null] ]] callback flags: 0 order: 2147483647 isUidTracked: false declaredMethods: AVAIL|LOSING|LOST|UNAVAIL|NC|LP
+11-05 05:22:25.359  7809  7836 I ReactNativeJS: Running "main"
+11-05 05:22:25.366   834  1038 D ConnectivityService: NetReassign [298 : null → 101] [c 3] [a 3] [i 5]
+11-05 05:22:25.367   834  1031 D WifiNetworkFactory: got request NetworkRequest [ REQUEST id=298, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10221 RequestorUid: 10221 RequestorPkg: com.scratchoracle.app UnderlyingNetworks: Null] ]
+11-05 05:22:25.368   834  1031 D UntrustedWifiNetworkFactory: got request NetworkRequest [ REQUEST id=298, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10221 RequestorUid: 10221 RequestorPkg: com.scratchoracle.app UnderlyingNetworks: Null] ]
+11-05 05:22:25.371   834  1031 D OemPaidWifiNetworkFactory: got request NetworkRequest [ REQUEST id=298, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10221 RequestorUid: 10221 RequestorPkg: com.scratchoracle.app UnderlyingNetworks: Null] ]
+11-05 05:22:25.371   834  1031 D MultiInternetWifiNetworkFactory: got request NetworkRequest [ REQUEST id=298, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10221 RequestorUid: 10221 RequestorPkg: com.scratchoracle.app UnderlyingNetworks: Null] ]
+11-05 05:22:25.377  1595  1595 I Module  : DeviceLockedStatusModuleProvider$Module.updateDeviceLockedStatus():100 repeatCheckTimes = 1, locked = false
+11-05 05:22:25.397   834  2100 W PackageConfigPersister: App-specific configuration not found for packageName: com.scratchoracle.app and userId: 0
+11-05 05:22:25.411  7809  7836 I HWUI    : Using FreeType backend (prop=Auto)
+11-05 05:22:25.431  4739  4845 D SatelliteController: iisInCarrierRoamingNbIotNtn: satellite is disabled
+11-05 05:22:25.435  4739  4845 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+11-05 05:22:25.448  7809  7836 E ReactNativeJS: { [TypeError: undefined is not a function]
+11-05 05:22:25.448  7809  7836 E ReactNativeJS:   componentStack: '\n    at AppContent (address at index.android.bundle:1:780432)\n    at QueryClientProvider (address at index.android.bundle:1:857331)\n    at RNCSafeAreaProvider (<anonymous>)\n    at SafeAreaProvider (address at index.android.bundle:1:786837)\n    at App (<anonymous>)\n    at RCTView (<anonymous>)\n    at View (address at index.android.bundle:1:199777)\n    at AppContainer (address at index.android.bundle:1:439561)',
+11-05 05:22:25.448  7809  7836 E ReactNativeJS:   isComponentError: true }
+11-05 05:22:25.449  7809  7836 I ReactNativeJS: '[FeatureFlags] Using defaults:', { useSupabaseData: false,
+11-05 05:22:25.449  7809  7836 I ReactNativeJS:   enableAIScores: false,
+11-05 05:22:25.449  7809  7836 I ReactNativeJS:   enableOfflineMode: true,
+11-05 05:22:25.449  7809  7836 I ReactNativeJS:   enablePredictionCache: true }
+11-05 05:22:25.449  7809  7836 I ReactNativeJS: '[App] Feature flags initialized:', 'Using MOCK data for testing'
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact: ReactHost{0}.handleHostException(message = "TypeError: undefined is not a function
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact: 
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact: This error is located at:
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact:     at AppContent (address at index.android.bundle:1:780432)
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact:     at QueryClientProvider (address at index.android.bundle:1:857331)
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact:     at RNCSafeAreaProvider (<anonymous>)
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact:     at SafeAreaProvider (address at index.android.bundle:1:786837)
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact:     at App (<anonymous>)
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact:     at RCTView (<anonymous>)
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact:     at View (address at index.android.bundle:1:199777)
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact:     at AppContainer (address at index.android.bundle:1:439561), stack:
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact: anonymous@1:781755
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact: commitHookEffectListMount@1:321887
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact: commitPassiveMountOnFiber@1:328371
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact: recursivelyTraversePassiveMountEffects@1:327485
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact: commitPassiveMountOnFiber@1:328401
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact: recursivelyTraversePassiveMountEffects@1:327485
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact: commitPassiveMountOnFiber@1:328343
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact: recursivelyTraversePassiveMountEffects@1:327485
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact: commitPassiveMountOnFiber@1:328401
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact: recursivelyTraversePassiveMountEffects@1:327485
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact: commitPassiveMountOnFiber@1:328401
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact: recursivelyTraversePassiveMountEffects@1:327485
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact: commitPassiveMountOnFiber@1:328401
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact: recursivelyTraversePassiveMountEffects@1:327485
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact: commitPassiveMountOnFiber@1:328343
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact: recursivelyTraversePassiveMountEffects@1:327485
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact: commitPassiveMountOnFiber@1:328343
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact: recursivelyTraversePassiveMountEffects@1:327485
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact: commitPassiveMountOnFiber@1:328401
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact: recursivelyTraversePassiveMountEffects@1:327485
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact: commitPassiveMountOnFiber@1:328343
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact: recursivelyTraversePassiveMountEffects@1:327485
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact: commitPassiveMountOnFiber@1:328401
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact: recursivelyTraversePassiveMountEffects@1:327485
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact: commitPassiveMountOnFiber@1:328343
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact: recursivelyTraversePassiveMountEffects@1:327485
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact: commitPassiveMountOnFiber@1:328401
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact: recursivelyTraversePassiveMountEffects@1:327485
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact: commitPassiveMountOnFiber@1:328171
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact: flushPassiveEffects@1:337638
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact: anonymous@1:336315
+11-05 05:22:25.481  7809  7837 W unknown:BridgelessReact: ")
+--------- beginning of crash
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: FATAL EXCEPTION: mqt_v_native
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: Process: com.scratchoracle.app, PID: 7809
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: com.facebook.react.common.JavascriptException: TypeError: undefined is not a function
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: 
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: This error is located at:
+11-05 05:22:25.482  7809  7837 E AndroidRuntime:     at AppContent (address at index.android.bundle:1:780432)
+11-05 05:22:25.482  7809  7837 E AndroidRuntime:     at QueryClientProvider (address at index.android.bundle:1:857331)
+11-05 05:22:25.482  7809  7837 E AndroidRuntime:     at RNCSafeAreaProvider (<anonymous>)
+11-05 05:22:25.482  7809  7837 E AndroidRuntime:     at SafeAreaProvider (address at index.android.bundle:1:786837)
+11-05 05:22:25.482  7809  7837 E AndroidRuntime:     at App (<anonymous>)
+11-05 05:22:25.482  7809  7837 E AndroidRuntime:     at RCTView (<anonymous>)
+11-05 05:22:25.482  7809  7837 E AndroidRuntime:     at View (address at index.android.bundle:1:199777)
+11-05 05:22:25.482  7809  7837 E AndroidRuntime:     at AppContainer (address at index.android.bundle:1:439561), stack:
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: anonymous@1:781755
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: commitHookEffectListMount@1:321887
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: commitPassiveMountOnFiber@1:328371
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: recursivelyTraversePassiveMountEffects@1:327485
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: commitPassiveMountOnFiber@1:328401
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: recursivelyTraversePassiveMountEffects@1:327485
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: commitPassiveMountOnFiber@1:328343
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: recursivelyTraversePassiveMountEffects@1:327485
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: commitPassiveMountOnFiber@1:328401
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: recursivelyTraversePassiveMountEffects@1:327485
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: commitPassiveMountOnFiber@1:328401
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: recursivelyTraversePassiveMountEffects@1:327485
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: commitPassiveMountOnFiber@1:328401
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: recursivelyTraversePassiveMountEffects@1:327485
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: commitPassiveMountOnFiber@1:328343
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: recursivelyTraversePassiveMountEffects@1:327485
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: commitPassiveMountOnFiber@1:328343
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: recursivelyTraversePassiveMountEffects@1:327485
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: commitPassiveMountOnFiber@1:328401
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: recursivelyTraversePassiveMountEffects@1:327485
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: commitPassiveMountOnFiber@1:328343
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: recursivelyTraversePassiveMountEffects@1:327485
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: commitPassiveMountOnFiber@1:328401
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: recursivelyTraversePassiveMountEffects@1:327485
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: commitPassiveMountOnFiber@1:328343
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: recursivelyTraversePassiveMountEffects@1:327485
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: commitPassiveMountOnFiber@1:328401
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: recursivelyTraversePassiveMountEffects@1:327485
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: commitPassiveMountOnFiber@1:328171
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: flushPassiveEffects@1:337638
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: anonymous@1:336315
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: 
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: 	at com.facebook.react.modules.core.ExceptionsManagerModule.reportException(ExceptionsManagerModule.kt:52)
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: 	at com.facebook.jni.NativeRunnable.run(Native Method)
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: 	at android.os.Handler.handleCallback(Handler.java:1070)
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:125)
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: 	at com.facebook.react.bridge.queue.MessageQueueThreadHandler.dispatchMessage(MessageQueueThreadHandler.kt:21)
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: 	at android.os.Looper.dispatchMessage(Looper.java:333)
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: 	at android.os.Looper.loopOnce(Looper.java:263)
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:367)
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: 	at com.facebook.react.bridge.queue.MessageQueueThreadImpl$Companion.startNewBackgroundThread$lambda$1(MessageQueueThreadImpl.kt:175)
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: 	at com.facebook.react.bridge.queue.MessageQueueThreadImpl$Companion.$r8$lambda$ldnZnqelhYFctGaUKkOKYj5rxo4(Unknown Source:0)
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: 	at com.facebook.react.bridge.queue.MessageQueueThreadImpl$Companion$$ExternalSyntheticLambda0.run(D8$$SyntheticClass:0)
+11-05 05:22:25.482  7809  7837 E AndroidRuntime: 	at java.lang.Thread.run(Thread.java:1563)
+11-05 05:22:25.492   834  7854 I DropBoxManagerService: add tag=data_app_crash isTagEnabled=true flags=0x2
+11-05 05:22:25.509   834  1928 W ActivityTaskManager:   Force finishing activity com.scratchoracle.app/.MainActivity
+11-05 05:22:25.511   834  1928 W TransitionChain: Combining AR.finish-force-crash into #15(CLOSE|R|0x10) from finishTopCrash
+11-05 05:22:25.512  1505  1518 I FontLog : (REDACTED) Received query %s, URI %s
+11-05 05:22:25.517  1149  1211 V WindowManagerShell: Transition requested (#15): android.os.BinderProxy@59d6f2b TransitionRequestInfo { type = CLOSE, triggerTask = TaskInfo{userId=0 taskId=43 effectiveUid=10221 displayId=0 isRunning=true baseIntent=Intent { flg=0x10000000 cmp=com.scratchoracle.app/.MainActivity } baseActivity=ComponentInfo{com.scratchoracle.app/com.scratchoracle.app.MainActivity} topActivity=ComponentInfo{com.scratchoracle.app/com.scratchoracle.app.MainActivity} origActivity=null realActivity=ComponentInfo{com.scratchoracle.app/com.scratchoracle.app.MainActivity} numActivities=1 lastActiveTime=13613907 supportsMultiWindow=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.os.BinderProxy@aa49ad1} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 0 - 0, 0) topActivityInfo=ActivityInfo{2299f88 com.scratchoracle.app.MainActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=true isVisible=true isVisibleRequested=true isTopActivityNoDisplay=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=false lastNonFullscreenBounds=null capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=503 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false isLeafTask= true eligibleForLetterboxEducation= false isLetterboxEducationEnabled= true isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 1080, 2400) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null cameraCompatTaskInfo=CameraCompatTaskInfo { cameraCompatMode=inactive0} topNonResizableActivityAspectRatio=-1.0} topActivityMainWindowFrame=null isAppBubble=false}, pipChange = null, remoteTransition = null, displayChange = null, requestedLocation = null, userChange = null, windowingLayerChange = null, flags = 16, debugId = 15 }
+11-05 05:22:25.517  1505  1518 I FontLog : (REDACTED) Query [%s] resolved to %s
+11-05 05:22:25.524   834  1928 V WindowManager: Defer transition id=15 for TaskFragmentTransaction=android.os.Binder@74d8a5d
+11-05 05:22:25.525   834  1928 V WindowManager: deferTransitionReady deferReadyDepth=1 stack=com.android.server.wm.TransitionController.deferTransitionReady:1061 com.android.server.wm.TaskFragmentOrganizerController$TaskFragmentOrganizerState.dispatchTransaction:517 com.android.server.wm.TaskFragmentOrganizerController.dispatchPendingEvents:1259 com.android.server.wm.TaskFragmentOrganizerController.dispatchPendingEvents:1228 com.android.server.wm.RootWindowContainer.performSurfacePlacement:777 
+11-05 05:22:25.534  7809  7837 I Process : Sending signal. PID: 7809 SIG: 9
+11-05 05:22:25.540   834  2100 V WindowManager: Continue transition id=15 for TaskFragmentTransaction=android.os.Binder@74d8a5d
+11-05 05:22:25.540   834  2100 V WindowManager: continueTransitionReady deferReadyDepth=0 stack=com.android.server.wm.TransitionController.continueTransitionReady:1071 com.android.server.wm.TaskFragmentOrganizerController$TaskFragmentOrganizerState.onTransactionFinished:546 com.android.server.wm.TaskFragmentOrganizerController.onTransactionHandled:740 android.window.ITaskFragmentOrganizerController$Stub.onTransact:225 android.os.Binder.execTransactInternal:1473 
+11-05 05:22:25.546  1326  1326 D b/417220811: invalidateLoadedTasks - previous requestLoadId: -1
+11-05 05:22:25.566   834   980 W InputDispatcher: channel '396fbca com.scratchoracle.app/com.scratchoracle.app.MainActivity' ~ Consumer closed input channel or an error occurred.  events=0x9
+11-05 05:22:25.567   834   980 E InputDispatcher: channel '396fbca com.scratchoracle.app/com.scratchoracle.app.MainActivity' ~ Channel is unrecoverably broken and will be disposed!
+11-05 05:22:25.567   834   980 I WindowManager: WINDOW DIED Window{396fbca u0 com.scratchoracle.app/com.scratchoracle.app.MainActivity}
+11-05 05:22:25.572   834  1966 I ImeTracker: com.scratchoracle.app:652a80cf: onRequestHide at ORIGIN_SERVER reason HIDE_REMOVE_CLIENT fromUser false
+11-05 05:22:25.573   834  1038 D ConnectivityService: releasing NetworkRequest [ REQUEST id=298, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED Uid: 10221 RequestorUid: 10221 RequestorPkg: com.scratchoracle.app UnderlyingNetworks: Null] ] (release request)
+11-05 05:22:25.575   834  1961 I WindowManager: WIN DEATH: Window{396fbca u0 com.scratchoracle.app/com.scratchoracle.app.MainActivity EXITING}
+11-05 05:22:25.578   834  2100 I ActivityManager: Process com.scratchoracle.app (pid 7809) has died: fg  TOP 
+11-05 05:22:25.578   834  1966 I ImeTracker: com.scratchoracle.app:652a80cf: onCancelled at PHASE_SERVER_SHOULD_HIDE
+11-05 05:22:25.579   834   868 V WindowManager: Unknown focus tokens, dropping reportFocusChanged
+11-05 05:22:25.580   579   579 I Zygote  : Process 7809 exited due to signal 9 (Killed)
+11-05 05:22:25.580   834   881 I libprocessgroup: Removed cgroup /sys/fs/cgroup/apps/uid_10221/pid_7809
+11-05 05:22:25.591  1505  1518 I FontLog : (REDACTED) Fetch %s end status %s
+11-05 05:22:25.601   834  2100 W TransitionChain: Combining appDied into #15(CLOSE|R|0x10) from finishTopCrash
+11-05 05:22:25.612   834  1038 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+11-05 05:22:25.612   834  1038 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+11-05 05:22:25.613   834  1038 D InetDiagMessage: Destroyed live tcp sockets for uids={10221} in 7ms
+11-05 05:22:25.613   834   868 W ActivityManager: setHasOverlayUi called on unknown pid: 7809
+11-05 05:22:25.614   834  1038 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+11-05 05:22:25.617   834  1038 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+11-05 05:22:25.617   834  1038 D InetDiagMessage: Destroyed live tcp sockets for uids={20221} in 3ms
+11-05 05:22:25.617  1326  1326 D ViewRootImpl: Skipping stats log for color mode
+11-05 05:22:25.618   834  1092 D BackgroundInstallControlService: Package event received: 0
+11-05 05:22:25.618   834  1092 D BackgroundInstallControlService: Package event received: 0
+11-05 05:22:25.618  1326  1326 D BaseActivity: Launcher flags updated: [state_started] +[state_started]
+11-05 05:22:25.618   834  1092 D BackgroundInstallControlService: Package event received: 0
+11-05 05:22:25.619  1326  1326 D BaseActivity: Launcher flags updated: [state_started|state_resumed|state_user_active] +[state_resumed|state_user_active]
+11-05 05:22:25.623  1326  1326 D BaseActivity: Launcher flags updated: [state_started|state_resumed|state_deferred_resumed|state_user_active] +[state_deferred_resumed]
+11-05 05:22:25.624  1326  1326 D StatsLog: LAUNCHER_ONRESUME
+11-05 05:22:25.627  1326  1326 D NexusLauncherModelDelegate: notifySmartspaceEvent: SmartspaceTargetEvent{mSmartspaceTarget=null, mSmartspaceActionId='null', mEventType=6}
+11-05 05:22:25.637  1149  1211 D WindowManagerShell: setLauncherKeepClearAreaHeight: visible=true, height=544
+11-05 05:22:25.638   708   798 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+11-05 05:22:25.639   708   798 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+11-05 05:22:25.648  1149  1250 D WindowOnBackDispatcher: setTopOnBackInvokedCallback (unwrapped): null
+11-05 05:22:25.654  1326  1384 D QuickstepModelDelegate: notifyAppTargetEvent action=1 launchLocation=workspace/0/[-1,-1]/[1,1]
+11-05 05:22:25.654   834   859 D CoreBackPreview: Window{5461e55 u0 Splash Screen com.scratchoracle.app EXITING}: Setting back callback null
+11-05 05:22:25.657  1149  1437 D WallpaperService: onVisibilityChanged(true): com.android.systemui.wallpapers.ImageWallpaper$CanvasEngine@b8f5b73
+11-05 05:22:25.676  1326  1326 D BaseDepthController: setSurface:
+11-05 05:22:25.676  1326  1326 D BaseDepthController: 	mWaitingOnSurfaceValidity: false
+11-05 05:22:25.676  1326  1326 D BaseDepthController: 	mBaseSurface: Surface(name=com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity#203)/@0x2434f23
+11-05 05:22:25.676  1326  1326 V BaseDepthController: Applying blur: 0 to Surface(name=com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity#203)/@0x2434f23 applyImmediately: false
+11-05 05:22:25.677  1326  1326 D BaseDepthController: shouldBlurWorkspace: false targetState: Normal currentStableState: Normal mCurrentBlur: 0 mLauncher.getDepthBlurTargets(): [com.android.launcher3.Workspace{6d44701 V.ED..... .......D 0,0-1080,2400 #7f0a049d app:id/workspace}, com.android.launcher3.Hotseat{1cab9a6 V.ED..... .......D 0,1856-1080,2400 #7f0a01ee app:id/hotseat}]
+11-05 05:22:25.810  1149  2417 V WindowManagerShell: onTransitionReady(transaction=3582002726147)
+11-05 05:22:25.810  1149  1211 V WindowManagerShell: onTransitionReady (#15) android.os.BinderProxy@59d6f2b: {id=15 t=CLOSE f=0x10 trk=0 r=[0@Point(0, 0)] c=[
+11-05 05:22:25.810  1149  1211 V WindowManagerShell:         {m=TO_FRONT f=SHOW_WALLPAPER|MOVE_TO_TOP leash=Surface(name=Task=1#44)/@0x2fbda5d sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 winMode=1 userId=0},
+11-05 05:22:25.810  1149  1211 V WindowManagerShell:         {m=CLOSE f=NONE leash=Surface(name=Task=43#184)/@0x2b27fd2 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 winMode=1 userId=0},
+11-05 05:22:25.810  1149  1211 V WindowManagerShell:         {m=TO_FRONT f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{a5e3854}#65)/@0x75e98a3 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}
+11-05 05:22:25.810  1149  1211 V WindowManagerShell:     ]}
+11-05 05:22:25.812  1149  1211 V WindowManagerShell: Playing animation for (#15) android.os.BinderProxy@59d6f2b@0
+11-05 05:22:25.812  1149  1211 V ShellRecents: RecentsTransitionHandler.startAnimation: no controller found
+11-05 05:22:25.812  1149  1211 V WindowManagerShell: Transition doesn't have explicit remote, search filters for match for {id=15 t=CLOSE f=0x10 trk=0 r=[0@Point(0, 0)] c=[{m=TO_FRONT f=SHOW_WALLPAPER|MOVE_TO_TOP leash=Surface(name=Task=1#44)/@0x2fbda5d sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 winMode=1 userId=0},{m=CLOSE f=NONE leash=Surface(name=Task=43#184)/@0x2b27fd2 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 winMode=1 userId=0},{m=TO_FRONT f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{a5e3854}#65)/@0x75e98a3 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}]}
+11-05 05:22:25.812  1149  1211 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x0 checks=[{atype=undefined independent=true modes=[CLOSE,TO_BACK] flags=IN_TASK_WITH_EMBEDDED_ACTIVITY mustBeTask=false order=ANY topActivity=null launchCookie=null taskFragmentToken=android.os.BinderProxy@c15e8d1 windowingMode=undefined isCrossDisplayMove=false}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@4e9ff36, appThread = android.app.IApplicationThread$Stub$Proxy@d284e37, debugName = overlayBackTransition }}
+11-05 05:22:25.812  1149  1211 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x0 checks=[{atype=dream independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{atype=home independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@7883fa4, appThread = android.app.IApplicationThread$Stub$Proxy@53f410d, debugName = LauncherToDream }}
+11-05 05:22:25.812  1149  1211 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=TOP topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity} launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined isCrossDisplayMove=false}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@eced8c2, appThread = android.app.IApplicationThread$Stub$Proxy@c2996d3, debugName = QuickstepLaunchHome }}
+11-05 05:22:25.812  1149  1211 D RemoteTransitionHandler: Found filterPair{{types=[] flags=0x0] notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=TOP topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity} launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined isCrossDisplayMove=false}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@eced8c2, appThread = android.app.IApplicationThread$Stub$Proxy@c2996d3, debugName = QuickstepLaunchHome }}
+11-05 05:22:25.812  1149  1211 V WindowManagerShell:  Delegate animation for (#15) to RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@eced8c2, appThread = android.app.IApplicationThread$Stub$Proxy@c2996d3, debugName = QuickstepLaunchHome }
+11-05 05:22:25.824  1326  1326 D LauncherStateManager: StateManager.cancelAnimation: animation ongoing: false, partial trace:
+11-05 05:22:25.824  1326  1326 D LauncherStateManager: 	at com.android.launcher3.statemanager.StateManager.setCurrentAnimation(go/retraceme 7101499b44b219b757f6885b35ae099b24fc769225595efcaaacae5b0f94500b:18)
+11-05 05:22:25.824  1326  1326 D LauncherStateManager: 	at com.android.launcher3.QuickstepTransitionManager.createWallpaperOpenAnimations(go/retraceme 7101499b44b219b757f6885b35ae099b24fc769225595efcaaacae5b0f94500b:646)
+11-05 05:22:25.824  1326  1326 D LauncherStateManager: 	at com.android.launcher3.QuickstepTransitionManager$WallpaperOpenLauncherAnimationRunner.onAnimationStart(go/retraceme 7101499b44b219b757f6885b35ae099b24fc769225595efcaaacae5b0f94500b:96)
+11-05 05:22:25.824  1326  1326 D LauncherStateManager: StateManager.createAtomicAnimation: fromState: Normal, toState: Normal, partial trace:
+11-05 05:22:25.824  1326  1326 D LauncherStateManager: 	at com.android.quickstep.util.WorkspaceRevealAnim.prepareToAnimate(go/retraceme 7101499b44b219b757f6885b35ae099b24fc769225595efcaaacae5b0f94500b:20)
+11-05 05:22:25.824  1326  1326 D LauncherStateManager: 	at com.android.quickstep.util.WorkspaceRevealAnim.<init>(go/retraceme 7101499b44b219b757f6885b35ae099b24fc769225595efcaaacae5b0f94500b:11)
+11-05 05:22:25.824  1326  1326 D LauncherStateManager: 	at com.android.launcher3.QuickstepTransitionManager.createWallpaperOpenAnimations(go/retraceme 7101499b44b219b757f6885b35ae099b24fc769225595efcaaacae5b0f94500b:683)
+11-05 05:22:25.824  1326  1326 D AllAppsTransitionController: shouldProtectHeader: false skipScrim: true state: Normal stateManager.getState(): Normal
+11-05 05:22:25.825  1326  1326 D KeyboardInsetsHandler: removePendingImeController: pendingImeController=null
+11-05 05:22:25.825  1326  1326 D b/311077782: LauncherAnimationRunner.setAnimation
+11-05 05:22:25.854  1326  1326 D BaseActivity: Launcher flags updated: [state_started|state_resumed|state_deferred_resumed|state_window_focused|state_user_active] +[state_window_focused]
+11-05 05:22:25.870   834   865 V WindowManager: Sent Transition (#15) createdAt=11-05 05:22:25.509 via request=TransitionRequestInfo { type = CLOSE, triggerTask = TaskInfo{userId=0 taskId=43 effectiveUid=10221 displayId=0 isRunning=true baseIntent=Intent { flg=0x10000000 cmp=com.scratchoracle.app/.MainActivity } baseActivity=ComponentInfo{com.scratchoracle.app/com.scratchoracle.app.MainActivity} topActivity=ComponentInfo{com.scratchoracle.app/com.scratchoracle.app.MainActivity} origActivity=null realActivity=ComponentInfo{com.scratchoracle.app/com.scratchoracle.app.MainActivity} numActivities=1 lastActiveTime=13613907 supportsMultiWindow=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{RemoteToken{9b332c2 Task{c146112 #43 type=standard A=10221:com.scratchoracle.app}}} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 0 - 0, 0) topActivityInfo=ActivityInfo{ecfe8d3 com.scratchoracle.app.MainActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=true isVisible=true isVisibleRequested=true isTopActivityNoDisplay=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=false lastNonFullscreenBounds=null capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=503 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false isLeafTask= true eligibleForLetterboxEducation= false isLetterboxEducationEnabled= true isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 1080, 2400) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null cameraCompatTaskInfo=CameraCompatTaskInfo { cameraCompatMode=inactive0} topNonResizableActivityAspectRatio=-1.0} topActivityMainWindowFrame=null isAppBubble=false}, pipChange = null, remoteTransition = null, displayChange = null, requestedLocation = null, userChange = null, windowingLayerChange = null, flags = 16, debugId = 15 }
+11-05 05:22:25.870   834   865 V WindowManager:     startWCT=WindowContainerTransaction { changes= {} hops= [] errorCallbackToken=null taskFragmentOrganizer=null }
+11-05 05:22:25.870   834   865 V WindowManager:     info={id=15 t=CLOSE f=0x10 trk=0 r=[0@Point(0, 0)] c=[
+11-05 05:22:25.870   834   865 V WindowManager:         {WCT{RemoteToken{fde634a Task{48aa688 #1 type=home}}} m=TO_FRONT f=SHOW_WALLPAPER|MOVE_TO_TOP leash=Surface(name=Task=1#44)/@0xeb23a sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 winMode=1 userId=0},
+11-05 05:22:25.870   834   865 V WindowManager:         {WCT{RemoteToken{9b332c2 Task{c146112 #43 type=standard A=10221:com.scratchoracle.app}}} m=CLOSE f=NONE leash=Surface(name=Task=43#184)/@0x37a89a4 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0 taskParent=-1 winMode=1 userId=0},
+11-05 05:22:25.870   834   865 V WindowManager:         {m=TO_FRONT f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{a5e3854}#65)/@0x6c8aefd sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) epz=Point(1080, 2400) d=0}
+11-05 05:22:25.870   834   865 V WindowManager:     ]}
+11-05 05:22:25.874  1149  1211 V WindowManagerShell:  animated by com.android.wm.shell.transition.RemoteTransitionHandler@e645a6f
+11-05 05:22:25.879   834   989 I ImeTracker: com.google.android.apps.nexuslauncher:ce257580: onRequestHide at ORIGIN_SERVER reason HIDE_UNSPECIFIED_WINDOW fromUser false
+11-05 05:22:25.885  1326  1326 D InsetsController: hide(ime())
+11-05 05:22:25.885  1326  1326 I ImeTracker: com.google.android.apps.nexuslauncher:ce257580: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+11-05 05:22:25.890  1595  1595 I GoogleInputMethodService: GoogleInputMethodService.onFinishInput():2057 
+11-05 05:22:25.891  1595  1595 I Module  : DeviceLockedStatusModuleProvider$Module.updateDeviceLockedStatus():100 repeatCheckTimes = 0, locked = false
+11-05 05:22:25.895   834   859 I ImeTracker: system_server:77740009: onRequestHide at ORIGIN_SERVER reason IME_REQUESTED_CHANGED_LISTENER fromUser false
+11-05 05:22:25.896  1595  1595 I GoogleInputMethodService: GoogleInputMethodService.onStartInput():1318 onStartInput(EditorInfo{EditorInfo{packageName=com.google.android.apps.nexuslauncher, inputType=0, inputTypeString=NULL, enableLearning=false, autoCorrection=false, autoComplete=false, imeOptions=0, privateImeOptions=null, actionName=UNSPECIFIED, actionLabel=null, initialSelStart=-1, initialSelEnd=-1, initialCapsMode=0, label=null, fieldId=0, fieldName=null, extras=null, hintText=null, hintLocales=[]}}, false)
+11-05 05:22:25.898   834   868 I ImeTracker: system_server:77740009: onCancelled at PHASE_SERVER_SHOULD_HIDE
+11-05 05:22:25.900  1595  1595 I Module  : DeviceLockedStatusModuleProvider$Module.updateDeviceLockedStatus():100 repeatCheckTimes = 1, locked = false
+11-05 05:22:25.901   834  1966 W PackageConfigPersister: App-specific configuration not found for packageName: com.google.android.apps.nexuslauncher and userId: 0
+11-05 05:22:25.914  1149  1156 W System  : A resource failed to call release. 
+11-05 05:22:25.914  1149  1156 W System  : A resource failed to call release. 
+11-05 05:22:25.914  1149  1156 W System  : A resource failed to call release. 
+11-05 05:22:26.014   834   868 W ActivityTaskManager: Activity top resumed state loss timeout for ActivityRecord{127891613 u0 com.scratchoracle.app/.MainActivity t43 f} isExiting}
+11-05 05:22:26.114  1674  1674 D BoundBrokerSvc: onBind: Intent { act=com.google.android.gms.semanticlocationhistory.service.START dat=chimera-action:/... xflg=0x4 cmp=com.google.android.gms/.chimera.GmsApiService }
+11-05 05:22:26.114  1674  1674 D BoundBrokerSvc: Loading bound service for intent: Intent { act=com.google.android.gms.semanticlocationhistory.service.START dat=chimera-action:/... xflg=0x4 cmp=com.google.android.gms/.chimera.GmsApiService }
+11-05 05:22:26.177  1326  1326 D WorkspaceRevealAnim: onAnimationEnd: workspace alpha = 1.0
+11-05 05:22:26.178  1149  2417 V WindowManagerShell: Received remote transition finished callback for (#15)
+11-05 05:22:26.179  1149  1211 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#15) android.os.BinderProxy@59d6f2b@0
+11-05 05:22:26.184   834   865 V WindowManager: Finish Transition (#15): created at 11-05 05:22:25.509 collect-started=0.309ms request-sent=0.513ms started=20.245ms ready=98.225ms sent=296.189ms commit=23.014ms finished=674.13ms
+11-05 05:22:26.188   834   859 E libbinder.IPCThreadState: Binder transaction failure. id: 1322313, cmd: BR_DEAD_REPLY (29189), error: -22 (Invalid argument)
+11-05 05:22:26.189   834   859 W ActivityManager: pid 834 system sent binder code 7 with flags 1 and got error -32
+11-05 05:22:26.191   834   859 W WindowManager: Exception thrown during dispatchAppVisibility Window{396fbca u0 com.scratchoracle.app/com.scratchoracle.app.MainActivity EXITING}
+11-05 05:22:26.191   834   859 W WindowManager: android.os.DeadObjectException
+11-05 05:22:26.191   834   859 W WindowManager: 	at android.os.BinderProxy.transactNative(Native Method)
+11-05 05:22:26.191   834   859 W WindowManager: 	at android.os.BinderProxy.transact(BinderProxy.java:599)
+11-05 05:22:26.191   834   859 W WindowManager: 	at android.view.IWindow$Stub$Proxy.dispatchAppVisibility(IWindow.java:535)
+11-05 05:22:26.191   834   859 W WindowManager: 	at com.android.server.wm.WindowState.sendAppVisibilityToClients(WindowState.java:3266)
+11-05 05:22:26.191   834   859 W WindowManager: 	at com.android.server.wm.WindowContainer.sendAppVisibilityToClients(WindowContainer.java:1218)
+11-05 05:22:26.191   834   859 W WindowManager: 	at com.android.server.wm.WindowToken.setClientVisible(WindowToken.java:394)
+11-05 05:22:26.191   834   859 W WindowManager: 	at com.android.server.wm.ActivityRecord.commitVisibility(ActivityRecord.java:5626)
+11-05 05:22:26.191   834   859 W WindowManager: 	at com.android.server.wm.Transition.finishTransition(Transition.java:1500)
+11-05 05:22:26.191   834   859 W WindowManager: 	at com.android.server.wm.TransitionController.finishTransition(TransitionController.java:1096)
+11-05 05:22:26.191   834   859 W WindowManager: 	at com.android.server.wm.WindowOrganizerController.finishTransition(WindowOrganizerController.java:518)
+11-05 05:22:26.191   834   859 W WindowManager: 	at android.window.IWindowOrganizerController$Stub.onTransact(IWindowOrganizerController.java:270)
+11-05 05:22:26.191   834   859 W WindowManager: 	at com.android.server.wm.WindowOrganizerController.onTransact(WindowOrganizerController.java:233)
+11-05 05:22:26.191   834   859 W WindowManager: 	at android.os.Binder.execTransactInternal(Binder.java:1473)
+11-05 05:22:26.191   834   859 W WindowManager: 	at android.os.Binder.execTransact(Binder.java:1418)
+11-05 05:22:26.191   834   859 W Process : Unable to open /proc/7809/status
+11-05 05:22:26.198  1149  1211 V WindowManagerShell: Track 0 became idle
+11-05 05:22:26.199  1149  1211 V WindowManagerShell: All active transition animations finished
+11-05 05:22:26.201  1326  1326 D RecentsView: onTaskRemoved: 43, not handling task stack changes
+11-05 05:22:26.202  1326  1326 D RecentsView: onTaskRemoved: 43, not handling task stack changes
+11-05 05:22:26.206  1149  1211 V ShellTaskOrganizer: Task vanished taskId=43
+11-05 05:22:26.207  1149  1211 V ShellTaskOrganizer: Fullscreen Task Vanished: #43
+11-05 05:22:26.207  1149  1211 D ShellDesktopMode: AppToWebRepository: Task 43 is vanishing. Removing task data from repository
+11-05 05:22:26.208  1326  1326 D b/417220811: invalidateLoadedTasks - previous requestLoadId: -1
+11-05 05:22:26.209   834   859 W WindowManager: takeTaskSnapshot: taskId=36 not found or not visible
+11-05 05:22:26.212   834   859 W WindowManager: takeTaskSnapshot: taskId=43 not found or not visible
+11-05 05:22:26.215   834  1116 W ImageReader_JNI: Unable to acquire a buffer item, very likely client tried to acquire more than maxImages buffers
+11-05 05:22:26.226   653   653 E BpTransactionCompletedListener: Failed to transact (-32)
+11-05 05:22:27.416  1892  2195 E TraceManagerImpl: Trace Broadcast to com.google.android.apps.wellbeing.time.delta.CheckTimeDeltaBroadcastReceiver_Receiver android.intent.action.TIME_SET timed out after 12646923 ms. Complete trace: # nad@82211ed6
+11-05 05:22:27.416  1892  2195 E TraceManagerImpl: nai: 
+11-05 05:22:27.416  1892  2195 E TraceManagerImpl: 	at tk_trace.execSQL: REPLACE INTO auxiliary_app_data(package_id,storage_id,data) VALUES (?, ?, ?)(Started After:8)
+11-05 05:22:27.416  1892  2195 E TraceManagerImpl: 	at tk_trace.Transaction(Started After:8)
+11-05 05:22:27.416  1892  2195 E TraceManagerImpl: 	at tk_trace.handleBroadcast(Started After:0)
+11-05 05:22:27.416  1892  2195 E TraceManagerImpl: 	at tk_trace.Broadcast to com.google.android.apps.wellbeing.time.delta.CheckTimeDeltaBroadcastReceiver_Receiver android.intent.action.TIME_SET(Started After:0)
+11-05 05:22:27.773   834  1841 E TaskPersister: File error accessing recents directory (directory doesn't exist?).
+11-05 05:22:28.079   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:22:28.316   834   970 D ActivityManager: freezing 2594 com.android.vending:background
+11-05 05:22:28.435   834   970 D ActivityManager: freezing 5734 com.android.vending
+11-05 05:22:28.439   834  1038 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+11-05 05:22:28.442   834  1038 D InetDiagMessage: Destroyed 2 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+11-05 05:22:28.442   834  1038 D InetDiagMessage: Destroyed live tcp sockets for uids={10145} in 4ms
+11-05 05:22:29.830   834  1038 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+11-05 05:22:29.831   834  1038 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+11-05 05:22:29.831   834  1038 D InetDiagMessage: Destroyed live tcp sockets for uids={10151} in 1ms
+11-05 05:22:29.831   834  1038 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+11-05 05:22:29.832   834  1038 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+11-05 05:22:29.832   834  1038 D InetDiagMessage: Destroyed live tcp sockets for uids={20151} in 0ms
+11-05 05:22:31.088   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:22:33.609  1674  1674 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.feedback.internal.IFeedbackService dat=chimera-action:/... xflg=0x4 cmp=com.google.android.gms/.chimera.GmsBoundBrokerService }
+11-05 05:22:34.094   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:22:35.427  4739  4845 D SatelliteController: iisInCarrierRoamingNbIotNtn: satellite is disabled
+11-05 05:22:35.430  4739  4845 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+11-05 05:22:37.102   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:22:37.583   834   970 D ActivityManager: freezing 2852 com.google.android.permissioncontroller
+11-05 05:22:37.586   834  1038 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+11-05 05:22:37.587   834  1038 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+11-05 05:22:37.587   834  1038 D InetDiagMessage: Destroyed live tcp sockets for uids={10199} in 1ms
+11-05 05:22:40.109   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:22:41.134  1674  1674 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.semanticlocationhistory.service.START dat=chimera-action:/... xflg=0x4 cmp=com.google.android.gms/.chimera.GmsApiService }
+11-05 05:22:43.116   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:22:43.510   834   956 D ActivityManager: sync unfroze 5734 com.android.vending for 6
+11-05 05:22:43.533   834   859 W ProcessStats: Tracking association SourceState{2e568db system/1000 ImpBg #6078} whose proc state 6 is better than process ProcessState{4a4dd07 com.android.vending/10145 pkg=com.android.vending} proc state 14 (38 skipped)
+11-05 05:22:43.534  5734  5734 I Finsky  : [2] SCH: job service start with id 9330.
+11-05 05:22:43.555  5734  7740 I Finsky  : [193] SCH: Satisfied jobs for 9330 are: 12-1
+11-05 05:22:43.569  5734  7862 I Finsky  : [201] SCH: Job 12-1 starting
+11-05 05:22:43.572  5734  5734 I Finsky  : [2] WM::SCH: Logging work start for 12-1
+11-05 05:22:43.580  5734  5734 I Finsky  : [2] [ContentSync] job started
+11-05 05:22:43.715  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.android.hardware.threadnetwork' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:43.731  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.google.android.uprobestats' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:43.753  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.android.hardware.vibrator' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:43.782  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.android.compos' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:43.782  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.google.android.uwb' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:43.784  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.google.android.bt' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:43.787  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.google.android.widevine.nonupdatable' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:43.791  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.google.android.tzdata6' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:43.812  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.google.android.permission' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:43.864  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.google.android.wifi' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:43.870  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.android.hardware.contexthub' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:43.871  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.android.hardware.authsecret' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:43.878  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.android.apex.cts.shim' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:43.888  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.android.hardware.thermal' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:43.902  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.google.android.telephonycore' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:43.925  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.google.android.appsearch' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:43.925  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.google.android.media.swcodec' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:43.927  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.google.android.art' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:43.944  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.google.android.profiling' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:43.965  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.google.android.mediaprovider' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:43.981  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.android.hardware.uwb' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:43.986  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.android.virt' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:43.986  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.android.hardware.neuralnetworks' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:43.987  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.google.android.crashrecovery' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:43.991  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.google.android.adbd' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:43.994  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.google.android.resolv' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:44.012  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.android.i18n' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:44.016  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.android.hardware.dumpstate' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:44.017  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.google.android.configinfrastructure' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:44.018  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.google.android.media' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:44.018  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.google.android.conscrypt' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:44.026  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.android.hardware.cas' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:44.039  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.google.android.neuralnetworks' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:44.045  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.google.android.runtime' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:44.047  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.google.android.ipsec' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:44.049  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.android.devicelock' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:44.067  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.android.hardware.power' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:44.071  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.google.android.ondevicepersonalization' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:44.082  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.google.android.sdkext' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:44.082  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.google.android.healthfitness' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:44.112  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.google.android.adservices' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:44.112  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.google.android.tethering' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:44.125  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.google.android.extservices' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:44.136  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.google.android.nfcservices' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:44.166  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.google.android.os.statsd' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:44.168  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.android.hardware.rebootescrow' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:44.172  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.google.android.cellbroadcast' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:44.189  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.google.android.rkpd' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:44.223  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.google.android.scheduling' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:44.230  5734  5734 W Finsky  : [2] STU: Failed to get storage stats for package 'com.android.hardware.gatekeeper' (1601: Error getting stats: android.content.pm.PackageManager.NameNotFoundException)
+11-05 05:22:44.242  5734  5734 I Finsky  : [2] App states replicator found 3 unowned apps
+11-05 05:22:44.254  5734  5774 I Finsky  : [85] Completed 0 account content syncs with 0 successful.
+11-05 05:22:44.255  5734  5734 I Finsky  : [2] [ContentSync] Installation state replication succeeded.
+11-05 05:22:44.255  5734  5734 I Finsky  : [2] SCH: jobFinished: 12-1. TimeElapsed: 685ms.
+11-05 05:22:44.257  5734  5734 I Finsky  : [2] WM::SCH: Logging work end for 12-1
+11-05 05:22:44.284  5734  5768 I Finsky  : [79] SCH: Scheduling phonesky job Id: 1-1337, CT: 1762324311838, Constraints: [{ L: 15936900, D: 59136900, C: CHARGING_NONE, I: IDLE_NONE, N: NET_ANY, B: BATTERY_ANY }]
+11-05 05:22:44.285  5734  5768 I Finsky  : [79] SCH: Scheduling phonesky job Id: 34-21, CT: 1762324384357, Constraints: [{ L: 79199198, D: 1375199198, C: CHARGING_NONE, I: IDLE_NONE, N: NET_ANY, B: BATTERY_ANY }]
+11-05 05:22:44.285  5734  5768 I Finsky  : [79] SCH: Scheduling phonesky job Id: 34-24, CT: 1762324389559, Constraints: [{ L: 604800000, D: 2591995476, C: CHARGING_NONE, I: IDLE_NONE, N: NET_ANY, B: BATTERY_ANY }]
+11-05 05:22:44.289  5734  5773 I Finsky  : [84] SCH: Scheduling 1 system job(s)
+11-05 05:22:44.290  5734  5773 I Finsky  : [84] SCH: Scheduling system job Id: 9335, L: 2084449, D: 45284449, C: false, I: false, N: 1
+11-05 05:22:44.296  5734  7862 I Finsky  : [201] SCH: job service finished with id 9330.
+11-05 05:22:44.303  5734  5734 I Finsky  : [2] Memory trim requested to level 40
+11-05 05:22:44.303  5734  5734 I Finsky  : [2] Flushing in-memory image cache
+11-05 05:22:45.427  4739  4845 D SatelliteController: iisInCarrierRoamingNbIotNtn: satellite is disabled
+11-05 05:22:45.428  4739  4845 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+11-05 05:22:46.123   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:22:46.142   834  1038 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+11-05 05:22:46.142   834  1038 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+11-05 05:22:46.142   834  1038 D InetDiagMessage: Destroyed live tcp sockets for uids={10210} in 1ms
+11-05 05:22:46.142   834  1038 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+11-05 05:22:46.143   834  1038 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+11-05 05:22:46.143   834  1038 D InetDiagMessage: Destroyed live tcp sockets for uids={20210} in 1ms
+11-05 05:22:49.130   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:22:51.142   834   970 D ActivityManager: freezing 1674 com.google.android.gms
+11-05 05:22:51.144   834   970 D ActivityManager: freezing 2210 com.google.android.adservices.api
+11-05 05:22:51.278   834  1038 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+11-05 05:22:51.279   834  1038 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+11-05 05:22:51.279   834  1038 D InetDiagMessage: Destroyed live tcp sockets for uids={10210} in 1ms
+11-05 05:22:52.138   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:22:54.311   834   970 D ActivityManager: freezing 5734 com.android.vending
+11-05 05:22:54.313   834  1038 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+11-05 05:22:54.314   834  1038 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+11-05 05:22:54.314   834  1038 D InetDiagMessage: Destroyed live tcp sockets for uids={10145} in 1ms
+11-05 05:22:54.825   834   970 D ActivityManager: freezing 1892 com.google.android.apps.wellbeing
+11-05 05:22:54.827   834  1038 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+11-05 05:22:54.827   834  1038 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+11-05 05:22:54.827   834  1038 D InetDiagMessage: Destroyed live tcp sockets for uids={10151} in 1ms
+11-05 05:22:55.146   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:22:55.427  4739  4845 D SatelliteController: iisInCarrierRoamingNbIotNtn: satellite is disabled
+11-05 05:22:55.427  4739  4845 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+11-05 05:22:57.136   834   970 D ActivityManager: freezing 6643 com.android.keychain
+11-05 05:22:57.137   834   970 D ActivityManager: freezing 3075 com.android.settings
+11-05 05:22:58.152   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:23:01.161   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:23:04.170   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:23:05.427  4739  4845 D SatelliteController: iisInCarrierRoamingNbIotNtn: satellite is disabled
+11-05 05:23:05.427  4739  4845 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+11-05 05:23:07.178   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:23:10.186   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:23:13.195   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:23:15.427  4739  4845 D SatelliteController: iisInCarrierRoamingNbIotNtn: satellite is disabled
+11-05 05:23:15.428  4739  4845 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+11-05 05:23:16.202   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:23:17.109   834   889 E BluetoothPowerStatsCollector: Cannot acquire BluetoothActivityEnergyInfo
+11-05 05:23:17.109   834   889 E BluetoothPowerStatsCollector: java.util.concurrent.ExecutionException: java.lang.RuntimeException: error: 9
+11-05 05:23:17.109   834   889 E BluetoothPowerStatsCollector: 	at java.util.concurrent.CompletableFuture.reportGet(CompletableFuture.java:372)
+11-05 05:23:17.109   834   889 E BluetoothPowerStatsCollector: 	at java.util.concurrent.CompletableFuture.get(CompletableFuture.java:2072)
+11-05 05:23:17.109   834   889 E BluetoothPowerStatsCollector: 	at com.android.server.power.stats.BluetoothPowerStatsCollector.collectBluetoothActivityInfo(BluetoothPowerStatsCollector.java:191)
+11-05 05:23:17.109   834   889 E BluetoothPowerStatsCollector: 	at com.android.server.power.stats.BluetoothPowerStatsCollector.collectStats(BluetoothPowerStatsCollector.java:155)
+11-05 05:23:17.109   834   889 E BluetoothPowerStatsCollector: 	at com.android.server.power.stats.PowerStatsCollector.collectAndDeliverStats(PowerStatsCollector.java:196)
+11-05 05:23:17.109   834   889 E BluetoothPowerStatsCollector: 	at com.android.server.power.stats.PowerStatsCollector.lambda$schedule$0(PowerStatsCollector.java:166)
+11-05 05:23:17.109   834   889 E BluetoothPowerStatsCollector: 	at com.android.server.power.stats.PowerStatsCollector.$r8$lambda$G7G_yFY7rV7oxQbQHnZ5FHX8eBk(PowerStatsCollector.java:0)
+11-05 05:23:17.109   834   889 E BluetoothPowerStatsCollector: 	at com.android.server.power.stats.PowerStatsCollector$$ExternalSyntheticLambda1.run(R8$$SyntheticClass:0)
+11-05 05:23:17.109   834   889 E BluetoothPowerStatsCollector: 	at android.os.Handler.handleCallback(Handler.java:1070)
+11-05 05:23:17.109   834   889 E BluetoothPowerStatsCollector: 	at android.os.Handler.dispatchMessage(Handler.java:125)
+11-05 05:23:17.109   834   889 E BluetoothPowerStatsCollector: 	at android.os.Looper.dispatchMessage(Looper.java:333)
+11-05 05:23:17.109   834   889 E BluetoothPowerStatsCollector: 	at android.os.Looper.loopOnce(Looper.java:263)
+11-05 05:23:17.109   834   889 E BluetoothPowerStatsCollector: 	at android.os.Looper.loop(Looper.java:367)
+11-05 05:23:17.109   834   889 E BluetoothPowerStatsCollector: 	at android.os.HandlerThread.run(HandlerThread.java:139)
+11-05 05:23:17.109   834   889 E BluetoothPowerStatsCollector: Caused by: java.lang.RuntimeException: error: 9
+11-05 05:23:17.109   834   889 E BluetoothPowerStatsCollector: 	at com.android.server.power.stats.BluetoothPowerStatsCollector$1.onBluetoothActivityEnergyInfoError(BluetoothPowerStatsCollector.java:180)
+11-05 05:23:17.109   834   889 E BluetoothPowerStatsCollector: 	at android.bluetooth.BluetoothAdapter.lambda$requestControllerActivityEnergyInfo$27(BluetoothAdapter.java:2513)
+11-05 05:23:17.109   834   889 E BluetoothPowerStatsCollector: 	at android.bluetooth.BluetoothAdapter$$ExternalSyntheticLambda27.run(D8$$SyntheticClass:0)
+11-05 05:23:17.109   834   889 E BluetoothPowerStatsCollector: 	at com.android.server.SystemServerInitThreadPool$$ExternalSyntheticLambda0.execute(R8$$SyntheticClass:0)
+11-05 05:23:17.109   834   889 E BluetoothPowerStatsCollector: 	at android.bluetooth.BluetoothAdapter.requestControllerActivityEnergyInfo(BluetoothAdapter.java:2511)
+11-05 05:23:17.109   834   889 E BluetoothPowerStatsCollector: 	at com.android.server.power.stats.BatteryStatsImpl$BluetoothStatsRetrieverImpl.requestControllerActivityEnergyInfo(BatteryStatsImpl.java:471)
+11-05 05:23:17.109   834   889 E BluetoothPowerStatsCollector: 	at com.android.server.power.stats.BluetoothPowerStatsCollector.collectBluetoothActivityInfo(BluetoothPowerStatsCollector.java:169)
+11-05 05:23:17.109   834   889 E BluetoothPowerStatsCollector: 	... 11 more
+11-05 05:23:18.164   834  1981 I AppSearchIcing: icing-search-engine.cc:2327: Persisting data to disk with mode 3
+11-05 05:23:18.183   834  1981 I AppSearchIcing: icing-search-engine.cc:2340: PersistToDisk completed.
+11-05 05:23:19.212   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:23:22.221   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:23:25.229   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:23:25.427  4739  4845 D SatelliteController: iisInCarrierRoamingNbIotNtn: satellite is disabled
+11-05 05:23:25.428  4739  4845 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+11-05 05:23:28.236   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:23:31.244   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:23:34.254   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:23:35.428  4739  4845 D SatelliteController: iisInCarrierRoamingNbIotNtn: satellite is disabled
+11-05 05:23:35.428  4739  4845 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+11-05 05:23:36.429   834   859 D WifiNl80211Manager: Scan result ready event
+11-05 05:23:36.429   834   859 D WifiNative: Scan result ready event
+11-05 05:23:36.436  1505  1518 I WifiScanner: onFullResults
+11-05 05:23:36.436  1505  3104 I WifiScanner: onFullResults
+11-05 05:23:36.439   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:23:37.263   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:23:40.273   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:23:43.280   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:23:45.428  4739  4845 D SatelliteController: iisInCarrierRoamingNbIotNtn: satellite is disabled
+11-05 05:23:45.428  4739  4845 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+11-05 05:23:46.288   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:23:49.295   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:23:52.303   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:23:55.313   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:23:55.428  4739  4845 D SatelliteController: iisInCarrierRoamingNbIotNtn: satellite is disabled
+11-05 05:23:55.429  4739  4845 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+11-05 05:23:58.321   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:24:01.328   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:24:04.336   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:24:05.428  4739  4845 D SatelliteController: iisInCarrierRoamingNbIotNtn: satellite is disabled
+11-05 05:24:05.428  4739  4845 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+11-05 05:24:07.344   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:24:10.351   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:24:13.359   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:24:15.428  4739  4845 D SatelliteController: iisInCarrierRoamingNbIotNtn: satellite is disabled
+11-05 05:24:15.430  4739  4845 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+11-05 05:24:16.367   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:24:19.374   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:24:22.382   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:24:25.389   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:24:25.428  4739  4845 D SatelliteController: iisInCarrierRoamingNbIotNtn: satellite is disabled
+11-05 05:24:25.428  4739  4845 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+11-05 05:24:28.397   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:24:31.405   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:24:34.412   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:24:35.429  4739  4845 D SatelliteController: iisInCarrierRoamingNbIotNtn: satellite is disabled
+11-05 05:24:35.430  4739  4845 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+11-05 05:24:37.420   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:24:40.426   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:24:43.434   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:24:45.430  4739  4845 D SatelliteController: iisInCarrierRoamingNbIotNtn: satellite is disabled
+11-05 05:24:45.431  4739  4845 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+11-05 05:24:46.442   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:24:49.076  1505  6801 I FusedLocation: (REDACTED) location delivery to %s blocked - too close
+11-05 05:24:49.116  1505  6801 W GLSUser : [DeviceKeyStore] Cannot load key: Device key file not found.
+11-05 05:24:49.148   834   859 D ActivityManager: sync unfroze 2820 com.google.android.gms.unstable for 6
+11-05 05:24:49.149   834  1092 D BackgroundInstallControlService: Package event received: 0
+11-05 05:24:49.151  2820  2820 D ActivityThread: Package [com.scratchoracle.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+11-05 05:24:49.151  2820  2820 D ActivityThread: Package [com.scratchoracle.app] reported as REPLACED, but missing application info. Assuming REMOVED.
+11-05 05:24:49.166   834  1961 W ProcessStats: Tracking association SourceState{20d7f9f com.google.android.gms.persistent/10147 BFgs #6089} whose proc state 4 is better than process ProcessState{47b672e com.google.android.gms.unstable/10147 pkg=com.google.android.gms} proc state 14 (0 skipped)
+11-05 05:24:49.177   834  1092 D BackgroundInstallControlService: Package event received: 0
+11-05 05:24:49.277  2820  2828 W libc    : Access denied finding property "persist.adb.tls_server.enable"
+11-05 05:24:49.295  2820  2824 W id.gms.unstable: Reducing the number of considered missed Gc histogram windows from 360 to 100
+11-05 05:24:49.302   834  1966 D FileUtils: Rounded bytes from 2061062144 to 4000000000
+11-05 05:24:49.311  1505  1505 D BoundBrokerSvc: onRebind: Intent { act=com.google.android.gms.common.telemetry.service.START dat=chimera-action:/... xflg=0x4 cmp=com.google.android.gms/.chimera.PersistentApiService }
+11-05 05:24:49.329  1505  6801 W GmsUrlRequestImpl: [https://android.googleapis.com/auth/devicekey] Content-Type header is overwritten.
+11-05 05:24:49.392  1505  5519 I GmsCoreXrpcWrapper: (REDACTED) Creating a custom channel provider with trafficStatsTag=%d trafficStatsUid=%d
+11-05 05:24:49.420  1505  5519 I LocationReportUplIntOp: Uploading owner sightings. [CONTEXT service_id=284 ratelimit_period="5 MINUTES" ]
+11-05 05:24:49.421  1505  5519 I GmsCoreXrpcWrapper: (REDACTED) Returning a channel provider with trafficStatsTag=%d trafficStatsUid=%d
+11-05 05:24:49.453   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:24:49.459  1505  6801 W GLSUser : [AppCertManager] Exception while requesting key: 
+11-05 05:24:49.459  1505  6801 W GLSUser : java.util.concurrent.ExecutionException: cont: Parse Proto Exception with response code 400
+11-05 05:24:49.459  1505  6801 W GLSUser : 	at grcy.j(:com.google.android.gms@254333038@25.43.33 (260800-826063635):21)
+11-05 05:24:49.459  1505  6801 W GLSUser : 	at grdh.u(:com.google.android.gms@254333038@25.43.33 (260800-826063635):71)
+11-05 05:24:49.459  1505  6801 W GLSUser : 	at ajrf.b(:com.google.android.gms@254333038@25.43.33 (260800-826063635):439)
+11-05 05:24:49.459  1505  6801 W GLSUser : 	at ajrd.a(:com.google.android.gms@254333038@25.43.33 (260800-826063635):67)
+11-05 05:24:49.459  1505  6801 W GLSUser : 	at ajqz.a(:com.google.android.gms@254333038@25.43.33 (260800-826063635):3)
+11-05 05:24:49.459  1505  6801 W GLSUser : 	at ajrb.a(:com.google.android.gms@254333038@25.43.33 (260800-826063635):58)
+11-05 05:24:49.459  1505  6801 W GLSUser : 	at ajrb.b(:com.google.android.gms@254333038@25.43.33 (260800-826063635):21)
+11-05 05:24:49.459  1505  6801 W GLSUser : 	at bdea.m(:com.google.android.gms@254333038@25.43.33 (260800-826063635):13)
+11-05 05:24:49.459  1505  6801 W GLSUser : 	at bdep.f(:com.google.android.gms@254333038@25.43.33 (260800-826063635):10)
+11-05 05:24:49.459  1505  6801 W GLSUser : 	at gacx.a(:com.google.android.gms@254333038@25.43.33 (260800-826063635):45)
+11-05 05:24:49.459  1505  6801 W GLSUser : 	at gacr.b(:com.google.android.gms@254333038@25.43.33 (260800-826063635):279)
+11-05 05:24:49.459  1505  6801 W GLSUser : 	at gbfs.g(:com.google.android.gms@254333038@25.43.33 (260800-826063635):15)
+11-05 05:24:49.459  1505  6801 W GLSUser : 	at gbfo.run(:com.google.android.gms@254333038@25.43.33 (260800-826063635):163)
+11-05 05:24:49.459  1505  6801 W GLSUser : 	at bdla.c(:com.google.android.gms@254333038@25.43.33 (260800-826063635):50)
+11-05 05:24:49.459  1505  6801 W GLSUser : 	at bdla.run(:com.google.android.gms@254333038@25.43.33 (260800-826063635):73)
+11-05 05:24:49.459  1505  6801 W GLSUser : 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1154)
+11-05 05:24:49.459  1505  6801 W GLSUser : 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:652)
+11-05 05:24:49.459  1505  6801 W GLSUser : 	at bdqr.run(:com.google.android.gms@254333038@25.43.33 (260800-826063635):8)
+11-05 05:24:49.459  1505  6801 W GLSUser : 	at java.lang.Thread.run(Thread.java:1563)
+11-05 05:24:49.459  1505  6801 W GLSUser : Caused by: cont: Parse Proto Exception with response code 400
+11-05 05:24:49.459  1505  6801 W GLSUser : 	at coow.e(:com.google.android.gms@254333038@25.43.33 (260800-826063635):71)
+11-05 05:24:49.459  1505  6801 W GLSUser : 	at cori.d(:com.google.android.gms@254333038@25.43.33 (260800-826063635):18)
+11-05 05:24:49.459  1505  6801 W GLSUser : 	at corz.onSucceeded(:com.google.android.gms@254333038@25.43.33 (260800-826063635):9)
+11-05 05:24:49.459  1505  6801 W GLSUser : 	at m1.nd.onSucceeded(:com.google.android.gms.dynamite_cronetdynamite@254333038@25.43.33 (260800-0):3)
+11-05 05:24:49.459  1505  6801 W GLSUser : 	at m1.lw.run(:com.google.android.gms.dynamite_cronetdynamite@254333038@25.43.33 (260800-0):21)
+11-05 05:24:49.459  1505  6801 W GLSUser : 	at m1.lq.run(:com.google.android.gms.dynamite_cronetdynamite@254333038@25.43.33 (260800-0):31)
+11-05 05:24:49.459  1505  6801 W GLSUser : 	... 6 more
+11-05 05:24:49.459  1505  6801 W GLSUser : Caused by: hlgj: Protocol message contained an invalid tag (zero).
+11-05 05:24:49.459  1505  6801 W GLSUser : 	at hldf.k(:com.google.android.gms@254333038@25.43.33 (260800-826063635):43)
+11-05 05:24:49.459  1505  6801 W GLSUser : 	at hlhh.c(:com.google.android.gms@254333038@25.43.33 (260800-826063635):399)
+11-05 05:24:49.459  1505  6801 W GLSUser : 	at hlhh.i(:com.google.android.gms@254333038@25.43.33 (260800-826063635):8)
+11-05 05:24:49.459  1505  6801 W GLSUser : 	at hlfn.y(:com.google.android.gms@254333038@25.43.33 (260800-826063635):23)
+11-05 05:24:49.459  1505  6801 W GLSUser : 	at hlfi.g(:com.google.android.gms@254333038@25.43.33 (260800-826063635):3)
+11-05 05:24:49.459  1505  6801 W GLSUser : 	at hldb.e(:com.google.android.gms@254333038@25.43.33 (260800-826063635):1)
+11-05 05:24:49.459  1505  6801 W GLSUser : 	at hldb.d(:com.google.android.gms@254333038@25.43.33 (260800-826063635):3)
+11-05 05:24:49.459  1505  6801 W GLSUser : 	at hldb.p(:com.google.android.gms@254333038@25.43.33 (260800-826063635):1)
+11-05 05:24:49.459  1505  6801 W GLSUser : 	at coow.g(:com.google.android.gms@254333038@25.43.33 (260800-826063635):69)
+11-05 05:24:49.459  1505  6801 W GLSUser : 	at coow.e(:com.google.android.gms@254333038@25.43.33 (260800-826063635):11)
+11-05 05:24:49.459  1505  6801 W GLSUser : 	... 11 more
+11-05 05:24:49.463  1505  6801 W GLSUser : [DeviceKeyStore] Cannot load key: Device key file not found.
+11-05 05:24:49.500  1505  7878 W Conscrypt: Could not set socket write timeout: java.net.SocketException: Socket closed
+11-05 05:24:49.505  1505  7878 W Conscrypt: 	at com.google.android.gms.org.conscrypt.Platform.setSocketWriteTimeout(:com.google.android.gms@254333038@25.43.33 (260800-826063635):204)
+11-05 05:24:49.505  1505  7878 W Conscrypt: 	at com.google.android.gms.org.conscrypt.ConscryptFileDescriptorSocket.setSoWriteTimeout(:com.google.android.gms@254333038@25.43.33 (260800-826063635):4)
+11-05 05:24:49.530  1505  7883 E igsc    : *~*~*~ Previous channel {0} was garbage collected without being shut down! ~*~*~*
+11-05 05:24:49.530  1505  7883 E igsc    :     Make sure to call shutdown()/shutdownNow()
+11-05 05:24:49.530  1505  7883 E igsc    : java.lang.RuntimeException: ManagedChannel allocation site
+11-05 05:24:49.530  1505  7883 E igsc    : 	at igsb.<init>(:com.google.android.gms@254333038@25.43.33 (260800-826063635):21)
+11-05 05:24:49.530  1505  7883 E igsc    : 	at igsc.<init>(:com.google.android.gms@254333038@25.43.33 (260800-826063635):10)
+11-05 05:24:49.530  1505  7883 E igsc    : 	at igsa.a(:com.google.android.gms@254333038@25.43.33 (260800-826063635):250)
+11-05 05:24:49.530  1505  7883 E igsc    : 	at igci.a(:com.google.android.gms@254333038@25.43.33 (260800-826063635):5)
+11-05 05:24:49.530  1505  7883 E igsc    : 	at cpyz.h(:com.google.android.gms@254333038@25.43.33 (260800-826063635):150)
+11-05 05:24:49.530  1505  7883 E igsc    : 	at gupc.a(:com.google.android.gms@254333038@25.43.33 (260800-826063635):154)
+11-05 05:24:49.530  1505  7883 E igsc    : 	at gitr.a(:com.google.android.gms@254333038@25.43.33 (260800-826063635):13)
+11-05 05:24:49.530  1505  7883 E igsc    : 	at grhi.a(:com.google.android.gms@254333038@25.43.33 (260800-826063635):3)
+11-05 05:24:49.530  1505  7883 E igsc    : 	at grgj.run(:com.google.android.gms@254333038@25.43.33 (260800-826063635):19)
+11-05 05:24:49.530  1505  7883 E igsc    : 	at grhk.run(:com.google.android.gms@254333038@25.43.33 (260800-826063635):5)
+11-05 05:24:49.530  1505  7883 E igsc    : 	at bdla.c(:com.google.android.gms@254333038@25.43.33 (260800-826063635):50)
+11-05 05:24:49.530  1505  7883 E igsc    : 	at bdla.run(:com.google.android.gms@254333038@25.43.33 (260800-826063635):73)
+11-05 05:24:49.530  1505  7883 E igsc    : 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1154)
+11-05 05:24:49.530  1505  7883 E igsc    : 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:652)
+11-05 05:24:49.530  1505  7883 E igsc    : 	at bdqr.run(:com.google.android.gms@254333038@25.43.33 (260800-826063635):8)
+11-05 05:24:49.530  1505  7883 E igsc    : 	at java.lang.Thread.run(Thread.java:1563)
+11-05 05:24:49.534  1505  7878 W Conscrypt: Could not set socket write timeout: java.net.SocketException: Socket closed
+11-05 05:24:49.534  1505  7878 W Conscrypt: 	at com.google.android.gms.org.conscrypt.Platform.setSocketWriteTimeout(:com.google.android.gms@254333038@25.43.33 (260800-826063635):204)
+11-05 05:24:49.534  1505  7878 W Conscrypt: 	at com.google.android.gms.org.conscrypt.ConscryptFileDescriptorSocket.setSoWriteTimeout(:com.google.android.gms@254333038@25.43.33 (260800-826063635):4)
+11-05 05:24:49.584  1505  6801 W GmsWeatherProviderContr: Failed to fetch weather tile
+11-05 05:24:49.584  1505  6801 W GmsWeatherProviderContr: igfy: INVALID_ARGUMENT: Application credential header not valid. Please fix the client to pass a valid application credential header.
+11-05 05:24:49.584  1505  6801 W GmsWeatherProviderContr: 	at bdep.s(:com.google.android.gms@254333038@25.43.33 (260800-826063635):31)
+11-05 05:24:49.584  1505  6801 W GmsWeatherProviderContr: 	at bdep.f(:com.google.android.gms@254333038@25.43.33 (260800-826063635):90)
+11-05 05:24:49.584  1505  6801 W GmsWeatherProviderContr: 	at gacx.a(:com.google.android.gms@254333038@25.43.33 (260800-826063635):45)
+11-05 05:24:49.584  1505  6801 W GmsWeatherProviderContr: 	at gacr.b(:com.google.android.gms@254333038@25.43.33 (260800-826063635):279)
+11-05 05:24:49.584  1505  6801 W GmsWeatherProviderContr: 	at gbfs.g(:com.google.android.gms@254333038@25.43.33 (260800-826063635):15)
+11-05 05:24:49.584  1505  6801 W GmsWeatherProviderContr: 	at gbfo.run(:com.google.android.gms@254333038@25.43.33 (260800-826063635):163)
+11-05 05:24:49.584  1505  6801 W GmsWeatherProviderContr: 	at bdla.c(:com.google.android.gms@254333038@25.43.33 (260800-826063635):50)
+11-05 05:24:49.584  1505  6801 W GmsWeatherProviderContr: 	at bdla.run(:com.google.android.gms@254333038@25.43.33 (260800-826063635):73)
+11-05 05:24:49.584  1505  6801 W GmsWeatherProviderContr: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1154)
+11-05 05:24:49.584  1505  6801 W GmsWeatherProviderContr: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:652)
+11-05 05:24:49.584  1505  6801 W GmsWeatherProviderContr: 	at bdqr.run(:com.google.android.gms@254333038@25.43.33 (260800-826063635):8)
+11-05 05:24:49.584  1505  6801 W GmsWeatherProviderContr: 	at java.lang.Thread.run(Thread.java:1563)
+11-05 05:24:49.742  1505  3172 I cn_CronetUrlRequestContext: destroyNativeStreamLocked org.chromium.net.impl.CronetBidirectionalStream@261e67c
+11-05 05:24:52.461   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:24:54.314  1505  1505 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.common.telemetry.service.START dat=chimera-action:/... xflg=0x4 cmp=com.google.android.gms/.chimera.PersistentApiService }
+11-05 05:24:55.430  4739  4845 D SatelliteController: iisInCarrierRoamingNbIotNtn: satellite is disabled
+11-05 05:24:55.431  4739  4845 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+11-05 05:24:55.469   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:24:58.478   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:25:01.484   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:25:04.325   834   970 D ActivityManager: freezing 2820 com.google.android.gms.unstable
+11-05 05:25:04.491   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:25:05.430  4739  4845 D SatelliteController: iisInCarrierRoamingNbIotNtn: satellite is disabled
+11-05 05:25:05.431  4739  4845 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+11-05 05:25:07.500   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:25:10.509   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:25:13.515   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:25:15.430  4739  4845 D SatelliteController: iisInCarrierRoamingNbIotNtn: satellite is disabled
+11-05 05:25:15.431  4739  4845 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+11-05 05:25:16.523   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:25:19.532   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:25:22.540   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:25:25.432  4739  4845 D SatelliteController: iisInCarrierRoamingNbIotNtn: satellite is disabled
+11-05 05:25:25.433  4739  4845 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+11-05 05:25:25.546   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:25:28.554   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:25:31.562   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:25:34.570   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:25:35.431  4739  4845 D SatelliteController: iisInCarrierRoamingNbIotNtn: satellite is disabled
+11-05 05:25:35.431  4739  4845 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+11-05 05:25:37.577   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:25:40.584   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:25:43.593   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:25:45.431  4739  4845 D SatelliteController: iisInCarrierRoamingNbIotNtn: satellite is disabled
+11-05 05:25:45.432  4739  4845 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+11-05 05:25:46.599   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:25:49.606   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:25:52.612   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:25:55.431  4739  4845 D SatelliteController: iisInCarrierRoamingNbIotNtn: satellite is disabled
+11-05 05:25:55.431  4739  4845 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+11-05 05:25:55.620   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:25:58.628   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:26:01.636   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:26:04.645   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:26:05.431  4739  4845 D SatelliteController: iisInCarrierRoamingNbIotNtn: satellite is disabled
+11-05 05:26:05.431  4739  4845 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+11-05 05:26:07.654   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:26:10.660   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:26:10.807  1260  1399 W AlarmManager: Unrecognized alarm listener com.android.networkstack.android.net.ip.IpClientLinkObserver$Dhcp6PdPreferredPrefixAlarmListener@9324391
+11-05 05:26:10.813  1260  1399 D ApfFilter: (wlan0): Adding RA fe80::2 -> ff02::1 1800s fec0::/64 86400s/14400s 
+11-05 05:26:13.668   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:26:15.431  4739  4845 D SatelliteController: iisInCarrierRoamingNbIotNtn: satellite is disabled
+11-05 05:26:15.432  4739  4845 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+11-05 05:26:16.432   834  2100 D WifiNl80211Manager: Scan result ready event
+11-05 05:26:16.432   834  2100 D WifiNative: Scan result ready event
+11-05 05:26:16.434  1505  1516 I WifiScanner: onFullResults
+11-05 05:26:16.434  1505  1518 I WifiScanner: onFullResults
+11-05 05:26:16.436   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:26:16.672   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:26:19.679   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:26:22.689   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:26:25.431  4739  4845 D SatelliteController: iisInCarrierRoamingNbIotNtn: satellite is disabled
+11-05 05:26:25.432  4739  4845 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+11-05 05:26:25.696   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:26:28.703   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:26:31.711   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:26:34.719   834  1031 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+11-05 05:26:35.431  4739  4845 D SatelliteController: iisInCarrierRoamingNbIotNtn: satellite is disabled
+11-05 05:26:35.432  4739  4845 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
