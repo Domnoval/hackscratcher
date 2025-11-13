@@ -42,6 +42,9 @@ jobs:
           echo "EXPO_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.EXPO_PUBLIC_SUPABASE_ANON_KEY }}" >> .env
           echo "EXPO_PUBLIC_GOOGLE_MAPS_API_KEY=${{ secrets.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY }}" >> .env
 
+      - name: Prebuild Android native code
+        run: npx expo prebuild --platform android --clean
+
       - name: Decode and setup release keystore
         if: ${{ secrets.RELEASE_KEYSTORE_BASE64 != '' }}
         run: |
@@ -59,10 +62,10 @@ jobs:
           cd android
           ./gradlew bundleRelease --no-daemon --stacktrace
 
-      - name: Get version from app.json
+      - name: Get version from app.config.js
         id: version
         run: |
-          VERSION=$(node -p "require('./app.json').expo.version")
+          VERSION=$(node -p "require('./app.config.js').expo.version")
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Upload AAB artifact
