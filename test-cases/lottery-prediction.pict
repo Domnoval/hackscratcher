@@ -1,0 +1,44 @@
+# PICT Model for Scratch Oracle Lottery Prediction Testing
+# Generated for comprehensive test coverage of Minnesota lottery games
+
+# Game Parameters
+Price: $5, $10, $20, $30
+TopPrize: Low, Medium, High, VeryHigh
+OverallOdds: Excellent, Good, Fair, Poor
+GameAge: New, Active, EndingSoon
+PrizeRemaining: High, Medium, Low
+
+# User Parameters
+UserBudget: $5, $20, $50, $100
+RiskTolerance: Conservative, Moderate, Aggressive
+
+# System State
+DatabaseStatus: Available, Unavailable
+NetworkStatus: Online, Offline
+CacheStatus: Fresh, Stale
+
+# Constraints - Business Rules
+# Low-priced tickets can't have very high top prizes
+IF [Price] = "$5" THEN [TopPrize] <> "VeryHigh";
+
+# Excellent odds are typically on higher-priced tickets
+IF [OverallOdds] = "Excellent" THEN [Price] IN {"$20", "$30"};
+
+# New games should have high prizes remaining
+IF [GameAge] = "New" THEN [PrizeRemaining] IN {"High", "Medium"};
+
+# Ending soon games have lower prizes remaining
+IF [GameAge] = "EndingSoon" THEN [PrizeRemaining] = "Low";
+
+# Can't recommend if system is down
+IF [DatabaseStatus] = "Unavailable" THEN [NetworkStatus] = "Offline";
+
+# Conservative users prefer better odds
+IF [RiskTolerance] = "Conservative" THEN [OverallOdds] IN {"Excellent", "Good"};
+
+# Aggressive users can handle any odds
+IF [RiskTolerance] = "Aggressive" THEN [OverallOdds] IN {"Fair", "Poor", "Good"};
+
+# Budget constraints
+IF [UserBudget] = "$5" THEN [Price] = "$5";
+IF [UserBudget] = "$20" THEN [Price] IN {"$5", "$10", "$20"};

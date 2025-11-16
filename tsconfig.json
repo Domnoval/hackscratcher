@@ -6,6 +6,8 @@
   "exclude": [
     "components/Lucky/**",
     "components/Scanner/**",
+    "components/examples/**",
+    "debug-package/**",
     "services/scanner/**",
     "services/notifications/**",
     "services/social/**",

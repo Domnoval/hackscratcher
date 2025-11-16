@@ -3,6 +3,14 @@ import { LotteryGame, EVCalculation, UserProfile } from '../../types/lottery';
 import { validate, ValidationError } from '../validation/validator';
 import { GameSchema, UserProfileSchema } from '../validation/schemas';
 import { z } from 'zod';
+import {
+  HypergeometricCalculator,
+  KellyCalculator,
+  MonteCarloSimulator,
+  RiskMetrics,
+  VarianceAnalyzer,
+  BayesianUpdater
+} from './advancedStats';
 
 export class EVCalculator {
   /**
@@ -35,11 +43,11 @@ export class EVCalculator {
         launch_date: z.string(),
         last_updated: z.string(),
         total_tickets: z.number().int().positive().optional(),
-        ai_score: z.number().optional(),
-        confidence: z.number().optional(),
-        recommendation: z.enum(['strong_buy', 'buy', 'neutral', 'avoid', 'strong_avoid']).optional(),
-        ai_reasoning: z.string().optional(),
-        win_probability: z.number().optional(),
+        ai_score: z.number().nullable().optional(),
+        confidence: z.number().nullable().optional(),
+        recommendation: z.enum(['strong_buy', 'buy', 'neutral', 'avoid', 'strong_avoid']).nullable().optional(),
+        ai_reasoning: z.string().nullable().optional(),
+        win_probability: z.number().nullable().optional(),
       });
 
       // Validate game structure
@@ -98,7 +106,8 @@ export class EVCalculator {
       return -game.price; // Conservative estimate
     }
 
-    // Calculate expected value: sum(prize * probability) - ticket_cost
+    // Calculate expected value using HYPERGEOMETRIC DISTRIBUTION
+    // More accurate than simple probability - accounts for sampling without replacement
     let expectedWinnings = 0;
 
     for (const prize of game.prizes) {
@@ -108,7 +117,11 @@ export class EVCalculator {
         continue;
       }
       if (prize.remaining > 0) {
-        const probability = prize.remaining / game.total_tickets;
+        // Use hypergeometric probability instead of naive probability
+        const probability = HypergeometricCalculator.winProbability(
+          game.total_tickets,
+          prize.remaining
+        );
         expectedWinnings += prize.amount * probability;
       }
     }
@@ -281,5 +294,172 @@ export class EVCalculator {
     }
 
     return explanations;
+  }
+
+  // ========================================================================
+  // ADVANCED STATISTICAL METHODS
+  // ========================================================================
+
+  /**
+   * Calculate comprehensive risk metrics for a game
+   * Includes variance, standard deviation, Sharpe ratio, VaR
+   */
+  static calculateRiskMetrics(game: LotteryGame): {
+    variance: number;
+    stdDeviation: number;
+    semiVariance: number;
+    sharpeRatio: number;
+    coefficientOfVariation: number;
+    winRate: number;
+    valueAtRisk95: number;
+  } {
+    const baseEV = this.calculateBaseEV(game);
+    const variance = VarianceAnalyzer.calculateVariance(game);
+    const stdDev = Math.sqrt(variance);
+    const semiVariance = VarianceAnalyzer.calculateSemiVariance(game, 0);
+    const sharpe = RiskMetrics.sharpeRatio(baseEV, stdDev);
+    const cv = RiskMetrics.coefficientOfVariation(baseEV, stdDev);
+    const winRate = RiskMetrics.winRate(game);
+
+    // VaR is typically the price you could lose (since lottery has limited downside)
+    const valueAtRisk95 = game.price;
+
+    return {
+      variance,
+      stdDeviation: stdDev,
+      semiVariance,
+      sharpeRatio: sharpe,
+      coefficientOfVariation: cv,
+      winRate,
+      valueAtRisk95,
+    };
+  }
+
+  /**
+   * Run Monte Carlo simulation to estimate return distribution
+   * WARNING: Computationally intensive - use sparingly
+   */
+  static runMonteCarloAnalysis(
+    game: LotteryGame,
+    numSimulations: number = 10000
+  ): {
+    meanReturn: number;
+    medianReturn: number;
+    stdDeviation: number;
+    confidenceInterval95: [number, number];
+    probabilityOfProfit: number;
+    valueAtRisk95: number;
+  } {
+    return MonteCarloSimulator.simulate(game, numSimulations, 1);
+  }
+
+  /**
+   * Calculate Kelly Criterion optimal bet size
+   * Returns recommended ticket quantity based on bankroll
+   */
+  static calculateKellyCriterion(
+    game: LotteryGame,
+    userBankroll: number
+  ): {
+    optimalBetSize: number;
+    kellyFraction: number;
+    recommendation: string;
+    maxTickets: number;
+  } {
+    const kelly = KellyCalculator.calculateForLottery(game, userBankroll);
+
+    const maxTickets = Math.floor(kelly.kellyBetSize / game.price);
+
+    return {
+      optimalBetSize: kelly.kellyBetSize,
+      kellyFraction: kelly.kellyFraction,
+      recommendation: kelly.recommendation,
+      maxTickets: Math.max(0, maxTickets),
+    };
+  }
+
+  /**
+   * Calculate exact win probability using hypergeometric distribution
+   * More accurate than simple probability for finite prize pools
+   */
+  static calculateExactWinProbability(game: LotteryGame): number {
+    return RiskMetrics.winRate(game);
+  }
+
+  /**
+   * Calculate probability of winning a specific prize tier
+   */
+  static calculatePrizeTierProbability(
+    game: LotteryGame,
+    tierIndex: number
+  ): number {
+    if (tierIndex < 0 || tierIndex >= game.prizes.length) return 0;
+    if (!game.total_tickets || game.total_tickets === 0) return 0;
+
+    const prize = game.prizes[tierIndex];
+    if (prize.remaining === 0) return 0;
+
+    return HypergeometricCalculator.winProbability(
+      game.total_tickets,
+      prize.remaining
+    );
+  }
+
+  /**
+   * Get comprehensive analysis with all advanced metrics
+   * This is the "kitchen sink" method that returns everything
+   */
+  static getAdvancedAnalysis(
+    game: LotteryGame,
+    userProfile?: UserProfile
+  ): {
+    basicEV: EVCalculation;
+    riskMetrics: ReturnType<typeof EVCalculator.calculateRiskMetrics>;
+    kellyCriterion?: ReturnType<typeof EVCalculator.calculateKellyCriterion>;
+    prizeTierProbabilities: number[];
+    recommendation: string;
+    riskLevel: 'very_low' | 'low' | 'medium' | 'high' | 'very_high';
+  } {
+    const basicEV = this.calculateEV(game, userProfile);
+    const riskMetrics = this.calculateRiskMetrics(game);
+
+    const kellyCriterion = userProfile?.budget.daily
+      ? this.calculateKellyCriterion(game, userProfile.budget.daily * 7) // Weekly bankroll
+      : undefined;
+
+    const prizeTierProbs = game.prizes.map((_, idx) =>
+      this.calculatePrizeTierProbability(game, idx)
+    );
+
+    // Determine risk level based on coefficient of variation
+    let riskLevel: 'very_low' | 'low' | 'medium' | 'high' | 'very_high' = 'medium';
+    const cv = riskMetrics.coefficientOfVariation;
+
+    if (cv < 0.5) riskLevel = 'very_low';
+    else if (cv < 1.0) riskLevel = 'low';
+    else if (cv < 2.0) riskLevel = 'medium';
+    else if (cv < 5.0) riskLevel = 'high';
+    else riskLevel = 'very_high';
+
+    // Build recommendation
+    let recommendation = '';
+    if (basicEV.adjustedEV > 0 && riskMetrics.sharpeRatio > 0.5) {
+      recommendation = 'Strong Buy - Positive EV with acceptable risk';
+    } else if (basicEV.adjustedEV > 0) {
+      recommendation = 'Buy - Positive EV but higher volatility';
+    } else if (basicEV.adjustedEV > -0.5) {
+      recommendation = 'Neutral - Minimal expected loss';
+    } else {
+      recommendation = 'Avoid - Negative expected value';
+    }
+
+    return {
+      basicEV,
+      riskMetrics,
+      kellyCriterion,
+      prizeTierProbabilities: prizeTierProbs,
+      recommendation,
+      riskLevel,
+    };
   }
 }

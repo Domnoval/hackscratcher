@@ -1,0 +1,100 @@
+name: Collect AI Training Data
+
+# Runs weekly to collect winning ticket data for AI location prediction model
+# Data is collected silently in background while feature remains "Coming Soon" on frontend
+
+on:
+  schedule:
+    # Every Sunday at 3 AM CT (8 AM UTC)
+    - cron: '0 8 * * 0'
+
+  # Allow manual triggering
+  workflow_dispatch:
+
+jobs:
+  collect-winners-data:
+    name: Scrape Winner Locations
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Scrape Minnesota winners
+        env:
+          EXPO_PUBLIC_SUPABASE_URL: ${{ secrets.EXPO_PUBLIC_SUPABASE_URL }}
+          EXPO_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.EXPO_PUBLIC_SUPABASE_ANON_KEY }}
+        run: npm run scrape:winners:mn
+        continue-on-error: true
+
+      - name: Upload debug artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: winner-scrape-debug-${{ github.run_number }}
+          path: |
+            mn-winners-debug.png
+            *.log
+          retention-days: 14
+
+      - name: Check data collection
+        run: |
+          echo "📊 Training data collection complete"
+          echo "Data is being accumulated for AI location prediction model"
+          echo "Frontend will show 'Coming Soon' until sufficient data is collected"
+
+  # Future: Add stats calculation job
+  calculate-stats:
+    name: Calculate Retailer Stats
+    needs: collect-winners-data
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Calculate retailer statistics
+        env:
+          EXPO_PUBLIC_SUPABASE_URL: ${{ secrets.EXPO_PUBLIC_SUPABASE_URL }}
+          EXPO_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.EXPO_PUBLIC_SUPABASE_ANON_KEY }}
+        run: |
+          # Future: Run stats calculation script
+          # npm run calculate:retailer-stats
+          echo "Stats calculation placeholder - will be implemented when model is ready"
+
+  report-status:
+    name: Report Data Collection Status
+    needs: [collect-winners-data, calculate-stats]
+    if: always()
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Generate status report
+        run: |
+          echo "🤖 AI TRAINING DATA COLLECTION REPORT"
+          echo "======================================"
+          echo "Date: $(date)"
+          echo "Winner Scraping: ${{ needs.collect-winners-data.result }}"
+          echo "Stats Calculation: ${{ needs.calculate-stats.result }}"
+          echo ""
+          echo "ℹ️  Data is being collected for future AI location prediction feature"
+          echo "📱 Frontend shows 'Coming Soon' while model trains in background"
+          echo "🎯 Goal: 6+ months of data before model deployment"

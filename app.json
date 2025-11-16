@@ -2,10 +2,11 @@
   "expo": {
     "name": "Scratch Oracle",
     "slug": "scratch-oracle-app",
-    "version": "1.0.1",
+    "version": "1.0.11",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
+    "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
@@ -20,7 +21,7 @@
     },
     "android": {
       "package": "com.scratchoracle.app",
-      "versionCode": 2,
+      "versionCode": 11,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#0A0A0F"
@@ -34,22 +35,35 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": [],
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "newArchEnabled": true,
+            "minSdkVersion": 23
+          },
+          "ios": {
+            "newArchEnabled": true,
+            "deploymentTarget": "13.4"
+          }
+        }
+      ]
+    ],
+    "updates": {
+      "url": "https://u.expo.dev/78e2e800-e081-4b43-86e0-2968fffec441",
+      "enabled": true,
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 0
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
     "extra": {
       "eas": {
         "projectId": "78e2e800-e081-4b43-86e0-2968fffec441"
       }
     },
-    "owner": "mm444",
-    "autolinking": {
-      "exclude": [
-        "expo-barcode-scanner",
-        "expo-camera",
-        "expo-location",
-        "expo-notifications",
-        "expo-task-manager",
-        "expo-background-fetch"
-      ]
-    }
+    "owner": "mm444"
   }
 }

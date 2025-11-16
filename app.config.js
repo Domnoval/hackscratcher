@@ -1,6 +1,13 @@
 // Load environment variables from .env file for local development
 // In production (EAS builds), environment variables come from EAS secrets
-require('dotenv').config();
+// Note: dotenv only needed for local dev, not for EAS builds
+if (process.env.NODE_ENV !== 'production') {
+  try {
+    require('dotenv').config();
+  } catch (e) {
+    // dotenv not required for EAS builds
+  }
+}
 
 module.exports = {
   expo: {
@@ -37,6 +44,15 @@ module.exports = {
     },
     web: {
       favicon: "./assets/favicon.png"
+    },
+    updates: {
+      url: "https://u.expo.dev/78e2e800-e081-4b43-86e0-2968fffec441",
+      enabled: true,
+      checkAutomatically: "ON_LOAD",
+      fallbackToCacheTimeout: 0
+    },
+    runtimeVersion: {
+      policy: "appVersion"
     },
     plugins: [],
     extra: {

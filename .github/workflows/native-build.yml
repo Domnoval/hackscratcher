@@ -1,0 +1,323 @@
+name: Native Production Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      platform:
+        description: 'Platform to build'
+        required: true
+        type: choice
+        default: 'android'
+        options:
+          - android
+          - ios
+          - all
+      profile:
+        description: 'Build profile'
+        required: true
+        type: choice
+        default: 'production'
+        options:
+          - production
+          - preview
+      auto_submit:
+        description: 'Auto-submit to Play Store?'
+        required: false
+        type: boolean
+        default: false
+
+env:
+  NODE_VERSION: '18.x'
+
+jobs:
+  # Job 1: Pre-build validation
+  validate:
+    name: Pre-Build Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🏗 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 🔍 TypeScript validation
+        run: npx tsc --noEmit --skipLibCheck
+
+      - name: 🧪 Run tests
+        run: npm test
+
+      - name: 📋 Validate app.json
+        run: |
+          if [ ! -f app.json ]; then
+            echo "❌ app.json not found!"
+            exit 1
+          fi
+          echo "✅ app.json exists"
+
+      - name: 📋 Validate eas.json
+        run: |
+          if [ ! -f eas.json ]; then
+            echo "❌ eas.json not found!"
+            exit 1
+          fi
+          echo "✅ eas.json exists"
+
+      - name: ✅ Validation complete
+        run: echo "All pre-build validations passed!"
+
+  # Job 2: Build Android AAB
+  build-android:
+    name: Build Android AAB
+    needs: validate
+    runs-on: ubuntu-latest
+    if: github.event.inputs.platform == 'android' || github.event.inputs.platform == 'all'
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🏗 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 🏗 Setup Expo and EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 🔑 Setup credentials
+        run: |
+          echo "Setting up EAS credentials..."
+          eas credentials:get --platform android
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        continue-on-error: true
+
+      - name: 🚀 Build Android AAB
+        id: build_android
+        run: |
+          echo "Starting Android build..."
+          BUILD_OUTPUT=$(eas build --platform android --profile ${{ github.event.inputs.profile }} --non-interactive --wait --json)
+          echo "$BUILD_OUTPUT"
+
+          # Extract build ID and URL (if available in output)
+          BUILD_ID=$(echo "$BUILD_OUTPUT" | jq -r '.[0].id // "unknown"')
+          BUILD_URL="https://expo.dev/accounts/mm444/projects/scratch-oracle-app/builds/$BUILD_ID"
+
+          echo "build_id=$BUILD_ID" >> $GITHUB_OUTPUT
+          echo "build_url=$BUILD_URL" >> $GITHUB_OUTPUT
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+
+      - name: 📥 Download AAB artifact
+        if: success()
+        run: |
+          echo "Downloading build artifact..."
+          eas build:download --id ${{ steps.build_android.outputs.build_id }} --output ./scratch-oracle.aab
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        continue-on-error: true
+
+      - name: 📤 Upload AAB as artifact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-aab-${{ github.event.inputs.profile }}
+          path: ./scratch-oracle.aab
+          retention-days: 30
+
+      - name: 📝 Create build summary
+        if: always()
+        run: |
+          echo "## 🤖 Android Build Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Platform:** Android" >> $GITHUB_STEP_SUMMARY
+          echo "**Profile:** ${{ github.event.inputs.profile }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Build ID:** ${{ steps.build_android.outputs.build_id }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Build URL:** ${{ steps.build_android.outputs.build_url }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Status:** ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
+
+  # Job 3: Submit to Play Store (optional)
+  submit-android:
+    name: Submit to Play Store
+    needs: build-android
+    runs-on: ubuntu-latest
+    if: github.event.inputs.auto_submit == 'true' && github.event.inputs.platform == 'android'
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🏗 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 🏗 Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 🔑 Setup Google Play credentials
+        run: |
+          if [ -z "${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}" ]; then
+            echo "❌ GOOGLE_PLAY_SERVICE_ACCOUNT_JSON secret not found!"
+            exit 1
+          fi
+          echo "${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}" > google-play-service-account.json
+          echo "✅ Credentials configured"
+
+      - name: 📤 Submit to Play Store
+        run: |
+          eas submit --platform android --latest --non-interactive
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+
+      - name: 🧹 Cleanup credentials
+        if: always()
+        run: rm -f google-play-service-account.json
+
+      - name: 📝 Create submission summary
+        if: always()
+        run: |
+          echo "## 📤 Play Store Submission Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Status:** ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Track:** Internal Testing" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Next Steps:**" >> $GITHUB_STEP_SUMMARY
+          echo "1. Check Play Console for submission status" >> $GITHUB_STEP_SUMMARY
+          echo "2. Wait for Google review (typically 1-3 days)" >> $GITHUB_STEP_SUMMARY
+          echo "3. Promote to production when ready" >> $GITHUB_STEP_SUMMARY
+
+  # Job 4: Build iOS (if selected)
+  build-ios:
+    name: Build iOS IPA
+    needs: validate
+    runs-on: ubuntu-latest
+    if: github.event.inputs.platform == 'ios' || github.event.inputs.platform == 'all'
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🏗 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 🏗 Setup Expo and EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 🍎 Build iOS IPA
+        id: build_ios
+        run: |
+          echo "Starting iOS build..."
+          BUILD_OUTPUT=$(eas build --platform ios --profile ${{ github.event.inputs.profile }} --non-interactive --wait --json)
+          echo "$BUILD_OUTPUT"
+
+          BUILD_ID=$(echo "$BUILD_OUTPUT" | jq -r '.[0].id // "unknown"')
+          BUILD_URL="https://expo.dev/accounts/mm444/projects/scratch-oracle-app/builds/$BUILD_ID"
+
+          echo "build_id=$BUILD_ID" >> $GITHUB_OUTPUT
+          echo "build_url=$BUILD_URL" >> $GITHUB_OUTPUT
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+
+      - name: 📥 Download IPA artifact
+        if: success()
+        run: |
+          echo "Downloading build artifact..."
+          eas build:download --id ${{ steps.build_ios.outputs.build_id }} --output ./scratch-oracle.ipa
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        continue-on-error: true
+
+      - name: 📤 Upload IPA as artifact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-ipa-${{ github.event.inputs.profile }}
+          path: ./scratch-oracle.ipa
+          retention-days: 30
+
+      - name: 📝 Create build summary
+        if: always()
+        run: |
+          echo "## 🍎 iOS Build Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Platform:** iOS" >> $GITHUB_STEP_SUMMARY
+          echo "**Profile:** ${{ github.event.inputs.profile }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Build ID:** ${{ steps.build_ios.outputs.build_id }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Build URL:** ${{ steps.build_ios.outputs.build_url }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Status:** ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
+
+  # Job 5: Post-build notifications
+  notify:
+    name: Send Notifications
+    needs: [build-android, build-ios]
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+      - name: 📊 Build status summary
+        run: |
+          echo "## 📦 Native Build Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Workflow:** ${{ github.workflow }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Triggered by:** ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Branch:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Build Results:**" >> $GITHUB_STEP_SUMMARY
+
+          if [ "${{ needs.build-android.result }}" != "skipped" ]; then
+            echo "- Android: ${{ needs.build-android.result }}" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          if [ "${{ needs.build-ios.result }}" != "skipped" ]; then
+            echo "- iOS: ${{ needs.build-ios.result }}" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Next Steps:**" >> $GITHUB_STEP_SUMMARY
+          echo "1. Download artifacts from the Actions tab" >> $GITHUB_STEP_SUMMARY
+          echo "2. Test on physical devices" >> $GITHUB_STEP_SUMMARY
+          echo "3. Submit to stores manually or use auto-submit" >> $GITHUB_STEP_SUMMARY
+
+      - name: 🎉 Success notification
+        if: needs.build-android.result == 'success' || needs.build-ios.result == 'success'
+        run: echo "✅ Build completed successfully!"
+
+      - name: ❌ Failure notification
+        if: needs.build-android.result == 'failure' || needs.build-ios.result == 'failure'
+        run: |
+          echo "❌ Build failed! Check the logs for details."
+          exit 1

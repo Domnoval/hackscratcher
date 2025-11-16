@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scratch Oracle - ML Model Performance Dashboard</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            color: rgba(255,255,255,0.9);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .metric-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .metric-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .metric-trend {
+            font-size: 0.85em;
+            margin-top: 8px;
+        }
+
+        .metric-trend.positive {
+            color: #10b981;
+        }
+
+        .metric-trend.negative {
+            color: #ef4444;
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .chart-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .axis {
+            font-size: 12px;
+        }
+
+        .axis path,
+        .axis line {
+            stroke: #d1d5db;
+        }
+
+        .grid line {
+            stroke: #e5e7eb;
+            stroke-opacity: 0.7;
+        }
+
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.85em;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 1000;
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+            font-size: 0.9em;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Scratch Oracle ML Dashboard</h1>
+        <p class="subtitle">Real-time Model Performance & Prediction Analytics</p>
+
+        <!-- Key Metrics -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-label">Model Accuracy</div>
+                <div class="metric-value">73.2%</div>
+                <div class="metric-trend positive">↑ 3.2% from last week</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Prediction Confidence</div>
+                <div class="metric-value">81.5%</div>
+                <div class="metric-trend positive">↑ 5.1% from last week</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Games Analyzed</div>
+                <div class="metric-value">41</div>
+                <div class="metric-trend">Minnesota Active Games</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Training Samples</div>
+                <div class="metric-value">1,247</div>
+                <div class="metric-trend positive">↑ 123 this week</div>
+            </div>
+        </div>
+
+        <!-- Accuracy Over Time Chart -->
+        <div class="chart-container">
+            <div class="chart-title">Model Accuracy Trend (Last 12 Weeks)</div>
+            <div id="accuracy-chart"></div>
+        </div>
+
+        <!-- Feature Importance Chart -->
+        <div class="chart-container">
+            <div class="chart-title">Feature Importance Analysis</div>
+            <div id="feature-importance-chart"></div>
+        </div>
+
+        <!-- Prediction Distribution Chart -->
+        <div class="chart-container">
+            <div class="chart-title">Prediction Confidence Distribution</div>
+            <div id="confidence-distribution-chart"></div>
+        </div>
+    </div>
+
+    <div class="tooltip" id="tooltip"></div>
+
+    <script>
+        // Sample data - in production, this would come from your API
+        const accuracyData = [
+            {week: 1, accuracy: 65, confidence: 72, samples: 250},
+            {week: 2, accuracy: 67, confidence: 74, samples: 350},
+            {week: 3, accuracy: 68, confidence: 75, samples: 450},
+            {week: 4, accuracy: 66, confidence: 73, samples: 550},
+            {week: 5, accuracy: 69, confidence: 76, samples: 650},
+            {week: 6, accuracy: 70, confidence: 78, samples: 750},
+            {week: 7, accuracy: 71, confidence: 79, samples: 850},
+            {week: 8, accuracy: 70, confidence: 77, samples: 950},
+            {week: 9, accuracy: 72, confidence: 80, samples: 1050},
+            {week: 10, accuracy: 71, confidence: 79, samples: 1150},
+            {week: 11, accuracy: 73, confidence: 81, samples: 1247},
+            {week: 12, accuracy: 73.2, confidence: 81.5, samples: 1247}
+        ];
+
+        const featureImportance = [
+            {feature: 'Prize Remaining %', importance: 0.28},
+            {feature: 'Overall Odds', importance: 0.24},
+            {feature: 'Ticket Price', importance: 0.18},
+            {feature: 'Game Age (Days)', importance: 0.15},
+            {feature: 'Top Prize Amount', importance: 0.10},
+            {feature: 'Launch Season', importance: 0.05}
+        ];
+
+        const confidenceDistribution = [
+            {range: '0-20%', count: 2},
+            {range: '20-40%', count: 5},
+            {range: '40-60%', count: 8},
+            {range: '60-80%', count: 15},
+            {range: '80-100%', count: 11}
+        ];
+
+        // 1. Accuracy Over Time Chart
+        function createAccuracyChart() {
+            const margin = {top: 20, right: 80, bottom: 50, left: 60};
+            const width = document.getElementById('accuracy-chart').clientWidth - margin.left - margin.right;
+            const height = 350 - margin.top - margin.bottom;
+
+            const svg = d3.select('#accuracy-chart')
+                .append('svg')
+                .attr('width', width + margin.left + margin.right)
+                .attr('height', height + margin.top + margin.bottom)
+                .append('g')
+                .attr('transform', `translate(${margin.left},${margin.top})`);
+
+            // Scales
+            const x = d3.scaleLinear()
+                .domain([1, 12])
+                .range([0, width]);
+
+            const y = d3.scaleLinear()
+                .domain([60, 85])
+                .range([height, 0]);
+
+            // Grid
+            svg.append('g')
+                .attr('class', 'grid')
+                .attr('opacity', 0.3)
+                .call(d3.axisLeft(y).tickSize(-width).tickFormat(''));
+
+            // Axes
+            svg.append('g')
+                .attr('class', 'axis')
+                .attr('transform', `translate(0,${height})`)
+                .call(d3.axisBottom(x).ticks(12));
+
+            svg.append('g')
+                .attr('class', 'axis')
+                .call(d3.axisLeft(y).ticks(6));
+
+            // Accuracy line
+            const accuracyLine = d3.line()
+                .x(d => x(d.week))
+                .y(d => y(d.accuracy))
+                .curve(d3.curveMonotoneX);
+
+            svg.append('path')
+                .datum(accuracyData)
+                .attr('fill', 'none')
+                .attr('stroke', '#667eea')
+                .attr('stroke-width', 3)
+                .attr('d', accuracyLine);
+
+            // Confidence line
+            const confidenceLine = d3.line()
+                .x(d => x(d.week))
+                .y(d => y(d.confidence))
+                .curve(d3.curveMonotoneX);
+
+            svg.append('path')
+                .datum(accuracyData)
+                .attr('fill', 'none')
+                .attr('stroke', '#10b981')
+                .attr('stroke-width', 2)
+                .attr('stroke-dasharray', '5,5')
+                .attr('d', confidenceLine);
+
+            // Points
+            svg.selectAll('.dot-accuracy')
+                .data(accuracyData)
+                .enter().append('circle')
+                .attr('class', 'dot-accuracy')
+                .attr('cx', d => x(d.week))
+                .attr('cy', d => y(d.accuracy))
+                .attr('r', 4)
+                .attr('fill', '#667eea')
+                .style('cursor', 'pointer')
+                .on('mouseover', showTooltip)
+                .on('mouseout', hideTooltip);
+
+            // Axis labels
+            svg.append('text')
+                .attr('x', width / 2)
+                .attr('y', height + 40)
+                .attr('text-anchor', 'middle')
+                .style('font-size', '13px')
+                .text('Week');
+
+            svg.append('text')
+                .attr('transform', 'rotate(-90)')
+                .attr('y', -45)
+                .attr('x', -height / 2)
+                .attr('text-anchor', 'middle')
+                .style('font-size', '13px')
+                .text('Accuracy (%)');
+
+            // Legend
+            const legend = d3.select('#accuracy-chart')
+                .append('div')
+                .attr('class', 'legend');
+
+            legend.append('div')
+                .attr('class', 'legend-item')
+                .html('<div class="legend-color" style="background: #667eea;"></div><span>Model Accuracy</span>');
+
+            legend.append('div')
+                .attr('class', 'legend-item')
+                .html('<div class="legend-color" style="background: #10b981;"></div><span>Prediction Confidence</span>');
+        }
+
+        // 2. Feature Importance Chart
+        function createFeatureImportanceChart() {
+            const margin = {top: 20, right: 30, bottom: 60, left: 180};
+            const width = document.getElementById('feature-importance-chart').clientWidth - margin.left - margin.right;
+            const height = 300 - margin.top - margin.bottom;
+
+            const svg = d3.select('#feature-importance-chart')
+                .append('svg')
+                .attr('width', width + margin.left + margin.right)
+                .attr('height', height + margin.top + margin.bottom)
+                .append('g')
+                .attr('transform', `translate(${margin.left},${margin.top})`);
+
+            const x = d3.scaleLinear()
+                .domain([0, d3.max(featureImportance, d => d.importance)])
+                .range([0, width]);
+
+            const y = d3.scaleBand()
+                .domain(featureImportance.map(d => d.feature))
+                .range([0, height])
+                .padding(0.2);
+
+            // Bars
+            svg.selectAll('.bar')
+                .data(featureImportance)
+                .enter().append('rect')
+                .attr('class', 'bar')
+                .attr('x', 0)
+                .attr('y', d => y(d.feature))
+                .attr('width', d => x(d.importance))
+                .attr('height', y.bandwidth())
+                .attr('fill', '#667eea')
+                .attr('rx', 4);
+
+            // Values
+            svg.selectAll('.value')
+                .data(featureImportance)
+                .enter().append('text')
+                .attr('class', 'value')
+                .attr('x', d => x(d.importance) + 5)
+                .attr('y', d => y(d.feature) + y.bandwidth() / 2)
+                .attr('dy', '.35em')
+                .style('font-size', '12px')
+                .style('fill', '#666')
+                .text(d => `${(d.importance * 100).toFixed(0)}%`);
+
+            // Axes
+            svg.append('g')
+                .attr('class', 'axis')
+                .call(d3.axisLeft(y));
+
+            svg.append('g')
+                .attr('class', 'axis')
+                .attr('transform', `translate(0,${height})`)
+                .call(d3.axisBottom(x).ticks(5).tickFormat(d => `${(d * 100).toFixed(0)}%`));
+        }
+
+        // 3. Confidence Distribution Chart
+        function createConfidenceDistributionChart() {
+            const margin = {top: 20, right: 30, bottom: 50, left: 60};
+            const width = document.getElementById('confidence-distribution-chart').clientWidth - margin.left - margin.right;
+            const height = 300 - margin.top - margin.bottom;
+
+            const svg = d3.select('#confidence-distribution-chart')
+                .append('svg')
+                .attr('width', width + margin.left + margin.right)
+                .attr('height', height + margin.top + margin.bottom)
+                .append('g')
+                .attr('transform', `translate(${margin.left},${margin.top})`);
+
+            const x = d3.scaleBand()
+                .domain(confidenceDistribution.map(d => d.range))
+                .range([0, width])
+                .padding(0.3);
+
+            const y = d3.scaleLinear()
+                .domain([0, d3.max(confidenceDistribution, d => d.count)])
+                .range([height, 0]);
+
+            // Bars
+            svg.selectAll('.bar')
+                .data(confidenceDistribution)
+                .enter().append('rect')
+                .attr('class', 'bar')
+                .attr('x', d => x(d.range))
+                .attr('y', d => y(d.count))
+                .attr('width', x.bandwidth())
+                .attr('height', d => height - y(d.count))
+                .attr('fill', '#10b981')
+                .attr('rx', 4);
+
+            // Values on top
+            svg.selectAll('.value')
+                .data(confidenceDistribution)
+                .enter().append('text')
+                .attr('class', 'value')
+                .attr('x', d => x(d.range) + x.bandwidth() / 2)
+                .attr('y', d => y(d.count) - 5)
+                .attr('text-anchor', 'middle')
+                .style('font-size', '13px')
+                .style('font-weight', 'bold')
+                .style('fill', '#666')
+                .text(d => d.count);
+
+            // Axes
+            svg.append('g')
+                .attr('class', 'axis')
+                .attr('transform', `translate(0,${height})`)
+                .call(d3.axisBottom(x));
+
+            svg.append('g')
+                .attr('class', 'axis')
+                .call(d3.axisLeft(y).ticks(5));
+
+            // Axis labels
+            svg.append('text')
+                .attr('x', width / 2)
+                .attr('y', height + 40)
+                .attr('text-anchor', 'middle')
+                .style('font-size', '13px')
+                .text('Confidence Range');
+
+            svg.append('text')
+                .attr('transform', 'rotate(-90)')
+                .attr('y', -45)
+                .attr('x', -height / 2)
+                .attr('text-anchor', 'middle')
+                .style('font-size', '13px')
+                .text('Number of Predictions');
+        }
+
+        // Tooltip functions
+        function showTooltip(event, d) {
+            const tooltip = d3.select('#tooltip');
+            tooltip.style('opacity', 1)
+                .html(`
+                    <strong>Week ${d.week}</strong><br>
+                    Accuracy: ${d.accuracy}%<br>
+                    Confidence: ${d.confidence}%<br>
+                    Samples: ${d.samples}
+                `)
+                .style('left', (event.pageX + 10) + 'px')
+                .style('top', (event.pageY - 10) + 'px');
+        }
+
+        function hideTooltip() {
+            d3.select('#tooltip').style('opacity', 0);
+        }
+
+        // Initialize all charts
+        createAccuracyChart();
+        createFeatureImportanceChart();
+        createConfidenceDistributionChart();
+
+        // Make responsive
+        window.addEventListener('resize', () => {
+            d3.select('#accuracy-chart').selectAll('*').remove();
+            d3.select('#feature-importance-chart').selectAll('*').remove();
+            d3.select('#confidence-distribution-chart').selectAll('*').remove();
+            createAccuracyChart();
+            createFeatureImportanceChart();
+            createConfidenceDistributionChart();
+        });
+    </script>
+</body>
+</html>

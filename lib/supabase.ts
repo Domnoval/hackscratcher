@@ -44,7 +44,8 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   global: {
     // Use custom fetch with SSL certificate pinning for all Supabase requests
     // In development (__DEV__), use regular fetch since SSL pinning doesn't work in Expo Go
-    fetch: __DEV__ ? fetch : (pinnedFetch as unknown as typeof fetch),
+    // TEMPORARILY DISABLED FOR DEBUGGING - SSL pinning may be causing crashes
+    fetch: fetch, // __DEV__ ? fetch : (pinnedFetch as unknown as typeof fetch),
   },
 });
 
@@ -146,14 +147,15 @@ export interface UserScan {
 // =====================================================
 
 /**
- * Fetch all active games with their latest AI predictions
- * Now validates response data structure
+ * Fetch all active games (predictions separate)
+ * Now queries games table directly - predictions are completely decoupled
  */
 export async function getActiveGamesWithPredictions() {
   const { data, error } = await supabase
-    .from('active_games_with_predictions')
+    .from('games')
     .select('*')
-    .order('ai_score', { ascending: false });
+    .eq('is_active', true)
+    .order('game_number', { ascending: false });
 
   // Validate response structure
   const response = { data, error };

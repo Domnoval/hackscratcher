@@ -236,4 +236,165 @@ export class RecommendationEngine {
       totalGames: recommendations.length
     };
   }
+
+  // ========================================================================
+  // 3-TIER RECOMMENDATION SYSTEM
+  // ========================================================================
+
+  /**
+   * Get recommendations across 3 risk tiers: SAFE, MODERATE, INSANE
+   * Returns tailored picks for conservative, balanced, and aggressive players
+   */
+  static async getThreeTierRecommendations(
+    budget: number,
+    userProfile?: UserProfile,
+    state: string = 'MN'
+  ): Promise<{
+    safe: Recommendation[];
+    moderate: Recommendation[];
+    insane: Recommendation[];
+  }> {
+    // Get all active games
+    const useSupabase = FeatureFlagService.useSupabase();
+    let games = useSupabase
+      ? await SupabaseLotteryService.getActiveGames()
+      : await MinnesotaLotteryService.getActiveGames();
+
+    // Filter affordable games
+    const affordableGames = games.filter(game => game.price <= budget);
+
+    if (affordableGames.length === 0) {
+      return { safe: [], moderate: [], insane: [] };
+    }
+
+    // Calculate advanced metrics for each game
+    const gameAnalyses = affordableGames.map(game => {
+      const basicEV = EVCalculator.calculateEV(game, userProfile);
+      const riskMetrics = EVCalculator.calculateRiskMetrics(game);
+
+      return {
+        game,
+        basicEV,
+        riskMetrics,
+        score: this.calculateRecommendationScore(basicEV, userProfile)
+      };
+    });
+
+    // Remove zombie games
+    const validGames = gameAnalyses.filter(a => a.basicEV.adjustedEV !== -Infinity);
+
+    // ===== SAFE TIER: Low risk, consistent returns =====
+    // Criteria: Low volatility (Sharpe > 0.3), positive EV or near-breakeven
+    const safeGames = validGames
+      .filter(a => {
+        const sharpe = a.riskMetrics.sharpeRatio;
+        const ev = a.basicEV.adjustedEV;
+        const cv = a.riskMetrics.coefficientOfVariation;
+
+        // Safe games: decent Sharpe ratio, not too volatile
+        return sharpe > -0.5 && cv < 100 && ev > -2;
+      })
+      .sort((a, b) => {
+        // Sort by risk-adjusted return (Sharpe ratio)
+        return b.riskMetrics.sharpeRatio - a.riskMetrics.sharpeRatio;
+      })
+      .slice(0, 3);
+
+    // ===== MODERATE TIER: Balanced risk/reward =====
+    // Criteria: Best overall score, medium variance
+    const moderateGames = validGames
+      .filter(a => {
+        const ev = a.basicEV.adjustedEV;
+        const confidence = a.basicEV.confidence;
+
+        // Moderate games: positive or near-positive EV, decent confidence
+        return ev > -3 && confidence > 0.5;
+      })
+      .sort((a, b) => b.score - a.score) // Sort by overall score
+      .slice(0, 3);
+
+    // ===== INSANE TIER: High risk, massive upside =====
+    // Criteria: Huge top prizes, willing to accept volatility
+    const insaneGames = validGames
+      .filter(a => {
+        // Find games with BIG top prizes (100K+)
+        const hasMassivePrize = a.game.prizes.some(p =>
+          p.amount >= 100000 && p.remaining > 0
+        );
+
+        return hasMassivePrize;
+      })
+      .sort((a, b) => {
+        // Sort by max prize amount
+        const maxA = Math.max(...a.game.prizes.map(p => p.amount));
+        const maxB = Math.max(...b.game.prizes.map(p => p.amount));
+        return maxB - maxA;
+      })
+      .slice(0, 3);
+
+    // Convert to recommendation format
+    const toRecommendation = (analysis: any, tier: 'safe' | 'moderate' | 'insane') => ({
+      gameId: analysis.game.id,
+      game: analysis.game,
+      score: analysis.score,
+      ev: analysis.basicEV,
+      reasons: this.generateReasonsForTier(analysis, tier),
+      timestamp: new Date().toISOString(),
+      tier, // Add tier information
+      riskMetrics: analysis.riskMetrics, // Include advanced metrics
+    });
+
+    return {
+      safe: safeGames.map(a => toRecommendation(a, 'safe')),
+      moderate: moderateGames.map(a => toRecommendation(a, 'moderate')),
+      insane: insaneGames.map(a => toRecommendation(a, 'insane')),
+    };
+  }
+
+  /**
+   * Generate tier-specific reasons
+   */
+  private static generateReasonsForTier(
+    analysis: any,
+    tier: 'safe' | 'moderate' | 'insane'
+  ): string[] {
+    const reasons: string[] = [];
+    const { game, basicEV, riskMetrics } = analysis;
+
+    switch (tier) {
+      case 'safe':
+        reasons.push(`🛡️ Low Risk: Sharpe Ratio ${riskMetrics.sharpeRatio.toFixed(2)}`);
+        reasons.push(`📊 Win Rate: ${(riskMetrics.winRate * 100).toFixed(1)}%`);
+        if (basicEV.adjustedEV >= 0) {
+          reasons.push(`✅ Positive EV: +$${basicEV.adjustedEV.toFixed(2)}`);
+        } else {
+          reasons.push(`⚖️ Near break-even: $${basicEV.adjustedEV.toFixed(2)}`);
+        }
+        reasons.push(`📉 Volatility: $${riskMetrics.stdDeviation.toFixed(2)}`);
+        break;
+
+      case 'moderate':
+        reasons.push(`⚖️ Balanced Risk/Reward`);
+        if (basicEV.adjustedEV > 0) {
+          reasons.push(`✅ Positive EV: +$${basicEV.adjustedEV.toFixed(2)}`);
+        }
+        reasons.push(`🎯 Confidence: ${(basicEV.confidence * 100).toFixed(0)}%`);
+        const maxPrizeMod = Math.max(...game.prizes.map((p: any) => p.amount));
+        reasons.push(`🎁 Max Prize: $${maxPrizeMod.toLocaleString()}`);
+        break;
+
+      case 'insane':
+        const maxPrize = Math.max(...game.prizes.map((p: any) => p.amount));
+        reasons.push(`🚀 MASSIVE Top Prize: $${maxPrize.toLocaleString()}`);
+        reasons.push(`⚡ High Volatility: $${riskMetrics.stdDeviation.toFixed(2)}`);
+        const topPrizes = game.prizes.filter((p: any) => p.amount >= 100000 && p.remaining > 0);
+        reasons.push(`💎 ${topPrizes.length} top prizes remaining`);
+        if (basicEV.adjustedEV < 0) {
+          reasons.push(`⚠️ Negative EV: $${basicEV.adjustedEV.toFixed(2)} (high risk!)`);
+        }
+        break;
+    }
+
+    return reasons.slice(0, 4);
+  }
 }

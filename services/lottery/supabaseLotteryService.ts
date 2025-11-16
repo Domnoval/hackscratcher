@@ -65,26 +65,35 @@ export class SupabaseLotteryService {
       console.log(`[SupabaseLotteryService] Found ${data.length} active games`);
 
       // Convert database rows to app format
-      return data.map(row => ({
-        id: row.id,
-        name: row.game_name,
-        price: Number(row.ticket_price),
-        overall_odds: row.overall_odds || '1 in 4.0',
-        status: 'Active' as const,
-        prizes: this.extractPrizeTiers(row),
-        launch_date: row.game_start_date || row.created_at,
-        last_updated: row.updated_at,
-        total_tickets: row.total_tickets_printed
-          ? Number(row.total_tickets_printed)
-          : undefined,
+      const games = data.map(row => {
+        const price = Number(row.ticket_price);
+        console.log(`[SupabaseLotteryService] Game: ${row.game_name} - Price from DB: ${row.ticket_price} -> Converted: $${price}`);
 
-        // AI fields from prediction join
-        ai_score: row.ai_score,
-        confidence: row.confidence_level,
-        recommendation: row.recommendation,
-        ai_reasoning: row.reasoning,
-        win_probability: row.win_probability,
-      }));
+        return {
+          id: row.id,
+          name: row.game_name,
+          price: price,
+          overall_odds: row.overall_odds || '1 in 4.0',
+          status: 'Active' as const,
+          prizes: this.extractPrizeTiers(row),
+          launch_date: row.game_start_date || row.created_at,
+          last_updated: row.updated_at,
+          total_tickets: row.total_tickets_printed
+            ? Number(row.total_tickets_printed)
+            : undefined,
+
+          // AI predictions are completely separate - always undefined here
+          // To add predictions, query the predictions table separately
+          ai_score: undefined,
+          confidence: undefined,
+          recommendation: undefined,
+          ai_reasoning: undefined,
+          win_probability: undefined,
+        };
+      });
+
+      console.log(`[SupabaseLotteryService] Sample prices: ${games.slice(0, 5).map(g => `${g.name}: $${g.price}`).join(', ')}`);
+      return games;
     } catch (error) {
       console.error('[SupabaseLotteryService] Error fetching games from Supabase:', error);
       throw new Error('Failed to load lottery games. Please check your connection.');

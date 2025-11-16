@@ -1,0 +1,46 @@
+TestID,Price,TopPrize,OverallOdds,GameAge,PrizeRemaining,UserBudget,RiskTolerance,DatabaseStatus,NetworkStatus,ExpectedResult
+TC-001,$5,Medium,Good,New,High,$100,Moderate,Available,Online,Recommendation: BUY - Good value for $5 ticket
+TC-002,$5,Medium,Good,Active,Medium,$100,Moderate,Available,Online,Recommendation: BUY - Good value for $5 ticket
+TC-003,$5,Medium,Good,EndingSoon,Low,$100,Moderate,Available,Online,Recommendation: BUY - Good value for $5 ticket
+TC-004,$5,Medium,Fair,New,High,$100,Moderate,Available,Online,"Recommendation: NEUTRAL - Fair odds, consider budget"
+TC-005,$5,Medium,Fair,Active,Medium,$100,Moderate,Available,Online,"Recommendation: NEUTRAL - Fair odds, consider budget"
+TC-006,$5,Medium,Fair,EndingSoon,Low,$100,Moderate,Available,Online,"Recommendation: NEUTRAL - Fair odds, consider budget"
+TC-007,$5,Medium,Poor,New,High,$100,Moderate,Available,Online,"Recommendation: AVOID - Poor odds, not recommended"
+TC-008,$5,Medium,Poor,Active,Medium,$100,Moderate,Available,Online,"Recommendation: AVOID - Poor odds, not recommended"
+TC-009,$5,Medium,Poor,EndingSoon,Low,$100,Moderate,Available,Online,"Recommendation: AVOID - Poor odds, not recommended"
+TC-010,$10,Medium,Good,New,High,$100,Moderate,Available,Online,Recommendation: BUY - Good value for $10 ticket
+TC-011,$10,Medium,Good,Active,Medium,$100,Moderate,Available,Online,Recommendation: BUY - Good value for $10 ticket
+TC-012,$10,Medium,Good,EndingSoon,Low,$100,Moderate,Available,Online,Recommendation: BUY - Good value for $10 ticket
+TC-013,$10,Medium,Fair,New,High,$100,Moderate,Available,Online,"Recommendation: NEUTRAL - Fair odds, consider budget"
+TC-014,$10,Medium,Fair,Active,Medium,$100,Moderate,Available,Online,"Recommendation: NEUTRAL - Fair odds, consider budget"
+TC-015,$10,Medium,Fair,EndingSoon,Low,$100,Moderate,Available,Online,"Recommendation: NEUTRAL - Fair odds, consider budget"
+TC-016,$10,Medium,Poor,New,High,$100,Moderate,Available,Online,"Recommendation: AVOID - Poor odds, not recommended"
+TC-017,$10,Medium,Poor,Active,Medium,$100,Moderate,Available,Online,"Recommendation: AVOID - Poor odds, not recommended"
+TC-018,$10,Medium,Poor,EndingSoon,Low,$100,Moderate,Available,Online,"Recommendation: AVOID - Poor odds, not recommended"
+TC-019,$20,High,Excellent,New,High,$100,Moderate,Available,Online,"Recommendation: STRONG BUY - Excellent odds, high prizes remaining"
+TC-020,$20,High,Excellent,Active,Medium,$100,Moderate,Available,Online,Recommendation: BUY - Good value for $20 ticket
+TC-021,$20,High,Excellent,EndingSoon,Low,$100,Moderate,Available,Online,Recommendation: BUY - Good value for $20 ticket
+TC-022,$20,High,Good,New,High,$100,Moderate,Available,Online,Recommendation: BUY - Good value for $20 ticket
+TC-023,$20,High,Good,Active,Medium,$100,Moderate,Available,Online,Recommendation: BUY - Good value for $20 ticket
+TC-024,$20,High,Good,EndingSoon,Low,$100,Moderate,Available,Online,Recommendation: BUY - Good value for $20 ticket
+TC-025,$20,High,Fair,New,High,$100,Moderate,Available,Online,"Recommendation: NEUTRAL - Fair odds, consider budget"
+TC-026,$20,High,Fair,Active,Medium,$100,Moderate,Available,Online,"Recommendation: NEUTRAL - Fair odds, consider budget"
+TC-027,$20,High,Fair,EndingSoon,Low,$100,Moderate,Available,Online,"Recommendation: NEUTRAL - Fair odds, consider budget"
+TC-028,$20,High,Poor,New,High,$100,Moderate,Available,Online,"Recommendation: AVOID - Poor odds, not recommended"
+TC-029,$20,High,Poor,Active,Medium,$100,Moderate,Available,Online,"Recommendation: AVOID - Poor odds, not recommended"
+TC-030,$20,High,Poor,EndingSoon,Low,$100,Moderate,Available,Online,"Recommendation: AVOID - Poor odds, not recommended"
+TC-031,$30,High,Excellent,New,High,$100,Moderate,Available,Online,"Recommendation: STRONG BUY - Excellent odds, high prizes remaining"
+TC-032,$30,High,Excellent,Active,Medium,$100,Moderate,Available,Online,Recommendation: BUY - Good value for $30 ticket
+TC-033,$30,High,Excellent,EndingSoon,Low,$100,Moderate,Available,Online,Recommendation: BUY - Good value for $30 ticket
+TC-034,$30,High,Good,New,High,$100,Moderate,Available,Online,Recommendation: BUY - Good value for $30 ticket
+TC-035,$30,High,Good,Active,Medium,$100,Moderate,Available,Online,Recommendation: BUY - Good value for $30 ticket
+TC-036,$30,High,Good,EndingSoon,Low,$100,Moderate,Available,Online,Recommendation: BUY - Good value for $30 ticket
+TC-037,$30,High,Fair,New,High,$100,Moderate,Available,Online,"Recommendation: NEUTRAL - Fair odds, consider budget"
+TC-038,$30,High,Fair,Active,Medium,$100,Moderate,Available,Online,"Recommendation: NEUTRAL - Fair odds, consider budget"
+TC-039,$30,High,Fair,EndingSoon,Low,$100,Moderate,Available,Online,"Recommendation: NEUTRAL - Fair odds, consider budget"
+TC-040,$30,High,Poor,New,High,$100,Moderate,Available,Online,"Recommendation: AVOID - Poor odds, not recommended"
+TC-041,$30,High,Poor,Active,Medium,$100,Moderate,Available,Online,"Recommendation: AVOID - Poor odds, not recommended"
+TC-042,$30,High,Poor,EndingSoon,Low,$100,Moderate,Available,Online,"Recommendation: AVOID - Poor odds, not recommended"
+TC-043,$30,VeryHigh,Excellent,New,High,$100,Aggressive,Available,Online,"Recommendation: STRONG BUY - Premium ticket, best odds"
+TC-044,$5,Low,Poor,EndingSoon,Low,$5,Conservative,Available,Online,"Recommendation: AVOID - Poor odds, low prizes"
+TC-045,$20,High,Good,Active,Medium,$100,Moderate,Unavailable,Offline,Error: Cannot connect to database

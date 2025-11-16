@@ -1,0 +1,179 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+env:
+  NODE_VERSION: '18.x'
+  EXPO_PUBLIC_SUPABASE_URL: ${{ secrets.EXPO_PUBLIC_SUPABASE_URL }}
+  EXPO_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.EXPO_PUBLIC_SUPABASE_ANON_KEY }}
+  EXPO_PUBLIC_GOOGLE_MAPS_API_KEY: ${{ secrets.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY }}
+
+jobs:
+  # Job 1: Run tests and quality checks
+  test:
+    name: Test & Quality Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🏗 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 🔍 TypeScript type checking
+        run: npx tsc --noEmit --skipLibCheck
+        continue-on-error: false
+
+      - name: 🧪 Run tests
+        run: npm run test:coverage
+        continue-on-error: false
+
+      - name: 📊 Upload coverage reports
+        uses: codecov/codecov-action@v4
+        if: always()
+        with:
+          files: ./coverage/lcov.info
+          flags: unittests
+          name: scratch-oracle-coverage
+          fail_ci_if_error: false
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: 📈 Comment test coverage on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let coverage = 'Coverage report not available';
+
+            try {
+              const coverageSummary = fs.readFileSync('./coverage/coverage-summary.json', 'utf8');
+              const data = JSON.parse(coverageSummary);
+              const total = data.total;
+
+              coverage = `## 📊 Test Coverage Report\n\n| Category | Coverage |\n|----------|----------|\n| Statements | ${total.statements.pct}% |\n| Branches | ${total.branches.pct}% |\n| Functions | ${total.functions.pct}% |\n| Lines | ${total.lines.pct}% |`;
+            } catch (e) {
+              coverage = '## 📊 Test Coverage\n\nCoverage data not available. Check the workflow logs.';
+            }
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: coverage
+            });
+
+  # Job 2: Deploy OTA updates (only on push to main)
+  deploy-ota:
+    name: Deploy OTA Update
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🏗 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 🏗 Setup Expo
+        uses: expo/expo-github-action@v8
+        with:
+          expo-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 🚀 Publish OTA update
+        run: |
+          npx expo publish --non-interactive
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+
+      - name: 📝 Create deployment comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const projectUrl = 'https://expo.dev/accounts/mm444/projects/scratch-oracle-app';
+            github.rest.repos.createCommitComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              commit_sha: context.sha,
+              body: `✅ OTA Update published successfully!\n\n🔗 [View Project](${projectUrl})\n\n📱 Users will receive the update the next time they open the app.`
+            });
+
+      - name: 🔔 Notify on failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.repos.createCommitComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              commit_sha: context.sha,
+              body: '❌ OTA Update deployment failed! Check the workflow logs for details.'
+            });
+
+  # Job 3: Security and dependency checks
+  security:
+    name: Security Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🏗 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: 🔒 Run npm audit
+        run: npm audit --audit-level=moderate
+        continue-on-error: true
+
+      - name: 📦 Check for outdated dependencies
+        run: npm outdated
+        continue-on-error: true
+
+  # Job 4: Build status summary
+  status:
+    name: Build Status
+    needs: [test, security]
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+      - name: ✅ All checks passed
+        if: needs.test.result == 'success' && needs.security.result == 'success'
+        run: echo "All quality checks passed! ✅"
+
+      - name: ❌ Some checks failed
+        if: needs.test.result != 'success' || needs.security.result != 'success'
+        run: |
+          echo "Some checks failed:"
+          echo "Tests: ${{ needs.test.result }}"
+          echo "Security: ${{ needs.security.result }}"
+          exit 1

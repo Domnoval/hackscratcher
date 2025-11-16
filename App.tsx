@@ -32,6 +32,7 @@ import { WinTracker } from './components/tracking';
 
 // Recommendation Components
 import { RecommendationCard } from './components/recommendations/RecommendationCard';
+import { ThreeTierRecommendations } from './components/recommendations/ThreeTierRecommendations';
 
 // State Selector
 import { StateSelector } from './components/common/StateSelector';
@@ -77,7 +78,11 @@ function AppContent() {
   const [isOnline, setIsOnline] = useState(true);
   const [selectedState, setSelectedState] = useState<State>('MN');
   const [budget, setBudget] = useState('20');
-  const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
+  const [recommendations, setRecommendations] = useState<{
+    safe: Recommendation[];
+    moderate: Recommendation[];
+    insane: Recommendation[];
+  }>({ safe: [], moderate: [], insane: [] });
   const [loadingRecommendations, setLoadingRecommendations] = useState(false);
 
   useEffect(() => {
@@ -87,9 +92,8 @@ function AppContent() {
     NetworkMonitor.initialize();
 
     // Get initial network status
-    NetworkMonitor.getStatus().then(status => {
-      setIsOnline(status);
-    });
+    const initialStatus = NetworkMonitor.getStatus();
+    setIsOnline(initialStatus);
 
     const unsubscribe = NetworkMonitor.subscribe((online) => {
       setIsOnline(online);
@@ -110,10 +114,10 @@ function AppContent() {
       // Initialize feature flags first
       await FeatureFlagService.initialize();
 
-      // AUTH DISABLED - Don't enable Supabase features for now
-      // await FeatureFlagService.enableSupabase();
+      // Enable Supabase to get real-time data
+      await FeatureFlagService.enableSupabase();
 
-      console.log('[App] Feature flags initialized:', FeatureFlagService.getStatusMessage());
+      // console.log('[App] Feature flags initialized:', FeatureFlagService.getStatusMessage());
 
       // Then check age verification
       await checkAgeVerification();
@@ -179,14 +183,22 @@ function AppContent() {
   };
 
   const getRecommendations = async () => {
+    // console.log('[App] getRecommendations called!');
+    // console.log('[App] Budget:', budget);
+    // console.log('[App] Network status (isOnline):', isOnline);
+
     const budgetAmount = parseFloat(budget);
     if (isNaN(budgetAmount) || budgetAmount <= 0) {
+      // console.log('[App] ERROR: Invalid budget amount:', budgetAmount);
       Alert.alert('Error', 'Please enter a valid budget amount');
       return;
     }
 
+    // console.log('[App] Budget validated:', budgetAmount);
+
     // Check network status first
     if (!isOnline) {
+      // console.log('[App] ERROR: App thinks it is OFFLINE');
       Alert.alert(
         'No Internet Connection',
         'Please check your connection and try again.'
@@ -194,20 +206,28 @@ function AppContent() {
       return;
     }
 
+    // console.log('[App] Network check passed, fetching recommendations...');
+
     setLoadingRecommendations(true);
 
     try {
-      const recs = await ErrorHandler.retry(
-        () => RecommendationEngine.getRecommendations(budgetAmount, undefined, 3, selectedState),
+      // Use 3-tier recommendation system
+      const tieredRecs = await ErrorHandler.retry(
+        () => RecommendationEngine.getThreeTierRecommendations(budgetAmount, undefined, selectedState),
         2 // Retry once if network fails
       );
-      setRecommendations(recs);
 
-      if (recs.length === 0) {
+      // Store tiered recommendations directly
+      setRecommendations(tieredRecs);
+
+      const totalRecs = tieredRecs.safe.length + tieredRecs.moderate.length + tieredRecs.insane.length;
+      if (totalRecs === 0) {
         Alert.alert(
           'No Recommendations',
           'No suitable games found for your budget. Try increasing your budget.'
         );
+      } else {
+        // console.log(`✅ Got ${tieredRecs.safe.length} safe, ${tieredRecs.moderate.length} moderate, ${tieredRecs.insane.length} insane recommendations`);
       }
     } catch (error) {
       console.error('Failed to get recommendations:', error);
@@ -301,38 +321,37 @@ function AppContent() {
       {/* Show loading skeleton while fetching recommendations */}
       {loadingRecommendations ? (
         <RecommendationSkeletonList count={3} />
-      ) : !isOnline && recommendations.length === 0 ? (
+      ) : !isOnline && (recommendations.safe.length === 0 && recommendations.moderate.length === 0 && recommendations.insane.length === 0) ? (
         <OfflineState onRetry={getRecommendations} />
-      ) : recommendations.length > 0 ? (
-        <FlatList
-          data={recommendations}
-          renderItem={renderRecommendation}
-          keyExtractor={(item) => item.gameId}
-          style={styles.recommendationsContainer}
-          removeClippedSubviews={true}
-          maxToRenderPerBatch={5}
-          windowSize={5}
-          initialNumToRender={3}
-          ListHeaderComponent={
-            <Text style={styles.recommendationsTitle}>
-              🎲 Top Recommendations for ${budget}
+      ) : (recommendations.safe.length > 0 || recommendations.moderate.length > 0 || recommendations.insane.length > 0) ? (
+        <View style={styles.recommendationsContainer}>
+          <Text style={styles.recommendationsTitle}>
+            🎲 Smart Recommendations for ${budget}
+          </Text>
+          <ThreeTierRecommendations
+            recommendations={recommendations}
+            onGameSelect={(game) => {
+              // Handle game selection (e.g., show details modal)
+              Alert.alert(
+                game.name,
+                `Price: $${game.price}\nOdds: ${game.overall_odds}\n\nThis feature will show detailed game info in a future update!`,
+                [{ text: 'OK' }]
+              );
+            }}
+          />
+          <View style={styles.footerContainer}>
+            <Text style={styles.footerText}>
+              💡 Tap any stat to learn how it's calculated
             </Text>
-          }
-          ListFooterComponent={
-            <View style={styles.footerContainer}>
-              <Text style={styles.footerText}>
-                💡 Based on Expected Value, confidence, and prize availability
-              </Text>
-              <Text style={styles.footerDisclaimer}>
-                Lottery games involve risk. Play responsibly within your budget.
-              </Text>
-            </View>
-          }
-        />
+            <Text style={styles.footerDisclaimer}>
+              Lottery games involve risk. Play responsibly within your budget.
+            </Text>
+          </View>
+        </View>
       ) : (
         <NoRecommendationsState onGetStarted={() => {
           // Scroll to budget input
-          console.log('Scroll to budget input');
+          // console.log('Scroll to budget input');
         }} />
       )}
     </View>
