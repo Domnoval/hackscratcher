@@ -56,29 +56,24 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
 export interface Game {
   id: string;
   game_number: string;
-  game_name: string;
-  ticket_price: number;
-  top_prize_amount: number;
-  total_top_prizes: number;
-  remaining_top_prizes: number;
-  overall_odds?: string;
-  game_start_date?: string;
-  game_end_date?: string;
-  is_active: boolean;
-  total_tickets_printed?: number;
-  tickets_remaining_estimate?: number;
   state: string;
+  name: string;                // Changed from game_name
+  price: number;               // Changed from ticket_price (stored as DECIMAL)
+  top_prize: number;           // Changed from top_prize_amount (stored as BIGINT)
+  overall_odds?: string;       // Stored as DECIMAL but used as string
+  launch_date?: string;        // Changed from game_start_date
+  status: string;              // Changed from is_active (boolean) - values: 'PUBLISHED', 'RETIRED'
+  image_url?: string;
   created_at: string;
   updated_at: string;
-  last_scraped_at?: string;
 }
 
 export interface PrizeTier {
   id: string;
   game_id: string;
   prize_amount: number;
-  total_prizes: number;
-  remaining_prizes: number;
+  total_prizes?: number;        // Optional - may not be set
+  remaining_prizes?: number;    // Note: Schema has prizes_remaining but this matches scraper
   odds?: string;
   created_at: string;
   updated_at: string;
@@ -151,10 +146,12 @@ export interface UserScan {
  * Now queries games table directly - predictions are completely decoupled
  */
 export async function getActiveGamesWithPredictions() {
+  console.log('[Supabase] Fetching games with status=PUBLISHED...');
+
   const { data, error } = await supabase
     .from('games')
     .select('*')
-    .eq('is_active', true)
+    .eq('status', 'PUBLISHED')
     .order('game_number', { ascending: false });
 
   // Validate response structure
@@ -162,8 +159,14 @@ export async function getActiveGamesWithPredictions() {
   validate(SupabaseArrayResponseSchema, response, 'getActiveGamesWithPredictions');
 
   if (error) {
-    console.error('Error fetching games:', error);
+    console.error('[Supabase] Error fetching games:', error);
     throw error;
+  }
+
+  if (!data || data.length === 0) {
+    console.warn('[Supabase] No games found with status=PUBLISHED');
+  } else {
+    console.log(`[Supabase] Found ${data.length} active games`);
   }
 
   return data;

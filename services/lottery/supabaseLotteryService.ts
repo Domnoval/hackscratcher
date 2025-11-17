@@ -68,10 +68,10 @@ export class SupabaseLotteryService {
         console.log(`[SupabaseLotteryService] Game: ${row.name} - Price from DB: ${row.price} -> Converted: $${price}`);
 
         return {
-          id: row.id,
+          id: String(row.id),  // Convert NUMBER to STRING
           name: row.name,
           price: price,
-          overall_odds: row.overall_odds || '1 in 4.0',
+          overall_odds: row.overall_odds ? String(row.overall_odds) : '1 in 4.0',  // Convert NUMBER to STRING
           status: 'Active' as const,
           prizes: this.extractPrizeTiers(row),
           launch_date: row.launch_date || row.created_at,

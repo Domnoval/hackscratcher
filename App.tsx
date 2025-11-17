@@ -111,26 +111,49 @@ function AppContent() {
 
   const initializeApp = async () => {
     try {
+      console.log('[App] === INITIALIZATION START ===');
+
       // Initialize feature flags first
+      console.log('[App] Initializing feature flags...');
       await FeatureFlagService.initialize();
 
       // Enable Supabase to get real-time data
+      console.log('[App] Enabling Supabase...');
       await FeatureFlagService.enableSupabase();
 
-      // console.log('[App] Feature flags initialized:', FeatureFlagService.getStatusMessage());
+      console.log('[App] Feature flags initialized:', FeatureFlagService.getStatusMessage());
 
       // Then check age verification
       await checkAgeVerification();
+
+      console.log('[App] === INITIALIZATION COMPLETE ===');
     } catch (error) {
-      console.error('[App] Initialization failed:', error);
+      console.error('[App] === INITIALIZATION FAILED ===', error);
+      Alert.alert(
+        'Startup Error',
+        'Failed to initialize the app. Please restart.',
+        [{ text: 'OK' }]
+      );
     } finally {
+      console.log('[App] Setting isLoading to false');
       setIsLoading(false);
     }
   };
 
   const checkAgeVerification = async () => {
     try {
-      const status = await AgeVerificationService.checkVerificationStatus();
+      console.log('[App] Checking age verification...');
+
+      // Add 5-second timeout to prevent hanging on AsyncStorage
+      const timeoutPromise = new Promise<never>((_, reject) =>
+        setTimeout(() => reject(new Error('Age verification check timeout')), 5000)
+      );
+
+      const status = await Promise.race([
+        AgeVerificationService.checkVerificationStatus(),
+        timeoutPromise
+      ]);
+
       const verified = status.isVerified && !status.requiresReverification;
       setIsVerified(verified);
       setShowAgeVerification(!verified);
@@ -140,8 +163,21 @@ function AppContent() {
         const onboardingComplete = await hasCompletedOnboarding();
         setShowOnboarding(!onboardingComplete);
       }
+
+      console.log('[App] Age verification complete, verified:', verified);
     } catch (error) {
-      console.error('Age verification check failed:', error);
+      console.error('[App] Age verification check failed:', error);
+
+      // Show error to user
+      Alert.alert(
+        'Startup Notice',
+        'Could not verify age status. Please confirm you are 18+ to continue.',
+        [{ text: 'OK' }]
+      );
+
+      // Safe defaults - show age gate
+      setIsVerified(false);
+      setShowAgeVerification(true);
     }
   };
 

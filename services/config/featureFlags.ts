@@ -18,13 +18,13 @@ export interface FeatureFlags {
 }
 
 /**
- * Default flags - start with mock data and no AI features
- * This ensures safe rollout without breaking existing functionality
+ * Default flags - using real Supabase data
+ * Supabase is now configured and working
  */
 const DEFAULT_FLAGS: FeatureFlags = {
-  useSupabaseData: false,      // FALSE: Use mock data by default
-  enableAIScores: false,       // FALSE: Hide AI scores until Supabase enabled
-  enableOfflineMode: true,     // TRUE: Always cache for offline (works with mock too)
+  useSupabaseData: true,       // TRUE: Use real Supabase data
+  enableAIScores: false,       // FALSE: AI predictions not trained yet
+  enableOfflineMode: true,     // TRUE: Always cache for offline
   enablePredictionCache: true, // TRUE: Cache predictions for performance
 };
 
