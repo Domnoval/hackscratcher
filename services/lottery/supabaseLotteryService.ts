@@ -20,10 +20,10 @@ export class SupabaseLotteryService {
   ): LotteryGame {
     return {
       id: dbGame.id,
-      name: dbGame.game_name,
-      price: Number(dbGame.ticket_price),
+      name: dbGame.name,
+      price: Number(dbGame.price),
       overall_odds: dbGame.overall_odds || '1 in 4.0',
-      status: dbGame.is_active ? 'Active' : 'Retired',
+      status: dbGame.status === 'PUBLISHED' ? 'Active' : 'Retired',
       prizes: prizeTiers.map((tier): Prize => ({
         tier: this.getPrizeTierName(tier.prize_amount),
         amount: Number(tier.prize_amount),
@@ -31,11 +31,9 @@ export class SupabaseLotteryService {
         remaining: tier.remaining_prizes,
         odds: tier.odds,
       })),
-      launch_date: dbGame.game_start_date || dbGame.created_at,
+      launch_date: dbGame.launch_date || dbGame.created_at,
       last_updated: dbGame.updated_at,
-      total_tickets: dbGame.total_tickets_printed
-        ? Number(dbGame.total_tickets_printed)
-        : undefined,
+      total_tickets: undefined,
 
       // AI prediction fields (only if prediction exists)
       ai_score: prediction?.ai_score,
@@ -66,21 +64,19 @@ export class SupabaseLotteryService {
 
       // Convert database rows to app format
       const games = data.map(row => {
-        const price = Number(row.ticket_price);
-        console.log(`[SupabaseLotteryService] Game: ${row.game_name} - Price from DB: ${row.ticket_price} -> Converted: $${price}`);
+        const price = Number(row.price);
+        console.log(`[SupabaseLotteryService] Game: ${row.name} - Price from DB: ${row.price} -> Converted: $${price}`);
 
         return {
           id: row.id,
-          name: row.game_name,
+          name: row.name,
           price: price,
           overall_odds: row.overall_odds || '1 in 4.0',
           status: 'Active' as const,
           prizes: this.extractPrizeTiers(row),
-          launch_date: row.game_start_date || row.created_at,
+          launch_date: row.launch_date || row.created_at,
           last_updated: row.updated_at,
-          total_tickets: row.total_tickets_printed
-            ? Number(row.total_tickets_printed)
-            : undefined,
+          total_tickets: undefined,
 
           // AI predictions are completely separate - always undefined here
           // To add predictions, query the predictions table separately
@@ -168,12 +164,12 @@ export class SupabaseLotteryService {
     }
 
     // Fallback: single top prize from main game record
-    if (row.top_prize_amount) {
+    if (row.top_prize) {
       return [{
         tier: 'Top Prize',
-        amount: Number(row.top_prize_amount),
-        total: row.total_top_prizes || 1,
-        remaining: row.remaining_top_prizes || 0,
+        amount: Number(row.top_prize),
+        total: 1,
+        remaining: 1,
       }];
     }
 
