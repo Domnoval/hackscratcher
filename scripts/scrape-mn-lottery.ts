@@ -133,20 +133,17 @@ async function upsertGame(game: APIGame) {
     .upsert(
       {
         game_number: gameNumber,
-        game_name: gameName,
-        ticket_price: ticketPrice,
-        top_prize_amount: topPrizeAmount,
-        total_top_prizes: totalTopPrizes,
-        remaining_top_prizes: remainingTopPrizes,
+        name: gameName,
+        price: ticketPrice,
+        top_prize: topPrizeAmount,
         overall_odds: game.overallOdds ? String(game.overallOdds) : null,
-        game_end_date: game.playEndDate || game.playEnd,
-        is_active: true, // All published games are active
+        launch_date: game.playBegin,
+        status: 'PUBLISHED',
+        image_url: game.ticketFullImage,
         state: 'MN',
-        last_scraped_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
       },
       {
-        onConflict: 'game_number',
+        onConflict: 'state,game_number',
       }
     )
     .select()
