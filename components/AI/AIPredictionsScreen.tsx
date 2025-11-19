@@ -101,10 +101,10 @@ export default function AIPredictionsScreen() {
     return (
       <View style={styles.centerContainer}>
         <Animated.Text style={[styles.loadingIcon, { transform: [{ scale: pulseAnim }] }]}>
-          🤖
+          📊
         </Animated.Text>
         <ActivityIndicator size="large" color="#00FFFF" />
-        <Text style={styles.loadingText}>AI analyzing patterns...</Text>
+        <Text style={styles.loadingText}>Analyzing statistical trends...</Text>
       </View>
     );
   }
@@ -119,22 +119,23 @@ export default function AIPredictionsScreen() {
       {/* Header */}
       <View style={styles.header}>
         <Animated.Text style={[styles.aiIcon, { transform: [{ scale: pulseAnim }] }]}>
-          🤖
+          📊
         </Animated.Text>
-        <Text style={styles.headerTitle}>AI Predictions</Text>
-        <Text style={styles.headerSubtitle}>Machine Learning Hot Ticket Analysis</Text>
+        <Text style={styles.headerTitle}>Trend Analysis</Text>
+        <Text style={styles.headerSubtitle}>Statistical Pattern Detection</Text>
       </View>
 
-      {/* Accuracy Badge */}
-      {accuracy && (
-        <View style={styles.accuracyCard}>
-          <Text style={styles.accuracyLabel}>Model Accuracy</Text>
-          <Text style={styles.accuracyValue}>{(accuracy.accuracy * 100).toFixed(1)}%</Text>
-          <Text style={styles.accuracySubtext}>
-            Based on {accuracy.totalPredictions} predictions
-          </Text>
-        </View>
-      )}
+      {/* Disclaimer Badge (replacing fake accuracy) */}
+      <View style={styles.disclaimerCard}>
+        <Text style={styles.disclaimerTitle}>⚠️ Important Disclaimer</Text>
+        <Text style={styles.disclaimerText}>
+          This tool analyzes statistical trends based on historical data. It does NOT predict lottery outcomes.
+          All lottery games are random - no system can guarantee wins. Use for informational purposes only.
+        </Text>
+        <Text style={styles.disclaimerSubtext}>
+          Trend accuracy requires historical validation data, which we are currently collecting.
+        </Text>
+      </View>
 
       {/* Timeframe Selector */}
       <View style={styles.timeframeContainer}>
@@ -164,10 +165,10 @@ export default function AIPredictionsScreen() {
         </TouchableOpacity>
       </View>
 
-      {/* AI Insights */}
+      {/* Statistical Insights */}
       {insights.length > 0 && (
         <View style={styles.insightsSection}>
-          <Text style={styles.sectionTitle}>💡 AI Insights</Text>
+          <Text style={styles.sectionTitle}>💡 Statistical Insights</Text>
           {insights.map((insight, index) => (
             <View
               key={index}
@@ -192,9 +193,9 @@ export default function AIPredictionsScreen() {
         </View>
       )}
 
-      {/* Predictions */}
+      {/* Trend-Based Recommendations */}
       <View style={styles.predictionsSection}>
-        <Text style={styles.sectionTitle}>🎯 Hot Ticket Predictions</Text>
+        <Text style={styles.sectionTitle}>🎯 Trend-Based Recommendations</Text>
 
         {predictions.map((pred, index) => (
           <View key={pred.gameId} style={styles.predictionCard}>
@@ -389,6 +390,32 @@ const styles = StyleSheet.create({
   accuracySubtext: {
     fontSize: 10,
     color: '#708090',
+  },
+  disclaimerCard: {
+    backgroundColor: '#2A1A1A',
+    margin: 20,
+    marginTop: 0,
+    padding: 16,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: '#FFA500',
+  },
+  disclaimerTitle: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#FFA500',
+    marginBottom: 8,
+  },
+  disclaimerText: {
+    fontSize: 12,
+    color: '#E0E0E0',
+    lineHeight: 18,
+    marginBottom: 8,
+  },
+  disclaimerSubtext: {
+    fontSize: 10,
+    color: '#708090',
+    fontStyle: 'italic',
   },
   timeframeContainer: {
     flexDirection: 'row',

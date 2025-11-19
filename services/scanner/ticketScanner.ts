@@ -8,7 +8,8 @@ export class TicketScannerService {
   private static readonly MAX_HISTORY = 500; // Keep last 500 scans
 
   /**
-   * Validate and process a scanned barcode
+   * Track a scanned ticket (inventory tracking only)
+   * NOTE: This does NOT validate wins - users must check with retailer
    */
   static async validateTicket(barcode: string): Promise<ScannedTicket> {
     // Extract game info from barcode
@@ -22,9 +23,8 @@ export class TicketScannerService {
       throw new Error('Game not found - invalid barcode');
     }
 
-    // Simulate win checking (in production, this would call lottery API)
-    const winCheck = this.checkIfWinner(barcode, game);
-
+    // CRITICAL: We do NOT validate wins automatically
+    // Users must manually enter win results after checking with retailer
     const scannedTicket: ScannedTicket = {
       id: `scan-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
       barcode,
@@ -32,9 +32,9 @@ export class TicketScannerService {
       gameName: game.name,
       price: game.price,
       scannedDate: new Date().toISOString(),
-      isWinner: winCheck.isWinner,
-      prizeAmount: winCheck.prizeAmount,
-      validated: true
+      isWinner: false, // Default to false - user must update manually
+      prizeAmount: 0,
+      validated: false // Not validated until user checks with retailer
     };
 
     // Save to history
@@ -68,43 +68,33 @@ export class TicketScannerService {
   }
 
   /**
-   * Check if a ticket is a winner
-   * In production: Call actual lottery validation API
-   * For MVP: Simulate based on game odds
+   * Update ticket win status manually
+   * User checks ticket with retailer and updates result in app
    */
-  private static checkIfWinner(barcode: string, game: any): {
-    isWinner: boolean;
-    prizeAmount?: number;
-  } {
-    // Simple simulation based on overall odds
-    const overallOdds = parseFloat(game.overall_odds.replace('1 in ', ''));
-    const random = Math.random();
+  static async updateTicketWinStatus(
+    ticketId: string,
+    isWinner: boolean,
+    prizeAmount: number = 0
+  ): Promise<void> {
+    try {
+      const history = await this.getHistory();
+      const ticket = history.tickets.find(t => t.id === ticketId);
 
-    if (random < (1 / overallOdds)) {
-      // Winner! Determine prize amount based on prize distribution
-      const availablePrizes = game.prizes.filter((p: any) => p.remaining > 0);
+      if (ticket) {
+        ticket.isWinner = isWinner;
+        ticket.prizeAmount = prizeAmount;
+        ticket.validated = true;
 
-      if (availablePrizes.length === 0) {
-        return { isWinner: false };
+        await AsyncStorage.setItem(this.HISTORY_KEY, JSON.stringify(history.tickets));
       }
-
-      // Weight prizes by remaining count
-      const totalRemaining = availablePrizes.reduce((sum: number, p: any) => sum + p.remaining, 0);
-      let randomPick = Math.random() * totalRemaining;
-
-      for (const prize of availablePrizes) {
-        randomPick -= prize.remaining;
-        if (randomPick <= 0) {
-          return {
-            isWinner: true,
-            prizeAmount: prize.amount
-          };
-        }
-      }
+    } catch (error) {
+      console.error('Failed to update ticket status:', error);
     }
-
-    return { isWinner: false };
   }
+
+  // REMOVED: checkIfWinner() - was generating fake win/loss results
+  // Win validation requires official lottery API access, which we don't have
+  // Users must verify wins with retailers and manually update in app
 
   /**
    * Save scanned ticket to history

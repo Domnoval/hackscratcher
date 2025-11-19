@@ -1,8 +1,8 @@
 # 🎰 Scratch Oracle
 
-**AI-Powered Lottery Analytics for Smart Players**
+**Statistical Lottery Analytics for Smart Players**
 
-> Find the hottest scratch-off tickets in Minnesota using advanced mathematics, machine learning, and a touch of mystical insight.
+> Find the smartest scratch-off tickets in Minnesota using advanced mathematics, statistical analysis, and a touch of mystical insight. Educational tool only - lottery games are random.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Platform: Android](https://img.shields.io/badge/Platform-Android-green.svg)](https://play.google.com/store)
@@ -14,13 +14,15 @@
 ## 🚀 What is Scratch Oracle?
 
 Scratch Oracle is a **$2.99/month mobile app** that helps lottery players make smarter decisions using:
-- 📊 **Real-time Expected Value (EV) calculations**
-- 🤖 **AI predictions** (78% accuracy)
-- 📱 **Barcode scanner** for instant win validation
-- 🗺️ **Store heat map** showing where big wins happen
+- 📊 **Real-time Expected Value (EV) calculations** (hypergeometric distribution)
+- 📈 **Statistical trend analysis** based on historical patterns
+- 📱 **Barcode scanner** for ticket inventory tracking
+- 🗺️ **Store heat map** showing community-reported wins
 - 🔮 **Lucky Mode** with numerology, moon phases, and zodiac
-- 📈 **Win/loss tracker** with personal ROI statistics
+- 📉 **Win/loss tracker** with personal ROI statistics
 - 🌟 **Social features** (leaderboards, challenges, win feed)
+
+**⚠️ Important:** This is an informational/educational tool. Lottery games are random - no app can guarantee wins.
 
 **We beat competitors** (ScratchOdds at $10/mo, LottoEdge at $5/mo) on **price AND features**.
 
@@ -36,13 +38,13 @@ Scratch Oracle is a **$2.99/month mobile app** that helps lottery players make s
 - ✅ Budget-based personalized recommendations
 
 ### Competitive Differentiators (UNIQUE!)
-- 🆕 **Barcode Scanner** - Scan tickets for instant win/loss validation
+- 🆕 **Barcode Scanner** - Scan tickets for inventory tracking
 - 📊 **Win/Loss Tracker** - Track every ticket with ROI analysis
 - 🔄 **Real-Time Sync** - Hourly updates with change detection
-- 🔔 **Push Notifications** - Instant alerts for hot tickets
-- 🗺️ **Store Heat Map** - Community-driven lucky stores (NO ONE ELSE HAS THIS!)
+- 🔔 **Push Notifications** - Instant alerts for notable changes
+- 🗺️ **Store Heat Map** - Community-driven win reporting (NO ONE ELSE HAS THIS!)
 - 🔮 **Lucky Mode 2.0** - Numerology + moon phases + zodiac (UNIQUE!)
-- 🤖 **AI Predictions** - Machine learning forecasts (78% accuracy, UNIQUE!)
+- 📈 **Trend Analysis** - Statistical pattern detection (UNIQUE!)
 
 ### Social & Viral
 - 🌟 Win feed (share victories)
@@ -64,12 +66,12 @@ Scratch Oracle is a **$2.99/month mobile app** that helps lottery players make s
 <table>
   <tr>
     <td><b>Recommendations</b><br/>Personalized picks based on EV</td>
-    <td><b>Barcode Scanner</b><br/>Instant win validation</td>
+    <td><b>Barcode Scanner</b><br/>Ticket inventory tracking</td>
     <td><b>Store Heat Map</b><br/>Find lucky stores</td>
   </tr>
   <tr>
     <td><b>Lucky Mode</b><br/>Numerology & astrology</td>
-    <td><b>AI Predictions</b><br/>78% accuracy forecasts</td>
+    <td><b>Trend Analysis</b><br/>Statistical pattern detection</td>
     <td><b>Social Feed</b><br/>Community wins</td>
   </tr>
 </table>
@@ -229,7 +231,7 @@ scratch-oracle-app/
 
 ### Pro Features
 - ✅ Unlimited barcode scans
-- ✅ AI predictions unlocked
+- ✅ Trend analysis unlocked
 - ✅ Store heat map access
 - ✅ Lucky Mode 2.0
 - ✅ Real-time push notifications
@@ -339,7 +341,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 1. **Lowest Price**: $2.99 vs $5-10/mo (competitors)
 2. **Most Features**: 6 unique differentiators
-3. **AI-Powered**: 78% prediction accuracy
+3. **Mathematically Sound**: Hypergeometric distribution EV calculations
 4. **Community-Driven**: Social features + heat map
 5. **Fun Factor**: Lucky Mode (mystical + analytical)
 6. **Proven Demand**: Competitors charging 2-3x and succeeding

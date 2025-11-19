@@ -57,11 +57,11 @@ Make smarter scratch-off ticket decisions with Scratch Oracle, the data-driven l
 • Budget tracking tools
 • Play responsibly reminders
 
-🤖 AI Predictions (Coming Soon)
-• Machine learning powered insights
+📈 Statistical Trend Analysis (Coming Soon)
 • Pattern detection in prize depletion
 • Personalized game recommendations
-• Confidence scoring
+• Data-driven insights
+• Educational analytics
 
 📱 Beautiful, Easy-to-Use Interface
 • Dark mode design
@@ -138,10 +138,10 @@ If you or someone you know has a gambling problem, help is available:
 
 We're constantly improving! Coming soon:
 • More states
-• AI-powered predictions
-• Win/loss tracking
+• Statistical trend analysis
+• Win/loss tracking (manual entry)
 • Social features (compare with friends)
-• Push notifications for new high-EV games
+• Push notifications for notable changes
 • Advanced filtering options
 
 📧 CONTACT & SUPPORT
