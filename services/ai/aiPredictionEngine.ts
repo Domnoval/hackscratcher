@@ -437,23 +437,18 @@ export class AIPredictionEngine {
 
   /**
    * Track prediction accuracy
+   * NOTE: Accuracy tracking requires historical validation data
+   * Currently returns null until we have sufficient data to validate predictions
    */
-  static async trackAccuracy(): Promise<PredictionAccuracy> {
-    // In production, this would compare predictions to actual outcomes
-    // For MVP, return mock accuracy metrics
+  static async trackAccuracy(): Promise<PredictionAccuracy | null> {
+    // TODO: Implement actual accuracy tracking once we have:
+    // 1. Historical predictions stored with timestamps
+    // 2. Actual outcomes collected (did hotness increase/decrease as predicted?)
+    // 3. At least 30 days of validation data
 
-    return {
-      modelType: 'ensemble',
-      totalPredictions: 150,
-      correctPredictions: 117,
-      accuracy: 0.78,
-      lastUpdated: new Date().toISOString(),
-      byTimeframe: {
-        '24h': 0.82,
-        '48h': 0.76,
-        '7d': 0.71
-      }
-    };
+    // For now, return null to indicate no validated accuracy data
+    // This is more honest than showing fake metrics
+    return null;
   }
 
   /**

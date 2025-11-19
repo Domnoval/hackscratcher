@@ -49,15 +49,10 @@ export default function TicketScannerScreen() {
         return;
       }
 
-      // Validate ticket
+      // Track ticket (inventory only - does not validate wins)
       const ticket = await TicketScannerService.validateTicket(data);
       setScannedTicket(ticket);
       setShowResult(true);
-
-      // Extra vibration for winners!
-      if (ticket.isWinner) {
-        Vibration.vibrate([0, 200, 100, 200]);
-      }
     } catch (error) {
       console.error('Scan error:', error);
       Alert.alert('Scan Error', 'Failed to validate ticket. Please try again.');
@@ -168,8 +163,6 @@ export default function TicketScannerScreen() {
   const renderResultModal = () => {
     if (!scannedTicket) return null;
 
-    const isWinner = scannedTicket.isWinner;
-
     return (
       <Modal
         visible={showResult}
@@ -178,12 +171,12 @@ export default function TicketScannerScreen() {
         onRequestClose={() => setShowResult(false)}
       >
         <View style={styles.modalOverlay}>
-          <View style={[styles.resultCard, isWinner && styles.winnerCard]}>
-            {/* Winner/Loser Header */}
+          <View style={styles.resultCard}>
+            {/* Tracking Confirmation Header */}
             <View style={styles.resultHeader}>
-              <Text style={styles.resultIcon}>{isWinner ? '🎉' : '❌'}</Text>
-              <Text style={[styles.resultTitle, isWinner && styles.winnerTitle]}>
-                {isWinner ? 'WINNER!' : 'Not a Winner'}
+              <Text style={styles.resultIcon}>✅</Text>
+              <Text style={styles.resultTitle}>
+                Ticket Tracked
               </Text>
             </View>
 
@@ -191,15 +184,18 @@ export default function TicketScannerScreen() {
             <View style={styles.ticketDetails}>
               <Text style={styles.gameName}>{scannedTicket.gameName}</Text>
               <Text style={styles.ticketPrice}>${scannedTicket.price} Ticket</Text>
+              <Text style={styles.barcodeText}>Barcode: {scannedTicket.barcode}</Text>
+            </View>
 
-              {isWinner && scannedTicket.prizeAmount && (
-                <View style={styles.prizeContainer}>
-                  <Text style={styles.prizeLabel}>Prize Amount:</Text>
-                  <Text style={styles.prizeAmount}>
-                    ${scannedTicket.prizeAmount.toLocaleString()}
-                  </Text>
-                </View>
-              )}
+            {/* CRITICAL DISCLAIMER */}
+            <View style={styles.disclaimerBox}>
+              <Text style={styles.disclaimerTitle}>⚠️ Important</Text>
+              <Text style={styles.disclaimerText}>
+                This app does NOT validate wins. Please scratch your ticket and check with an authorized retailer to verify if you won.
+              </Text>
+              <Text style={styles.disclaimerSubtext}>
+                You can manually update win status in your Stats tab after verification.
+              </Text>
             </View>
 
             {/* Action Buttons */}
@@ -225,12 +221,6 @@ export default function TicketScannerScreen() {
                 <Text style={styles.closeButtonText}>Close</Text>
               </TouchableOpacity>
             </View>
-
-            {isWinner && (
-              <Text style={styles.congratsText}>
-                🎊 Congratulations! Remember to claim your prize at an authorized retailer.
-              </Text>
-            )}
           </View>
         </View>
       </Modal>
@@ -483,10 +473,36 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
   },
-  congratsText: {
-    color: '#FFD700',
+  barcodeText: {
+    color: '#708090',
     fontSize: 12,
-    textAlign: 'center',
+    marginTop: 8,
+    fontFamily: 'monospace',
+  },
+  disclaimerBox: {
+    backgroundColor: '#2A1A1A',
+    padding: 12,
+    borderRadius: 8,
+    marginTop: 16,
+    marginBottom: 16,
+    borderWidth: 2,
+    borderColor: '#FFA500',
+  },
+  disclaimerTitle: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#FFA500',
+    marginBottom: 6,
+  },
+  disclaimerText: {
+    fontSize: 12,
+    color: '#E0E0E0',
+    lineHeight: 18,
+    marginBottom: 6,
+  },
+  disclaimerSubtext: {
+    fontSize: 10,
+    color: '#708090',
     fontStyle: 'italic',
   },
 });

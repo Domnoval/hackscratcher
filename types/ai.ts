@@ -66,6 +66,7 @@ export interface PredictionAccuracy {
     '48h': number;
     '7d': number;
   };
+  note?: string; // Optional note about validation status
 }
 
 export interface TrendAnalysis {
